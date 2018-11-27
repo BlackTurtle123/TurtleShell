@@ -1,8 +1,8 @@
 import {expect, assert} from 'chai';
 import {WalletController} from "../src/controllers";
 import {encrypt} from "../src/lib/encryprtor";
-import {Money} from "@waves/data-entities";
-import * as SG from '@waves/signature-generator';
+import {Money} from "@turtlenetwork/data-entities";
+import * as SG from '@turtlenetwork/signature-generator';
 
 describe('WalletController', () => {
     const password = 'example';

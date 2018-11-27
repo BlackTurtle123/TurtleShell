@@ -286,7 +286,7 @@ function generateBundler(opts, performBundle) {
         fullPaths: opts.buildWithFullPaths,
         //temporary fix waves-api lib not supporting browserify
         noParse: [
-            __dirname + '/node_modules/@waves/waves-signature-generator/dist/waves-signature-generator.js',
+            __dirname + '/node_modules/@turtlenetwork/waves-signature-generator/dist/waves-signature-generator.js',
         ]
     })
 

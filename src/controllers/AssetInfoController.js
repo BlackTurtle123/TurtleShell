@@ -1,17 +1,17 @@
 import ObservableStore from 'obs-store';
 
-const WAVES = {
+const TN = {
     quantity: "10000000000000000",
-    ticker: 'WAVES',
-    id: 'WAVES',
-    name: 'Waves',
+    ticker: 'TN',
+    id: 'TN',
+    name: 'TN',
     precision: 8,
     description: '',
     height: 0,
-    timestamp: '2016-04-11T21:00:00.000Z',
+    timestamp: '2018-04-11T21:00:00.000Z',
     sender: '',
     reissuable: false,
-    displayName: 'WAVES'
+    displayName: 'TN'
 };
 
 export class AssetInfoController {
@@ -19,10 +19,10 @@ export class AssetInfoController {
         const defaults = {
             assets: {
                 mainnet: {
-                    WAVES
+                    TN
                 },
                 testnet: {
-                    WAVES
+                    TN
                 }
             }
         };

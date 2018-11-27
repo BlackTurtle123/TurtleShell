@@ -26,7 +26,7 @@ export class Auth extends SignClass {
                 </div>
 
                 <div className="headline2 font600 margin-main-large">
-                    <Trans i18nKey='sign.signAccessWaves'>Sign in with Waves</Trans>
+                    <Trans i18nKey='sign.signAccessWaves'>Sign in with TN</Trans>
                 </div>
 
                 <div className={`${styles.txRow} ${styles.borderedBottom} margin-main-big `}>
@@ -42,7 +42,7 @@ export class Auth extends SignClass {
                 </div>
                 <div>
                     <Trans i18nKey='sign.signAccessInfo'>
-                        The application will have access to your Waves address but will not expose your SEED or private key.
+                        The application will have access to your TN address but will not expose your SEED or private key.
                         Never enter your secret phrase (SEED) on any website you are redirected to.
                     </Trans>
                 </div>

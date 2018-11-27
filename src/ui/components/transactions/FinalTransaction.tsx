@@ -32,7 +32,7 @@ export class FinalTransaction extends React.PureComponent {
         const FinalComponent = config.final;
         const isSend = message.broadcast;
         const network = message.account && message.account.networkCode;
-        const txLink = `https://${ network === 'T' ? 'testnet.' : ''}wavesexplorer.com/tx/${message.messageHash}`;
+        const txLink = `https://${ network === 'T' ? 'testnet.' : ''}explorer.blackturtle.eu/tx/${message.messageHash}`;
         const className = cn(styles.txBigIcon, 'margin-main', {
             'tx-reject-icon': isReject,
             'tx-approve-icon': isApprove,

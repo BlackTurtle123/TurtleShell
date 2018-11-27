@@ -10,7 +10,7 @@ import {
     setActiveAccount,
 } from '../../actions';
 import {PAGES} from '../../pageConfig';
-import { Asset, Money } from '@waves/data-entities';
+import { Asset, Money } from '@turtlenetwork/data-entities';
 import { Modal } from '../ui';
 import * as CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import cn from 'classnames';
@@ -179,14 +179,14 @@ class AssetsComponent extends React.Component {
     }
     
     static getDerivedStateFromProps(props, state) {
-        const asset = props.assets['WAVES'];
+        const asset = props.assets['TN'];
 
         if (!props.activeAccount) {
             return { loading: true };
         }
 
         if (!asset) {
-            props.getAsset('WAVES');
+            props.getAsset('TN');
             return { balances: {}, loading: false };
         }
         

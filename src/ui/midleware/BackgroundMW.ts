@@ -1,5 +1,5 @@
 import { ACTION } from '../actions/constants';
-import { config } from '@waves/signature-generator';
+import { config } from '@turtlenetwork/signature-generator';
 import background from '../services/Background';
 import { i18n } from '../i18n';
 import {

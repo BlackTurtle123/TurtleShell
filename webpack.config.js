@@ -88,14 +88,14 @@ module.exports = env => {
     plugins.push(new ExtractTextPlugin({filename: 'index.css', allChunks: true}));
     plugins.push(new WebpackShellPlugin({onBuildEnd: [onCompileEnd]}));
     plugins.push(new HtmlWebpackPlugin({
-        title: 'WavesKeeper',
+        title: 'TNKeeper',
         filename: 'popup.html',
         template: path.resolve(SOURCE_FOLDER, 'popup.html'),
         hash: true,
         excludeChunks: ['background', 'contentscript', 'inpage'],
     }));
     plugins.push(new HtmlWebpackPlugin({
-        title: 'WavesKeeper',
+        title: 'TNKeeper',
         filename: 'home.html',
         template: path.resolve(SOURCE_FOLDER, 'home.html'),
         hash: true,

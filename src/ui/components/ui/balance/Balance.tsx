@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ASSETS_NAMES } from '../../../appConfig';
-import { Money } from '@waves/data-entities';
+import { Money } from '@turtlenetwork/data-entities';
 import * as styles from './balance.styl';
 import { Loader } from '../loader';
 

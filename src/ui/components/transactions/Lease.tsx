@@ -53,7 +53,7 @@ export class LeaseComponent extends SignClass {
     }
     
     static getDerivedStateFromProps(props) {
-       const asset = props.assets['WAVES'];
+       const asset = props.assets['TN'];
        return { asset,  tx: props.signData.data };
     }
 }

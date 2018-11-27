@@ -2,8 +2,8 @@ import ObservableStore from 'obs-store';
 import uuid from 'uuid/v4';
 import log from 'loglevel';
 import EventEmitter from 'events'
-import {getAdapterByType} from "@waves/signature-adapter";
-import {BigNumber, Money} from '@waves/data-entities';
+import {getAdapterByType} from "@turtlenetwork/signature-adapter";
+import {BigNumber, Money} from '@turtlenetwork/data-entities';
 import {networkByteFromAddress} from "../lib/cryptoUtil";
 
 // msg statuses: unapproved, signed, published, rejected, failed

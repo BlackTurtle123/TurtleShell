@@ -3,7 +3,7 @@ import * as React from 'react'
 import { translate, Trans } from 'react-i18next';
 import { Balance } from '../ui';
 import { SignClass } from './SignClass';
-import { Asset, Money, BigNumber } from '@waves/data-entities';
+import { Asset, Money, BigNumber } from '@turtlenetwork/data-entities';
 import { TxIcon } from './TransactionIcon';
 import { TransactionBottom } from './TransactionBottom';
 

@@ -1,5 +1,5 @@
-import * as SG from '@waves/signature-generator';
-import * as SA from '@waves/signature-adapter'
+import * as SG from '@turtlenetwork/signature-generator';
+import * as SA from '@turtlenetwork/signature-adapter'
 
 
 function blake2b(input) {

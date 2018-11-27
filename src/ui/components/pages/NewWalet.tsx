@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { translate, Trans } from 'react-i18next';
 import { newAccountSelect } from '../../actions';
 import { AvatarList } from '../ui/avatar/AvatarList';
-import { Seed } from '@waves/signature-generator';
+import { Seed } from '@turtlenetwork/signature-generator';
 import { Button } from '../ui/buttons';
 import { PAGES } from '../../pageConfig';
 

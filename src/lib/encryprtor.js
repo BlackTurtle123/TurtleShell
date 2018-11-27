@@ -1,4 +1,4 @@
-import {utils} from '@waves/signature-generator'
+import {utils} from '@turtlenetwork/signature-generator'
 
 export function encrypt(object, password) {
     const jsonObj = JSON.stringify(object);

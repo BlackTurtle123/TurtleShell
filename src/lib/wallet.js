@@ -1,5 +1,5 @@
-import {getAdapterByType} from '@waves/signature-adapter'
-import {BigNumber} from '@waves/data-entities';
+import {getAdapterByType} from '@turtlenetwork/signature-adapter'
+import {BigNumber} from '@turtlenetwork/data-entities';
 import create from 'parse-json-bignumber';
 const {stringify, parse} = create({BigNumber});
 

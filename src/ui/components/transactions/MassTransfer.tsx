@@ -5,7 +5,7 @@ import {Balance, Button, BUTTON_TYPE} from '../ui';
 import {SignClass} from './SignClass';
 import { TxIcon } from './TransactionIcon';
 import { TransactionBottom } from './TransactionBottom';
-import { Money } from '@waves/data-entities';
+import { Money } from '@turtlenetwork/data-entities';
 
 const MIN_COUNT = 3;
 

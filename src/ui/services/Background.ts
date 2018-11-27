@@ -150,7 +150,7 @@ class Background {
     }
 
     async assetInfo(assetId: string): Promise<any> {
-        assetId = assetId || 'WAVES';
+        assetId = assetId || 'TN';
         
         if (this._assetsStore[assetId]) {
             return await this._assetsStore[assetId];

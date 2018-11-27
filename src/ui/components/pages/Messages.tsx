@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 import {translate, Trans} from 'react-i18next';
 import { getAsset, approve, reject, clearMessagesStatus, clearMessages, closeNotificationWindow } from '../../actions';
 import { PAGES } from '../../pageConfig';
-import { Asset, Money } from '@waves/data-entities';
+import { Asset, Money } from '@turtlenetwork/data-entities';
 import { Intro } from './Intro';
 import { getConfigByTransaction, FinalTransaction } from '../transactions';
-import { BigNumber } from '@waves/data-entities/dist/libs/bignumber';
+import { BigNumber } from '@turtlenetwork/data-entities/dist/libs/bignumber';
 
 @translate('extension')
 class MessagesComponent extends React.Component {
@@ -79,8 +79,8 @@ class MessagesComponent extends React.Component {
 
         const { balance: sourceBalance, selectedAccount, assets, messages } = props;
 
-        if (!assets || !assets['WAVES']) {
-            props.getAsset('WAVES');
+        if (!assets || !assets['TN']) {
+            props.getAsset('TN');
             return { loading: true, selectedAccount } ;
         }
 
@@ -100,7 +100,7 @@ class MessagesComponent extends React.Component {
             return { transactionStatus, selectedAccount, config, signData };
         }
         
-        const assetInstance = new Asset(assets['WAVES']);
+        const assetInstance = new Asset(assets['TN']);
         const currentId = state && state.message && state.message.id;
         const isExistMsg = !!messages.find(({ id, status }) => id === currentId && status === 'unapproved');
         const balance = new Money(sourceBalance || 0, assetInstance);
@@ -150,15 +150,15 @@ class MessagesComponent extends React.Component {
             }
             
             if ('priceAsset' in currentData) {
-                assets[currentData.priceAsset || 'WAVES'] = true;
+                assets[currentData.priceAsset || 'TN'] = true;
             }
     
             if ('amountAsset' in currentData) {
-                assets[currentData.amountAsset || 'WAVES'] = true;
+                assets[currentData.amountAsset || 'TN'] = true;
             }
             
             if ( 'assetId' in currentData) {
-                assets[currentData.assetId || 'WAVES'] = true;
+                assets[currentData.assetId || 'TN'] = true;
 
                 if ('tokens' in currentData ) {
                     moneys.push({ ...currentData, path: currentPath });

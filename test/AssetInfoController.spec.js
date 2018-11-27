@@ -2,15 +2,15 @@ import {expect, assert} from 'chai';
 import {AssetInfoController} from "../src/controllers";
 
 describe('AssetInfoController', () => {
-    require('isomorphic-fetch')
+    require('isomorphic-fetch');
 
     const controller = new AssetInfoController({
         getNetwork: () => 'mainnet',
-        getNode: () => 'https://nodes.wavesplatform.com'
+        getNode: () => 'https://privatenode2.blackturtle.eu'
     });
 
-    it('Should Get waves asset info', async () => {
-        const info = await controller.assetInfo('WAVES');
+    it('Should Get tn asset info', async () => {
+        const info = await controller.assetInfo('TN');
         //console.log(info)
         expect(info.description).to.eql('');
     });

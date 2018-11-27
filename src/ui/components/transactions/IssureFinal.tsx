@@ -1,7 +1,7 @@
 import * as styles from './../pages/styles/transactions.styl';
 import * as React from 'react'
 import { translate, Trans } from 'react-i18next';
-import { Asset, Money, BigNumber } from '@waves/data-entities';
+import { Asset, Money, BigNumber } from '@turtlenetwork/data-entities';
 import { Balance } from '../ui';
 
 

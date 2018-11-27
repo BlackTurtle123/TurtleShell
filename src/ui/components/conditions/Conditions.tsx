@@ -12,10 +12,10 @@ export const ConditionsAndTerms = () => {
 
         <h3 className="headline4 margin-main-big-top margin-main">1. Agreement</h3>
         <div className="margin-main">
-            These Waves Keeper Terms of Use ("Terms") govern your use of a plug-in that extends the functionality of web
-            browsers and allows you to keep secret phrases (“SEED”) from your Waves accounts in the Waves Client and
+            These TN Keeper Terms of Use ("Terms") govern your use of a plug-in that extends the functionality of web
+            browsers and allows you to keep secret phrases (“SEED”) from your TN accounts in the TN Client and
             approve transactions without entering your SEED on third-parties websites and applications (“Software”). Software is
-            operated by Waves Platform AG (“Company”, "us", "we", or "our").
+            operated by TN Platform AG (“Company”, "us", "we", or "our").
         </div>
         <div>
             By clicking to accept or agree to these Terms where that option is made available, you agree to be bound by
@@ -48,9 +48,9 @@ export const ConditionsAndTerms = () => {
             password, you agree and acknowledge that the Company would not be responsible for the negative consequences of this.
         </div>
 
-        <div>By using Waves Client within Software you acknowledge that the transactions with cryptocurrencies and
+        <div>By using TN Client within Software you acknowledge that the transactions with cryptocurrencies and
             tokens are irreversible. The Company cannot be liable under any circumstances for any transaction made by you via your
-            account in the Waves Client.
+            account in the TN Client.
         </div>
 
         <h3 className="headline4 margin-main-big-top margin-main">5. Risk warning</h3>
@@ -61,7 +61,7 @@ export const ConditionsAndTerms = () => {
 
         <div className="margin-main">
             5.1. <span className="font600">New Technology.</span> You understand that cryptocurrencies, blockchain
-            technology, including Waves Blockchain and other associated and related technologies are new and untested
+            technology, including TN Blockchain and other associated and related technologies are new and untested
             and outside of your or the Company’s control and adverse changes in market forces or the technology, broadly
             construed, will excuse the nonperformance by the Company under these Terms.
         </div>
@@ -73,19 +73,19 @@ export const ConditionsAndTerms = () => {
             light of your financial condition. Forks and changes in relevant network may result in significant and
             sudden changes to the value and/or usability of cryptocurrencies and tokens. The Company is not responsible
             for such loss of value of cryptocurrencies and tokens and bears no responsibility for any loss incurred by
-            you while using the Waves Client.
+            you while using the TN Client.
         </div>
 
         <div className="margin-main">
             5.3. <span className="font600">Unfavorable regulatory environment.</span> Cryptocurrencies, blockchain
             technologies have been the subject of scrutiny by various regulatory bodies around the world. The functioning
-            of the Waves Client could be impacted by one or more regulatory inquiries or actions, including but not limited
+            of the TN Client could be impacted by one or more regulatory inquiries or actions, including but not limited
             to restrictions of use of cryptocurrencies.
         </div>
 
         <div className="margin-main">
             5.4. <span className="font600">Risk of theft and hacking.</span> Hackers or other groups or organizations
-            may attempt to interfere with your Waves Account in any number of ways, including without limitation denial
+            may attempt to interfere with your TN Account in any number of ways, including without limitation denial
             of service attacks, Sybil attacks, spoofing, smurfing, malware attacks, or consensus-based attacks.
             You acknowledge that the Company shall not be responsible for the consequences of hackers attack.
         </div>

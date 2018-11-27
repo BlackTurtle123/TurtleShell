@@ -5,9 +5,9 @@ import * as styles from './styles/accountInfo.styl';
 import { Avatar, CopyText, Modal, Input, Error, Button, Balance } from '../ui';
 import background from '../../services/Background';
 import { getAsset, selectAccount } from '../../actions';
-import { Money, Asset } from '@waves/data-entities';
+import { Money, Asset } from '@turtlenetwork/data-entities';
 import { PAGES } from '../../pageConfig';
-import { Seed } from '@waves/signature-generator';
+import { Seed } from '@turtlenetwork/signature-generator';
 
 @translate('extension')
 class AccountInfoComponent extends React.Component {
@@ -200,10 +200,10 @@ class AccountInfoComponent extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         const { selectedAccount, assets, balances } = props;
-        const asset = assets['WAVES'];
+        const asset = assets['TN'];
 
         if (!asset) {
-            props.getAsset('WAVES');
+            props.getAsset('TN');
             return { balance: null };
         }
         const assetInstance = new Asset(asset);

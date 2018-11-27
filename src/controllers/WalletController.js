@@ -1,6 +1,6 @@
 import ObservableStore from 'obs-store';
-import * as SA from '@waves/signature-adapter';
-import *  as SG from '@waves/signature-generator'
+import * as SA from '@turtlenetwork/signature-adapter';
+import *  as SG from '@turtlenetwork/signature-generator'
 import {encrypt, decrypt} from '../lib/encryprtor';
 import {Wallet} from "../lib/wallet";
 

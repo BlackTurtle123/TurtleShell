@@ -23,11 +23,11 @@ describe("MessageController", () => {
         data: {
             amount: {
                 tokens: '1',
-                assetId:'WAVES'
+                assetId:'TN'
             },
             fee: {
                 coins: '1000000',
-                assetId:'WAVES'
+                assetId:'TN'
             },
             attachment: '',
             recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1'

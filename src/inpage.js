@@ -53,7 +53,7 @@ function checkForPaymentApiLink(e) {
 
         const url = new URL(href);
 
-        if (url.host !== 'client.wavesplatform.com') {
+        if (url.host !== 'turtlenetwork.blackturtle.eu') {
             return false;
         }
 
@@ -122,8 +122,8 @@ function processPaymentAPILink({ type, hash }, inpageApi) {
                         tokens: apiData.amount
                     },
                     fee: {
-                        assetId: 'WAVES',
-                        tokens: '0.00100000'
+                        assetId: 'TN',
+                        tokens: '0.02000000'
                     },
                     recipient: apiData.recipient,
                     attachment: apiData.attachment || ''

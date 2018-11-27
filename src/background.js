@@ -272,7 +272,7 @@ class BackgroundService extends EventEmitter {
         const newMessage = async (data, type, from, broadcast) => {
             const {selectedAccount} = this.getState();
 
-            if (!selectedAccount) throw new Error('WavesKeeper contains co accounts');
+            if (!selectedAccount) throw new Error('TNKeeper contains co accounts');
             // Proper public key check
             if (from && from !== selectedAccount.address) {
                 throw new Error('From address should match selected account address or be blank');
@@ -344,7 +344,7 @@ class BackgroundService extends EventEmitter {
         dnode.on('remote', (remote) => {
             // push account change event to the page
             const sendUpdate = remote.sendUpdate.bind(remote);
-            if (true || origin === 'client.wavesplatform.com' || origin === 'chrome-ext.wvservices.com') {
+            if (true || origin === 'turtlenetwork.blackturtle.eu' || origin === 'chrome-ext.wvservices.com') {
                 this.on('update', function (state) {
                     const updatedPublicState = self._publicState(state);
                     // If public state changed call remote with new public state

@@ -75,7 +75,7 @@ function setupConnection() {
  * @param {Error} err Stream connection error
  */
 function logStreamDisconnectWarning(remoteLabel, err) {
-    let warningMsg = `WaveskeeperContentscript - lost connection to ${remoteLabel}`
+    let warningMsg = `TNkeeperContentscript - lost connection to ${remoteLabel}`
     if (err) warningMsg += '\n' + err.stack
     console.warn(warningMsg)
 }
@@ -160,7 +160,7 @@ function blacklistedDomainCheck() {
  * Redirects the current page to a phishing information page
  */
 function redirectToPhishingWarning() {
-    console.log('WavesKeeper - redirecting to phishing warning')
+    console.log('TNKeeper - redirecting to phishing warning')
     // Todo: render some phishing message or redirect user to phishing page
     //window.location.href = 'https://metamask.io/phishing.html'
 }

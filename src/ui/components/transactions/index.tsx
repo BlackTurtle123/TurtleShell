@@ -1,4 +1,4 @@
-import { SIGN_TYPE } from '@waves/signature-adapter';
+import { SIGN_TYPE } from '@turtlenetwork/signature-adapter';
 import { Transfer } from './Transfer';
 import { TransferFinal } from './TransferFinal';
 import { MassTransfer } from './MassTransfer';
