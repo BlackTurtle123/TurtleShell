@@ -5,8 +5,9 @@ import { setUiStateAndSetTab, newAccountSelect, setUiState } from '../../actions
 import { translate, Trans } from 'react-i18next';
 import { Copy, Button, Modal } from '../ui';
 import { PAGES } from '../../pageConfig';
+import { I18N_NAME_SPACE } from '../../appConfig';
 
-@translate('extension')
+@translate(I18N_NAME_SPACE)
 class BackUpSeedComponent extends React.Component {
     readonly state = {} as any;
     readonly props;
@@ -22,7 +23,7 @@ class BackUpSeedComponent extends React.Component {
             </h2>
 
             <div className='flex margin-main'>
-                <div className='basic500'>
+                <div className='basic500 tag1'>
                     <Trans i18nKey='backupSeed.backupCarefully'>
                         Please carefully write down these 15 words or copy them
                     </Trans>
@@ -32,7 +33,7 @@ class BackUpSeedComponent extends React.Component {
                 </Copy>
             </div>
 
-            <div className={`plate center ${styles.plateMargin}`}>
+            <div className={`plate center body3 cant-select ${styles.plateMargin}`}>
                 {this.props.account.seed}
             </div>
 

@@ -6,8 +6,9 @@ import {BigLogo} from '../head';
 import {Button, Input, Error} from '../ui';
 import {login} from '../../actions';
 import { PAGES } from '../../pageConfig';
+import { I18N_NAME_SPACE } from '../../appConfig';
 
-@translate('extension')
+@translate(I18N_NAME_SPACE)
 class LoginComponent extends React.Component {
 
     inputEl: Input;
@@ -42,6 +43,7 @@ class LoginComponent extends React.Component {
                            ref={this.getRef}
                            onChange={this.onChange}
                            error={this.state.passwordError}
+                           autocomplete="off"
                     />
                     <Error show={this.state.passwordError}>
                         <Trans i18nKey="login.passwordError">Wrong password</Trans>

@@ -4,7 +4,7 @@ import { createNew } from '../../actions';
 import * as React from 'react'
 import { Input, Button, Error } from '../ui';
 import { translate, Trans } from 'react-i18next';
-import { CONFIG } from '../../appConfig';
+import { CONFIG, I18N_NAME_SPACE } from '../../appConfig';
 
 const MIN_LENGTH = CONFIG.PASSWORD_MIN_LENGTH;
 
@@ -14,7 +14,7 @@ const mapStateToProps = function (store: any) {
     };
 };
 
-@translate('extension')
+@translate(I18N_NAME_SPACE)
 class NewAccountComponent extends React.PureComponent {
     
     inputEl: Input;
@@ -63,7 +63,8 @@ class NewAccountComponent extends React.PureComponent {
                                ref={this.getRef}
                                onBlur={this.onFirstBlur}
                                onChange={this.onChangeFist}
-                               error={!!this.state.firstError}/>
+                               error={!!this.state.firstError}
+                               autocomplete="off"/>
                         
                         <Error show={this.state.firstError}>
                             <Trans i18nKey='newAccount.smallPass'>Password is small</Trans>
@@ -79,7 +80,8 @@ class NewAccountComponent extends React.PureComponent {
                                type="password"
                                onBlur={this.onSecondBlur}
                                onChange={this.onChangeSecond}
-                               error={!!this.state.secondError}/>
+                               error={!!this.state.secondError}
+                               autocomplete="off"/>
                         <Error show={this.state.secondError}>
                             <Trans i18nKey='newAccount.notMatch'>Passwords no match</Trans>
                         </Error>

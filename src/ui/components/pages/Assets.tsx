@@ -15,8 +15,9 @@ import { Modal } from '../ui';
 import * as CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import cn from 'classnames';
 import { Intro } from './Intro';
+import { I18N_NAME_SPACE } from '../../appConfig';
 
-@translate('extension')
+@translate(I18N_NAME_SPACE)
 class AssetsComponent extends React.Component {
     props;
     state = {} as any;
@@ -33,6 +34,7 @@ class AssetsComponent extends React.Component {
     };
     showQrHandler = (event) => {
         event.stopPropagation();
+        event.preventDefault();
         this.props.setTab(PAGES.QR_CODE_SELECTED);
     };
 

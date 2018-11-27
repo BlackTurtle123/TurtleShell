@@ -4,10 +4,11 @@ import {connect} from 'react-redux';
 import {translate, Trans} from 'react-i18next';
 import {Button, Error, Pills} from '../ui';
 import {user, setUiState} from '../../actions';
+import { I18N_NAME_SPACE } from '../../appConfig';
 
 const SHUFFLE_COUNT = 500;
 
-@translate('extension')
+@translate(I18N_NAME_SPACE)
 class ConfirmBackupComponent extends React.Component {
 
     props;
@@ -15,7 +16,7 @@ class ConfirmBackupComponent extends React.Component {
     onSelect = (list) => this._onSelect(list);
     onUnSelect = (list) => this._onUnSelect(list);
     onClear = () => this._onClear();
-    onSubmit = () => this._onSubmit();
+    onSubmit = (e) => this._onSubmit(e);
 
     render() {
         const {selectedList, list, complete, wrongSeed} = this.state;
@@ -28,12 +29,12 @@ class ConfirmBackupComponent extends React.Component {
             </h2>
 
             <Pills animated={true}
-                   className={`${styles.readSeed} plate`}
+                   className={`${styles.readSeed} plate body3`}
                    list={selectedList}
                    selected={false}
                    onSelect={this.onUnSelect}/>
 
-            <div className="center">
+            <div className="center body3">
                 {complete ? null : <Trans i18nKey='confirmBackup.selectWord'>
                     Please, tap each word in the correct order
                 </Trans>}
@@ -64,7 +65,8 @@ class ConfirmBackupComponent extends React.Component {
         </div>
     }
 
-    private _onSubmit() {
+    private _onSubmit(event) {
+        event.preventDefault();
         this.props.setUiState({
             account: null
         });

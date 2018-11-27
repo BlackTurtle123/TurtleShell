@@ -2,6 +2,7 @@ import ObservableStore from 'obs-store';
 import * as SA from '@turtlenetwork/signature-adapter';
 import *  as SG from '@turtlenetwork/signature-generator'
 import {encrypt, decrypt} from '../lib/encryprtor';
+import {Seed} from '@waves/signature-generator'
 import {Wallet} from "../lib/wallet";
 
 export class WalletController {
@@ -106,8 +107,14 @@ export class WalletController {
 
         const wallet = this.wallets.find(wallet => wallet.getAccount().address === address);
         if (!wallet) throw new Error(`Wallet not found for address: ${address}`);
-
         return wallet.getSecret();
+    }
+
+    exportSeed(address) {
+        const wallet = this._findWallet(address);
+        if (!wallet) throw new Error(`Wallet not found for address: ${address}`);
+        const seed = new Seed(wallet.user.seed);
+        return seed.encrypt(this.password, 5000);
     }
 
     /**

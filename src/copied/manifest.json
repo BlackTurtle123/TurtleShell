@@ -17,6 +17,7 @@
   },
   "icons": {
     "16": "images/icon_16.png",
+    "20": "images/icon_20.png",
     "128": "images/icon_128.png"
   },
   "applications": {
@@ -33,7 +34,9 @@
   },
   "browser_action": {
     "default_icon": {
-      "16": "images/icon_16.png"
+      "16": "images/icon_16.png",
+      "20": "images/icon_20.png",
+      "128": "images/icon_128.png"
     },
     "default_title": "TN Keeper",
     "default_popup": "popup.html"
@@ -57,7 +60,11 @@
     "unlimitedStorage",
     "clipboardWrite",
     "idle",
-    "activeTab"
+    "storage",
+    "activeTab",
+    "webRequest",
+    "notifications",
+    "*://*.*/"
   ],
   "web_accessible_resources": [
     "inpage.js"

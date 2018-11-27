@@ -7,14 +7,15 @@ import { newAccountSelect, clearSeedErrors } from '../../actions';
 import { Button } from '../ui/buttons';
 import { Input } from '../ui/input';
 import { PAGES } from '../../pageConfig';
+import { I18N_NAME_SPACE } from '../../appConfig';
 
-@translate('extension')
+@translate(I18N_NAME_SPACE)
 class ImportSeedComponent extends React.Component {
     props;
     state;
     inputEl: Input;
     getRef = input => this.inputEl = input;
-    onSubmit = () => this._onSubmit();
+    onSubmit = (e) => this._onSubmit(e);
     onChange = e => this._changeHandler(e);
     inputBlurHandler = () => this._showError(true);
     inputFocusHandler = () => this._showError(false);
@@ -71,7 +72,8 @@ class ImportSeedComponent extends React.Component {
         </div>
     }
 
-    _onSubmit() {
+    _onSubmit(event) {
+        event.preventDefault();
         this.props.clearSeedErrors();
         this.props.setTab(PAGES.ACCOUNT_NAME_SEED);
     }
@@ -85,11 +87,11 @@ class ImportSeedComponent extends React.Component {
     }
 
     _changeHandler(e) {
-        const phrase = (e.target.value || '').trim();
+        const phrase = e.target.value || '';
         let seed = { address: '', phrase: '' };
 
         if (phrase.length >= 24) {
-            seed = new Seed(phrase);
+            seed = new Seed(phrase.trim());
         }
 
         this.setState({ value: phrase });

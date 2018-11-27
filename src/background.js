@@ -23,7 +23,7 @@ import {setupDnode} from './lib/dnode-util';
 import {WindowManager} from './lib/WindowManger'
 
 
-const WAVESKEEPER_DEBUG = false;
+const WAVESKEEPER_DEBUG = process.env.NODE_ENV !== 'production';
 const IDLE_INTERVAL = 60;
 const isEdge = window.navigator.userAgent.indexOf("Edge") > -1
 
@@ -361,11 +361,16 @@ class BackgroundService extends EventEmitter {
         this.emit('update', this.getState())
     }
 
+    _getCurrentNtwork(account) {
+        return !account ? null : this.networkController.getNetworks().find((conf) => conf.code === account.networkCode);
+    }
+
     _publicState(state) {
         return {
             initialized: state.initialized,
             locked: state.locked,
             account: state.locked ? null : state.selectedAccount,
+            network: this._getCurrentNtwork(state.selectedAccount),
         }
     }
 }
