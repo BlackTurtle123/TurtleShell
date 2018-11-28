@@ -2,7 +2,7 @@ import ObservableStore from 'obs-store';
 import * as SA from '@turtlenetwork/signature-adapter';
 import *  as SG from '@turtlenetwork/signature-generator'
 import {encrypt, decrypt} from '../lib/encryprtor';
-import {Seed} from '@waves/signature-generator'
+import {Seed} from '@turtlenetwork/signature-generator'
 import {Wallet} from "../lib/wallet";
 
 export class WalletController {
