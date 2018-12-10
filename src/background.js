@@ -278,7 +278,7 @@ class BackgroundService extends EventEmitter {
         const newMessage = async (data, type, from, broadcast) => {
             const {selectedAccount} = this.getState();
 
-            if (!selectedAccount) throw new Error('TNKeeper contains co accounts');
+            if (!selectedAccount) throw new Error('TurtleShell contains co accounts');
             // Proper public key check
             if (from && from !== selectedAccount.address) {
                 throw new Error('From address should match selected account address or be blank');

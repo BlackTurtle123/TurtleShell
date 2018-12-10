@@ -94,7 +94,7 @@ class NewAccountComponent extends React.PureComponent {
                     <Trans i18nKey='newAccount.passinfo'>
                         The password you entered will be stored locally.
                         If you change device or lose your password,
-                        you will have to repeat the process of adding accounts to TN Keeper.
+                        you will have to repeat the process of adding accounts to TurtleShell.
                         TN does not store your passwords.
                     </Trans>
                 </div>

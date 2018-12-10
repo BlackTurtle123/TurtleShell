@@ -38,7 +38,7 @@
       "20": "images/icon_20.png",
       "128": "images/icon_128.png"
     },
-    "default_title": "TN Keeper",
+    "default_title": "TurtleShell",
     "default_popup": "popup.html"
   },
   "content_scripts": [

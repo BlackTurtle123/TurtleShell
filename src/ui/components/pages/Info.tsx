@@ -13,7 +13,7 @@ export class Info extends React.Component {
 
             <div className="margin-main basic500">
                 <Trans i18nKey='info.keepUp'>
-                    TN Keeper — is the safest way to interact with third-party web resources with TN-integrated functionality or DApps. Using TN Keeper, you can sign transactions and remain safe from malicious sites.
+                    TurtleShell — is the safest way to interact with third-party web resources with TN-integrated functionality or DApps. Using TurtleShell, you can sign transactions and remain safe from malicious sites.
                 </Trans>
             </div>
 

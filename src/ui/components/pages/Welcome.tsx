@@ -19,8 +19,8 @@ export class Welcome extends React.Component {
                 <Trans i18nKey='welcome.getStarted'>Get Started</Trans>
             </Button>
             <div className="basic500 body3">
-                <div><Trans i18nKey='welcome.info'>TN Keeper — is the safest way to interact with third-party web resources with TN-integrated functionality or DApps.</Trans></div>
-                <div><Trans i18nKey='welcome.info2'>Using TN Keeper, you can sign transactions and remain safe from malicious sites.</Trans></div>
+                <div><Trans i18nKey='welcome.info'>TurtleShell — is the safest way to interact with third-party web resources with TN-integrated functionality or DApps.</Trans></div>
+                <div><Trans i18nKey='welcome.info2'>Using TurtleShell, you can sign transactions and remain safe from malicious sites.</Trans></div>
             </div>
         </div>
     }
