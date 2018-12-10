@@ -24,7 +24,7 @@ describe('AssetInfoController', () => {
     });
 
     it('Should return undefined on undefined asset id', async () => {
-        const info = await controller.assetInfo('WAVES1');
+        const info = await controller.assetInfo('TN1');
         //console.log(info)
         expect(info).to.be.undefined
     });

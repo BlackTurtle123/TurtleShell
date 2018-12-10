@@ -121,7 +121,7 @@ describe('WalletController', () => {
 
         // todo: request assset props from service by asset id
         const money = new Money(100000, {
-            id: 'WAVES',
+            id: 'TN',
             name: 'Default Name',
             precision: 8,
             description: 'Default description',
@@ -134,8 +134,8 @@ describe('WalletController', () => {
         const tx = {
             type: 4,
             data: {
-                assetId: 'WAVES',
-                feeAssetId: 'WAVES',
+                assetId: 'TN',
+                feeAssetId: 'TN',
                 amount: money,
                 fee: money,
                 attachment: '',

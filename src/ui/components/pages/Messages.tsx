@@ -101,7 +101,7 @@ class MessagesComponent extends React.Component {
         const isExistMsg = activeMessage && state.activeMessage && activeMessage.id === state.activeMessage.id;
 
         if (isExistMsg) {
-            const assetInstance = new Asset(assets['WAVES']);
+            const assetInstance = new Asset(assets['TN']);
             const balance = Money.fromTokens(sourceBalance || 0, assetInstance);
             loading = false;
             return { ...state, balance, selectedAccount, assets, transactionStatus, loading};

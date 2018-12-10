@@ -26,11 +26,11 @@ const BalanceComponent = ({ balance, split, getAsset, addSign=null, showAsset, i
         case balance instanceof Money:
             balanceOut = balance as Money;
             break;
-        case !assets['WAVES']:
-             getAsset('WAVES');
+        case !assets['TN']:
+             getAsset('TN');
              return <Loading>{children}</Loading>;
         case (new BigNumber(balance as string)).isNaN() === false:
-             balanceOut = Money.fromTokens(balance as string, assets['WAVES']);
+             balanceOut = Money.fromTokens(balance as string, assets['TN']);
              break;
         default:
             return <div>N/A</div>
