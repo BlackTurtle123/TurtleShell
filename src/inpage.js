@@ -26,7 +26,7 @@ async function setupInpageApi() {
         })
     });
 
-    global.Waves = inpageApi;
+    global.TN = inpageApi;
     setupClickInterceptor(inpageApi);
 }
 
