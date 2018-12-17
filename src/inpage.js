@@ -26,7 +26,7 @@ async function setupInpageApi() {
         })
     });
 
-    global.TN = inpageApi;
+    global.TurtleShell = global.TN = inpageApi;
     setupClickInterceptor(inpageApi);
 }
 
