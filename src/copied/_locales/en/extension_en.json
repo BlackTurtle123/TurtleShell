@@ -1,5 +1,8 @@
 {
+	"Account address": "Account address",
+	"Deleting an account may lead to irretrievable loss of access to funds! Always make sure you have backed up your SEEDs.": "Deleting an account may lead to irretrievable loss of access to funds! Always make sure you have backed up your SEEDs.",
 	"If you forget your password, you must restore all your accounts from their SEEDs and set a new password.": "If you forget your password, you must restore all your accounts from their SEEDs and set a new password.",
+	"Wallet Seed": "Wallet Seed",
 	"accountInfo.address": "address",
 	"accountInfo.backUp": "backUp",
 	"accountInfo.cancel": "Cancel",
@@ -166,6 +169,7 @@
 	"sign.transactionConfirmedBurn": "You have approved a Burn transaction.",
 	"sign.transactionFiled": "Your transaction is filed!",
 	"sign.transactionSend": "Your have send",
+	"sign.transactionSendCreateOrder": "You have approved a Create Order transaction",
 	"sign.transactionSendData.": "You have created a Data transaction",
 	"sign.transactionSendTransfer": "You have sent",
 	"sign.understand": "I understand",

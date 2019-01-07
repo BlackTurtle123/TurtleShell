@@ -117,6 +117,7 @@ function processPaymentAPILink({ type, hash }, inpageApi) {
                 type: 4,
                 successPath: apiData.referrer,
                 data: {
+                    version: 1,
                     amount: {
                         assetId: assetId,
                         tokens: apiData.amount

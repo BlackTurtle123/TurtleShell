@@ -278,13 +278,14 @@ class BackgroundService extends EventEmitter {
         const newMessage = async (data, type, from, broadcast) => {
             const {selectedAccount} = this.getState();
 
-            if (!selectedAccount) throw new Error('TurtleShell contains co accounts');
+            if (!selectedAccount) throw new Error('TurtleShell contains no accounts');
             // Proper public key check
             if (from && from !== selectedAccount.address) {
                 throw new Error('From address should match selected account address or be blank');
             }
 
             const messageId = await this.messageController.newMessage(data, type, origin, selectedAccount, broadcast);
+            console.log(broadcast);
             this.emit('Show notification');
             return await this.messageController.getMessageResult(messageId)
         };
@@ -306,6 +307,7 @@ class BackgroundService extends EventEmitter {
                 return await newMessage(data, 'transaction', from, false)
             },
             signAndPublishTransaction: async (data, from) => {
+                console.log(data);
                 return await newMessage(data, 'transaction', from, true)
             },
             auth: async (data, from) => {
