@@ -3,7 +3,7 @@ export const CONFIG = {
     NAME_MIN_LENGTH: 1,
     PASSWORD_MIN_LENGTH: 8,
     MESSAGES_CONFIRM_TIMEOUT: 3000,
-    BASE_URL: 'https://client.wavesplatform.com',
+    BASE_URL: 'https://turtlenetwork.blackurtle.eu',
 };
 
 export const I18N_NAME_SPACE = 'extension';
