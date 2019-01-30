@@ -1,5 +1,5 @@
 import LocalMessageDuplexStream from 'post-message-stream';
-import { setupDnode, transformMethods, cbToPromise } from './lib/dnode-util';
+import {cbToPromise, setupDnode, transformMethods} from './lib/dnode-util';
 import log from "loglevel";
 import EventEmitter from 'events';
 
@@ -8,7 +8,7 @@ setupInpageApi().catch(e => log.error(e));
 async function setupInpageApi() {
     const connectionStream = new LocalMessageDuplexStream({
         name: 'page',
-        target: 'content',
+        target: 'TurtleContent',
     });
     
     const eventEmitter = new EventEmitter();

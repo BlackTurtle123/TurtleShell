@@ -1,7 +1,7 @@
 import * as i18n from 'i18next';
-import { reactI18nextModule } from 'react-i18next';
-import { default as Locize } from 'i18next-locize-backend';
-import { I18N_NAME_SPACE, I18N_API_KEY, I18N_PROJECT_ID } from './appConfig';
+import {reactI18nextModule} from 'react-i18next';
+import * as Locize from 'i18next-locize-backend';
+import {I18N_API_KEY, I18N_NAME_SPACE, I18N_PROJECT_ID} from './appConfig';
 
 const WAVESKEEPER_DEBUG = process.env.NODE_ENV !== 'production';
 

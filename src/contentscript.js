@@ -1,7 +1,6 @@
 import extension from 'extensionizer';
 import pump from 'pump';
 import LocalMessageDuplexStream from 'post-message-stream';
-import ObjectMultiplex from 'obj-multiplex';
 import PortStream from './lib/port-stream.js';
 
 if (shouldInject()) {
@@ -25,7 +24,7 @@ function injectBundle() {
 
 function setupConnection() {
     const pageStream = new LocalMessageDuplexStream({
-        name: 'content',
+        name: 'TurtleContent',
         target: 'page',
     });
 
