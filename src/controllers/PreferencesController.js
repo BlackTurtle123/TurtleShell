@@ -1,88 +1,85 @@
 import ObservableStore from 'obs-store';
 import log from 'loglevel'
 import EventEmitter from 'events';
-import {NETWORK_CONFIG} from '../constants'
 
-export class PreferencesController extends EventEmitter{
+export class PreferencesController extends EventEmitter {
     constructor(options = {}) {
         super();
 
         const defaults = {
             currentLocale: options.initLangCode || 'en',
+            idleOptions: { type: 'idle', interval: 0 },
             accounts: [],
             currentNetworkAccounts: [],
-            selectedAccount: undefined
+            selectedAccount: undefined,
         };
-
+        this.getNetworkConfig = options.getNetworkConfig;
         const initState = Object.assign({}, defaults, options.initState);
         this.store = new ObservableStore(initState);
 
         this.getNetwork = options.getNetwork
     }
 
-
     setCurrentLocale(key) {
-        this.store.updateState({currentLocale: key})
+        this.store.updateState({ currentLocale: key });
     }
 
-    // addAccount(account) {
-    //     const accounts = this.store.getState().accounts;
-    //     if (!this._getAccountByAddress(account.address)) {
-    //         accounts.push(Object.assign({name: `Account ${accounts.length + 1}`}, account));
-    //         this.store.updateState({accounts})
-    //     } else {
-    //         log.log(`Account with address key ${account.address} already exists`)
-    //     }
-    // }
+    setIdleOptions(options) {
+        this.store.updateState({ idleOptions: options });
+    }
 
     syncAccounts(fromKeyrings) {
         const oldAccounts = this.store.getState().accounts;
         const accounts = fromKeyrings.map((account, i) => {
             return Object.assign(
-                {name: `Account ${i + 1}`},
+                { name: `Account ${i + 1}` },
                 account,
-                oldAccounts.find(oldAcc => oldAcc.address === account.address),
+                oldAccounts.find(oldAcc => oldAcc.address === account.address && oldAcc.network === account.network),
             )
         });
-        this.store.updateState({accounts});
+        this.store.updateState({ accounts });
 
         this.syncCurrentNetworkAccounts();
     }
 
-    syncCurrentNetworkAccounts(){
+    syncCurrentNetworkAccounts() {
+        const network = this.getNetwork();
         const accounts = this.store.getState().accounts;
-        const currentNetworkAccounts = accounts.filter(account => account.networkCode === NETWORK_CONFIG[this.getNetwork()].code);
-        this.store.updateState({currentNetworkAccounts});
+        const currentNetworkAccounts = accounts.filter(account => account.network === network);
+        this.store.updateState({ currentNetworkAccounts });
 
         // Ensure we have selected account from current network
         let selectedAccount = this.store.getState().selectedAccount;
-        if (!selectedAccount || !currentNetworkAccounts.find(account => account.address === selectedAccount.address)){
+        if (!selectedAccount ||
+            !currentNetworkAccounts.find(account => account.address === selectedAccount.address &&
+                account.network === selectedAccount.network
+            )) {
             const addressToSelect = currentNetworkAccounts.length > 0 ? currentNetworkAccounts[0].address : undefined;
-            this.selectAccount(addressToSelect)
+            this.selectAccount(addressToSelect, network)
         }
     }
 
-    addLabel(address, label) {
+    addLabel(address, label, network) {
         const accounts = this.store.getState().accounts;
-        const index = accounts.findIndex(current => current.address === address);
-        if (index === -1){
-            throw new Error(`Account with address "${address}" not found`)
+        const index = accounts.findIndex(current => current.address === address && current.network === network);
+        if (index === -1) {
+            throw new Error(`Account with address "${address}" in ${network} not found`)
         }
         accounts[index].name = label;
-        this.store.updateState({accounts})
+        this.store.updateState({ accounts })
     }
 
-    selectAccount(address) {
+    selectAccount(address, network) {
         let selectedAccount = this.store.getState().selectedAccount;
-        if (!selectedAccount || selectedAccount.address !== address) {
-            selectedAccount = this._getAccountByAddress(address);
-            this.store.updateState({selectedAccount});
+        if (!selectedAccount || selectedAccount.address !== address || selectedAccount.network !== network) {
+            selectedAccount = this._getAccountByAddress(address, network);
+            this.store.updateState({ selectedAccount });
             this.emit('accountChange');
         }
     }
 
-    _getAccountByAddress(address) {
+    _getAccountByAddress(address, network) {
         const accounts = this.store.getState().accounts;
-        return accounts.find(account => account.address === address)
+        return accounts.find(account => account.address === address && account.network === network);
     }
 }

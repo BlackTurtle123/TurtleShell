@@ -49,6 +49,7 @@ class AssetsComponent extends React.Component {
         const activeProps = {
             account: this.props.activeAccount,
             balance: this.state.balances[activeAddress],
+            leaseBalance: this.state.lease[activeAddress],
             onSelect: this.onSelectHandler,
             onShowQr: this.showQrHandler,
             active: true,
@@ -56,13 +57,15 @@ class AssetsComponent extends React.Component {
         
         const wallets = this.getFilteredAndSortedAccounts(activeAddress)
             .map((account) => (
+                account ?
                 <WalletItem
                     account={account}
                     active={false}
                     balance={this.state.balances[account.address]}
+                    leaseBalance={this.state.lease[account.address]}
                     key={`${account.address}_${account.name}_${account.type}`}
                     onSelect={this.onSelectHandler}
-                    onActive={this.onSetActiveHandler}/>)
+                    onActive={this.onSetActiveHandler}/> : null)
             );
 
         const scrollClassName = cn('scroll-container', {
@@ -70,6 +73,9 @@ class AssetsComponent extends React.Component {
         });
 
         return <div className={styles.assets}>
+            <div className={styles.activeAccountTitle}>
+                <Trans i18nKey='assets.activeAccount'>Active account</Trans>
+            </div>
             <CSSTransitionGroup className={styles.activeAnimationSpan}
                                 transitionName="animate_active_wallet"
                                 transitionEnterTimeout={600}
@@ -80,7 +86,6 @@ class AssetsComponent extends React.Component {
             </CSSTransitionGroup>
             <div className={`${scrollClassName} wallets-list`} onScroll={this.scrollHandler}>
                 <div>
-
                     {wallets.length ? <div className={`${styles.otherWalletsTitle} basic500 body3`}>
                         <Trans i18nKey='assets.inStorage'>Other accounts</Trans>
                     </div> : null}
@@ -95,6 +100,7 @@ class AssetsComponent extends React.Component {
                         </CSSTransitionGroup>
                     </div>
                 </div>
+
                 <div className={`body1 basic500 border-dashed ${styles.addAccount}`}
                      onClick={this.addWalletHandler}>
                     <Trans i18nKey='assets.addAccount'>Add an account</Trans>
@@ -121,6 +127,10 @@ class AssetsComponent extends React.Component {
                 </div>
             </Modal>
             
+            {/*<div className={styles.notifier}>*/}
+                {/*<i className={styles.counter}>5</i>*/}
+            {/*</div>*/}
+            
         </div>
     }
 
@@ -139,7 +149,7 @@ class AssetsComponent extends React.Component {
             return data;
         }).filter(Boolean);
         delete hash[activeAddress];
-        this._sorted = [...this._sorted, ...Object.values(hash)];
+        this._sorted = [...this._sorted, ...Object.values(hash).filter(Boolean)];
         
         if (this._currentActive === activeAddress) {
             return this._sorted;
@@ -189,17 +199,25 @@ class AssetsComponent extends React.Component {
 
         if (!asset) {
             props.getAsset('TN');
-            return { balances: {}, loading: false };
+            return { balances: {}, lease: {}, loading: false };
         }
         
         const assetInstance = new Asset(asset);
         const balancesMoney = {};
-        Object.entries(props.balances)
-            .forEach(([key, balance = 0]) =>  balancesMoney[key] = new Money(balance as number, assetInstance));
+        const leaseMoney = {};
+        
+        Object.entries<{ available: string, leasedOut: string }>(props.balances)
+            .forEach(([key, balance]) =>  {
+                if (!balance) {
+                    return null;
+                }
+            
+                balancesMoney[key] = new Money(balance.available, assetInstance);
+                leaseMoney[key] = new Money(balance.leasedOut, assetInstance);
+            });
 
         const { deleted: deletedNotify } = props.notifications;
-        
-        return { balances: balancesMoney, loading: false, deletedNotify };
+        return { balances: balancesMoney, lease: leaseMoney, loading: false, deletedNotify };
     }
 }
 

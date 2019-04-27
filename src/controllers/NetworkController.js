@@ -1,81 +1,108 @@
 import ObservableStore from 'obs-store';
-import { NETWORKS, NETWORK_CONFIG } from '../constants';
 
 const WAVESKEEPER_DEBUG = process.env.NODE_ENV !== 'production';
 
 
 export class NetworkController {
-    constructor(options = {}){
+    constructor(options = {}) {
         const defaults = {
             currentNetwork: WAVESKEEPER_DEBUG ? 'testnet' : 'mainnet',
             customNodes: {
                 mainnet: null,
-                testnet: null
+                testnet: null,
+                custom: null,
             },
             customMatchers: {
                 mainnet: null,
-                testnet: null
+                testnet: null,
+                custom: null,
+            },
+            customCodes: {
+                mainnet: null,
+                testnet: null,
+                custom: null,
             }
         };
-        this.store =  new ObservableStore(Object.assign({}, defaults, options.initState))
+
+        const { initState, getNetworkConfig, getNetworks } = options;
+        this.store = new ObservableStore({ ...defaults, ...initState });
+        this.configApi = { getNetworkConfig, getNetworks };
     }
 
     getNetworks() {
-        return NETWORKS.map(name => ({ ...NETWORK_CONFIG[name], name }));
+        const networks = this.configApi.getNetworkConfig();
+        return this.configApi.getNetworks().map(name => ({ ...networks[name], name }));
     }
 
-    setNetwork(network){
-        this.store.updateState({currentNetwork:network});
+    setNetwork(network) {
+        this.store.updateState({ currentNetwork: network });
     }
 
-    getNetwork(){
+    getNetwork() {
         return this.store.getState().currentNetwork
     }
 
-    setCustomNode(url, network = 'mainnet'){
+    setCustomNode(url, network = 'mainnet') {
         let { customNodes } = this.store.getState();
         customNodes[network] = url;
-        this.store.updateState({customNodes});
+        this.store.updateState({ customNodes });
     }
 
-    setCustomMatcher(url, network = 'mainnet'){
+    setCustomMatcher(url, network = 'mainnet') {
         let { customMatchers } = this.store.getState();
         customMatchers[network] = url;
-        this.store.updateState({customMatchers});
+        this.store.updateState({ customMatchers });
     }
 
-    getCustomNodes(){
+    setCustomCode(code, network = 'mainnet') {
+        let { customCodes } = this.store.getState();
+        customCodes[network] = code;
+        this.store.updateState({ customCodes });
+    }
+
+
+    getCustomCodes() {
+        return this.store.getState().customCodes;
+    }
+
+    getNetworkCode(network) {
+        const networks = this.configApi.getNetworkConfig();
+        network = network || this.getNetwork();
+        return this.getCustomCodes()[network] || networks[network].code;
+    }
+
+    getCustomNodes() {
         return this.store.getState().customNodes;
     }
 
-    getNode(){
-        const network = this.getNetwork();
-        return this.getCustomNodes()[network] || NETWORK_CONFIG[network].server;
+    getNode(network) {
+        const networks = this.configApi.getNetworkConfig();
+        network = network || this.getNetwork();
+        return this.getCustomNodes()[network] || networks[network].server;
     }
 
-    getCustomMatchers(){
+    getCustomMatchers() {
         return this.store.getState().customMatchers;
     }
 
-    getMather(){
-        const network = this.getNetwork();
-        return this.getCustomMatchers()[network] || NETWORK_CONFIG[network].matcher;
+    getMather(network) {
+        network = network || this.getNetwork();
+        return this.getCustomMatchers()[network] || this.configApi.getNetworkConfig()[network].matcher;
     }
 
-    async getMatcherPublicKey(){
+    async getMatcherPublicKey() {
         const keyMap = {};
-        const url =  new URL('/matcher', this.getMather()).toString();
-        if (keyMap[url] == null){
+        const url = new URL('/matcher', this.getMather()).toString();
+        if (keyMap[url] == null) {
             const resp = await fetch(url);
 
             keyMap[url] = await resp.text()
         }
-        console.log(keyMap[url]);
         return keyMap[url];
     }
 
-    async broadcast(message){
-        const {data,  type} = message;
+    async broadcast(message) {
+        const { result, type } = message;
         let API_BASE, url;
 
         switch (type) {
@@ -85,15 +112,15 @@ export class NetworkController {
                 break;
             case 'order':
                 API_BASE = this.getMather();
-                if (!API_BASE){
+                if (!API_BASE) {
                     throw new Error('Matcher not set. Cannot send order')
                 }
                 url = new URL('matcher/orderbook', API_BASE).toString();
                 break;
             case 'cancelOrder':
-                const {amountId, priceId} = message;
+                const { amountId, priceId } = message;
                 API_BASE = this.getMather();
-                if (!API_BASE){
+                if (!API_BASE) {
                     throw new Error('Matcher not set. Cannot send order')
                 }
                 url = new URL(`matcher/orderbook/${amountId}/${priceId}/cancel`, API_BASE).toString();
@@ -102,12 +129,12 @@ export class NetworkController {
                 throw new Error(`Unknown message type: ${type}`)
         }
 
-        const resp =  await fetch(url, {
+        const resp = await fetch(url, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },
-            body: data
+            body: result
         });
 
         switch (resp.status) {

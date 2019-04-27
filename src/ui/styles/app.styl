@@ -88,7 +88,7 @@ ul
 // typography
 :global .title1
   font-size: 24px;
-  font-weight: 400;
+  font-weight: normal;
 
 :global .headline1
   font-size: 18px;
@@ -96,6 +96,10 @@ ul
 :global .headline2
   font-size: 18px;
   font-family: Roboto-Medium, Arial, Tahoma;
+
+:global .headline2Bold
+  font-size: 18px;
+  font-family: Roboto-Bold, Arial, Tahoma;
 
 :global .headline3
   font-size: 16px;
@@ -127,6 +131,9 @@ ul
   &:hover
     text-decoration: none;
 
+:global .capitalize
+  text-transform: capitalize;
+
 // layout
 $layout-4 = 4px;
 $layout-10 = 10px;
@@ -140,17 +147,20 @@ $layout-44 = 44px;
 :global .centered
   margin: 0 auto;
 
+:global .margin-min
+  margin-bottom: $layout-4;
+
 :global .margin-main
   margin-bottom: $layout-14;
-
-:global .margin-main-min
-  margin-bottom: $layout-4;
 
 :global .margin-main-big
   margin-bottom: $layout-24;
 
 :global .margin-main-large
   margin-bottom: $layout-44;
+
+:global .margin-min-top
+  margin-top: $layout-4;
 
 :global .margin-main-top
   margin-top: $layout-14;
@@ -206,6 +216,10 @@ $layout-44 = 44px;
   word-break: break-all;
 }
 
+:global .underline {
+  text-decoration: underline;
+}
+
 // misc
 :global .separator
   height: 1px;
@@ -240,6 +254,11 @@ $layout-44 = 44px;
   justify-content: center;
   font-size: 12px;
 
+:global .origin-ellipsis
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 // blocks
 
 :global .plate
@@ -249,13 +268,17 @@ $layout-44 = 44px;
   border-radius: 2px;
 
   &-with-controls
-    max-height: 108px;
+    max-height: 114px;
     display: flex;
     flex-direction: column;
 
-    div:first-child
-      max-height: 100px;
-      overflow: auto;
+    &-short
+      max-height: 76px;
+
+    & > div:first-child
+      max-height: 110px;
+      overflow-y: auto;
+      overflow-x: hidden;
       padding-right: 14px;
       margin-right: -14px;
 
@@ -292,9 +315,12 @@ $layout-44 = 44px;
         &:hover
           border: 0 none;
 
-
         &:last-child
           margin-right: 0;
+
+:global .transactionContent
+  height: calc(100% - 160px);
+  padding-bottom: 14px;
 
 :global .info-block //with icon
   display: flex;
@@ -313,6 +339,7 @@ $layout-44 = 44px;
     flex-grow: 1;
 
 // modals, errors, notifications
+
 :global .tooltip
   background: $black;
   color: $white;
@@ -330,7 +357,7 @@ $layout-44 = 44px;
     height: 10px;
     content: '';
     transform: rotate(45deg);
-    right: 10px;
+    right: 7px;
     bottom: -2px;
     position: absolute;
 
@@ -339,7 +366,7 @@ $layout-44 = 44px;
   width: 100%;
   display: block;
   top: 0;
-  z-index: 2;
+  z-index: 1000;
 
 :global .modal
   position: fixed;
@@ -347,6 +374,15 @@ $layout-44 = 44px;
   height: 100%;
   top: 0;
   left: 0;
+
+:global .tooltip
+  display: none;
+  opacity: 0;
+  z-index: 10;
+
+:global .showTooltip:not(.active-account-icon):hover + .tooltip
+  display: block;
+  opacity: 1;
 
 :global .notification
   display: block;

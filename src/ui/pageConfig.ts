@@ -23,7 +23,10 @@ import {
     Messages,
     ForgotPassword,
     SelectTxAccount,
-    PairingAccountQr
+    PairingAccountQr,
+    PermissionsSettings,
+    MessageList,
+    SettingsGeneral,
 } from './components/pages';
 
 import { ImportSeed } from './components/pages/ImportSeedWalet';
@@ -53,12 +56,15 @@ export const PAGES = {
     QR_CODE_SELECTED: 'qr_code_selected_account',
     INTRO: 'intro',
     NETWORK_SETTINGS: 'networks_select',
+    GENERAL_SETTINGS: 'general_settings',
     LANGS_SETTINGS: 'langs_settings',
     LANGS_SETTINGS_INTRO: 'langs_settings_intro',
     CHANGE_PASSWORD: 'change_password_settings',
     DELETE_ACCOUNT: 'delete_account',
     PAIRING: 'pairing',
+    PERMISSIONS: 'origin_permisiions',
     MESSAGES: 'messages',
+    MESSAGES_LIST: 'messages_list',
     FORGOT: 'forgot_password',
     CHANGE_TX_ACCOUNT: 'change_tx_account',
     ROOT: '',
@@ -276,7 +282,7 @@ export const PAGES_CONF = {
             hasLogo: true,
             hasSettings: false,
             back: true,
-            deleteAccount: true,
+            deleteAccount: false,
         }
     },
     [PAGES.DELETE_ACTIVE_ACCOUNT]: {
@@ -323,8 +329,30 @@ export const PAGES_CONF = {
             back: null,
         }
     },
+    [PAGES.GENERAL_SETTINGS]: {
+        component: SettingsGeneral,
+        bottom: {
+            hide: true,
+        },
+        menu: {
+            hasLogo: true,
+            hasSettings: false,
+            back: true,
+        },
+    },
     [PAGES.NETWORK_SETTINGS]: {
         component: NetworksSettings,
+        bottom: {
+            hide: true,
+        },
+        menu: {
+            hasLogo: true,
+            hasSettings: false,
+            back: true,
+        }
+    },
+    [PAGES.PERMISSIONS]: {
+        component: PermissionsSettings,
         bottom: {
             hide: true,
         },
@@ -399,6 +427,17 @@ export const PAGES_CONF = {
             hide: true,
         },
         menu: {
+            hasLogo: true,
+            hasSettings: false,
+            back: false,
+        }
+    },
+    [PAGES.MESSAGES_LIST]: {
+        component: MessageList,
+        bottom: {
+            hide: true,
+        },
+        menu: {
             hasLogo: false,
             hasSettings: false,
             back: false,
@@ -411,7 +450,7 @@ export const PAGES_CONF = {
         },
         menu: {
             hasLogo: false,
-            hasSettings: false,
+            hasSettings: true,
             back: false,
         }
     }

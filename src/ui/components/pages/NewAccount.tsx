@@ -37,13 +37,14 @@ class NewAccountComponent extends React.PureComponent {
     onChangeSecond = e => this._onChangeInputs(this.state.firstValue, e.target.value);
     onSubmit = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (!this.state.passwordError && this.state.firstValue) {
             this.props.createNew(this.state.firstValue);
         }
     };
     
     componentDidMount() {
-        this.inputEl.focus();
+        //this.inputEl.focus();
     }
     
     render() {
@@ -52,6 +53,7 @@ class NewAccountComponent extends React.PureComponent {
                 <h2 className={`title1 margin3 left`}>
                     <Trans i18nKey='newAccount.protect'>Protect Your Account</Trans>
                 </h2>
+
                 <div>
                     <div className='margin1 relative'>
                         <div className={`basic500 tag1 left input-title`}>
@@ -64,6 +66,7 @@ class NewAccountComponent extends React.PureComponent {
                                onBlur={this.onFirstBlur}
                                onChange={this.onChangeFist}
                                error={!!this.state.firstError}
+                               autoFocus={true}
                                autoComplete="off"/>
                         
                         <Error show={this.state.firstError}>

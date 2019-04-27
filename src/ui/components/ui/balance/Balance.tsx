@@ -23,14 +23,14 @@ const BalanceComponent = ({ balance, split, getAsset, addSign=null, showAsset, i
     switch (true) {
         case !balance:
             return <Loading>{children}</Loading>;
-        case balance instanceof Money:
+        case balance instanceof Money && !balance.getTokens().isNaN():
             balanceOut = balance as Money;
             break;
-        case !assets['WAVES']:
-             getAsset('WAVES');
+        case !assets['TN']:
+             getAsset('TN');
              return <Loading>{children}</Loading>;
         case (new BigNumber(balance as string)).isNaN() === false:
-             balanceOut = Money.fromTokens(balance as string, assets['WAVES']);
+             balanceOut = Money.fromTokens(balance as string, assets['TN']);
              break;
         default:
             return <div>N/A</div>
@@ -47,8 +47,8 @@ const BalanceComponent = ({ balance, split, getAsset, addSign=null, showAsset, i
 
     return <div {...props}>
         {addSign ? <span>{addSign}</span> : null}
-        <span className="font600">{tokens[0]}</span>{ tokens[1] ? <span>{SEPARATOR}{tokens[1]}</span> : null }
-        <span className={styles.assetNameMargin}>{assetName}</span>
+        <span className="font600">{tokens[0]}</span>{ tokens[1] ? <span className="font400">{SEPARATOR}{tokens[1]}</span> : null }
+        <span className={`${styles.assetNameMargin} font400`}>{assetName}</span>
         {children}
         </div>;
 };

@@ -2,61 +2,19 @@
 
 .bottom {
   position: absolute;
-  bottom: 14px;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   white-space: nowrap;
   width: 100%;
   padding: 0 14px;
   font-size: 12px;
-
-  &.hidden {
-    display: none;
-  }
-
-  .network {
-    background: url(../../assets/img/network-14-basic-500.svg) left center no-repeat;
-    padding-left: 22px;
-    flex-grow: 0;
-    cursor: pointer;
-
-    span {
-      border-bottom: 1px dotted $basic500;
-    }
-  }
+  z-index: 10;
+  box-shadow: 0 -1px 4px 0 #00000019;
+  height: 34px;
+  background: $basic50;
 }
 
-.selectNetworks
-  position: absolute;
-  bottom: -3px;
-  background-color: white;
-  padding: 2px 8px;
-  box-shadow: 0 2px 6px 0 #9ba6b266;
-  border-radius: 5px;
-  z-index: 10;
-  width: 100px;
-  transform: translate3d(0,0,0);
-
-  .network
-    padding: 6px 5px 6px 20px;
-    width: 100%;
-    font-weight: 400;
-    text-transform: capitalize;
-
-    &:not(:first-child)
-      border-top: 1px solid $accent50;
-
-    span
-      border-bottom: 0 none;
-
-  .selectedNet
-    cursor: default;
-    background: url(../../assets/img/network-14-black.svg) left center no-repeat;
-    
-    span
-      color: $black;
-
-.disabledNet
-  opacity: 0.5;
-
-
+.hidden
+  display: none;

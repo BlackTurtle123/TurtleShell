@@ -25,9 +25,9 @@ export class Info extends React.Component {
                 </div>
                 <ul>
                     <li className={styles.github}><a target="_blank" href="https://github.com/BlackTurtle123/"></a></li>
-                    <li className={styles.telegram}><a target="_blank" href="https://telegram.me/BlackTurtle"></a></li>
-                    <li className={styles.twitter}><a target="_blank" href="https://twitter.com/__Black_Turtle_"></a></li>
-                    <li className={styles.facebook}><a target="_blank" href="https://www.facebook.com/BlackTurtle.eu"></a></li>
+                    <li className={styles.telegram}><a target="_blank" href="https://telegram.me/TurtleNetwork"></a></li>
+                    <li className={styles.twitter}><a target="_blank" href="https://twitter.com/TurtleNetworkTN"></a></li>
+                    <li className={styles.facebook}><a target="_blank" href="https://www.facebook.com/TurtleNetworkTN"></a></li>
                 </ul>
             </div>
 

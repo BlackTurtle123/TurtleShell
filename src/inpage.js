@@ -5,15 +5,31 @@ import EventEmitter from 'events';
 
 setupInpageApi().catch(e => log.error(e));
 
+
 async function setupInpageApi() {
+
+    const createDeffer = () => {
+        const def = {};
+        def.propmise = new Promise((res, rej) => {
+            def.resolve = res;
+            def.reject = rej;
+        });
+
+        return def;
+    };
+
+    const def = createDeffer();
+    const waves = { initialPromise: def.propmise };
+    global.WavesKeeper = global.Waves = waves;
+
     const connectionStream = new LocalMessageDuplexStream({
-        name: 'page',
-        target: 'content',
+        name: 'waves_keeper_page',
+        target: 'waves_keeper_content',
     });
-    
+
     const eventEmitter = new EventEmitter();
     const emitterApi = {
-        sendUpdate: async state => eventEmitter.emit('update', state)
+        sendUpdate: async state => eventEmitter.emit('update', state),
     };
     const dnode = setupDnode(connectionStream, emitterApi, 'inpageApi');
 
@@ -26,27 +42,33 @@ async function setupInpageApi() {
         })
     });
 
-    global.Waves = inpageApi;
     setupClickInterceptor(inpageApi);
+
+    Object.assign(waves, inpageApi);
+    def.resolve(waves);
+
 }
 
 function setupClickInterceptor(inpageApi){
     document.addEventListener("click", (e)=> {
         const paymentApiResult = checkForPaymentApiLink(e);
-        if (paymentApiResult && processPaymentAPILink(paymentApiResult, inpageApi)) {
-            e.preventDefault();
-            e.stopPropagation();
+        try {
+            if (paymentApiResult && processPaymentAPILink(paymentApiResult, inpageApi)) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        } catch (e) {
+
         }
     })
 }
-
 
 function checkForPaymentApiLink(e) {
     let node = e.target;
 
     const check = (node) => {
         const href = node.href;
-        
+
         if (!node.href) {
             return false;
         }
@@ -101,9 +123,9 @@ function processPaymentAPILink({ type, hash }, inpageApi) {
             inpageApi.auth({
                 name: apiData.n,
                 data: apiData.d,
-                icon: apiData.i,
-                referrer: apiData.r,
-                successPath: new URL(apiData.s || '', apiData.r).href,
+                icon: apiData.i || '',
+                referrer: apiData.r || `${location.origin}`,
+                successPath: apiData.s || '/',
             });
             break;
         case 'send':

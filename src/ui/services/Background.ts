@@ -5,8 +5,11 @@ class Background {
     background: any;
     initPromise: Promise<void>;
     onUpdateCb: Array<(state) => void> = [];
+    updatedByUser = false;
     _defer;
     _assetsStore;
+    _lastUpdateIdle = 0;
+    _tmr;
     
     constructor() {
         this._assetsStore = {};
@@ -35,7 +38,38 @@ class Background {
         this.background = background;
         this._defer.resolve();
     }
-
+    
+    async updateIdle() {
+        this.updatedByUser = true;
+        this._updateIdle();
+    }
+    
+    async setIdleOptions(options: { type: string }) {
+        await this.initPromise;
+        return this.background.setIdleOptions(options);
+    }
+    
+    async allowOrigin(origin: string) {
+        await this.initPromise;
+        return this.background.allowOrigin(origin);
+    }
+    
+    async disableOrigin(origin: string) {
+        await this.initPromise;
+        return this.background.disableOrigin(origin);
+    }
+    
+    async deleteOrigin(origin: string) {
+        await this.initPromise;
+        return this.background.deleteOrigin(origin);
+    }
+    
+    async setAutoSign(origin: string, options: { interval: number, totalAmount: number}) {
+        await this.initPromise;
+        return this.background.setAutoSign(origin, options);
+    }
+    
+    
     async getState() {
         await this.initPromise;
         const data = await this.background.getState();
@@ -53,9 +87,9 @@ class Background {
         return this.background.setUiState(newUiState);
     }
 
-    async selectAccount(address): Promise<void> {
+    async selectAccount(address, network): Promise<void> {
         await this.initPromise;
-        return this.background.selectAccount(address);
+        return this.background.selectAccount(address, network);
     }
 
     async addWallet(data): Promise<void> {
@@ -63,10 +97,10 @@ class Background {
         return this.background.addWallet(data);
     }
 
-    async removeWallet(address): Promise<void> {
+    async removeWallet(address, network): Promise<void> {
         await this.initPromise;
         if (address) {
-            return this.background.removeWallet(address);
+            return this.background.removeWallet(address, network);
         }
     
         return this.deleteVault();
@@ -97,19 +131,19 @@ class Background {
         return this.background.initVault(password);
     }
 
-    async exportAccount(address, password): Promise<void> {
+    async exportAccount(address, password, network): Promise<void> {
         await this.initPromise;
-        return this.background.exportAccount(address, password);
+        return this.background.exportAccount(address, password, network);
     }
     
-    async exportSeed(address): Promise<void> {
+    async exportSeed(address, network): Promise<void> {
         await this.initPromise;
-        return this.background.encryptedSeed(address);
+        return this.background.encryptedSeed(address, network);
     }
 
-    async editWalletName(address, name) {
+    async editWalletName(address, name, network) {
         await this.initPromise;
-        return this.background.editWalletName(address, name);
+        return this.background.editWalletName(address, name, network);
     }
 
     async newPassword(oldPassword, newPassword): Promise<void> {
@@ -122,9 +156,9 @@ class Background {
         return this.background.clearMessages();
     }
 
-    async approve(messageId, address): Promise<any> {
+    async approve(messageId, address, network): Promise<any> {
         await this.initPromise;
-        return this.background.approve(messageId, address);
+        return this.background.approve(messageId, address, network);
     }
 
     async reject(messageId): Promise<void> {
@@ -147,6 +181,11 @@ class Background {
     async setCustomNode(url, network): Promise<void> {
         await this.initPromise;
         return this.background.setCustomNode(url, network);
+    }
+    
+    async setCustomCode(code, network): Promise<void> {
+        await this.initPromise;
+        return this.background.setCustomCode(code, network);
     }
     
     async setCustomMatcher(url, network): Promise<void> {
@@ -177,6 +216,21 @@ class Background {
         return this.background.getUserList(type, from, to);
     }
 
+    async _updateIdle() {
+        const now = Date.now();
+        clearTimeout(this._tmr);
+        this._tmr = setTimeout(() => this._updateIdle(), 4000);
+        
+        if (!this.updatedByUser || now - this._lastUpdateIdle < 4000) {
+            return  null;
+        }
+        
+        this.updatedByUser = false;
+        this._lastUpdateIdle = now;
+        await this.initPromise;
+        return  this.background.updateIdle();
+    }
+    
     _onUpdate(state: IState) {
         for (const cb of this.onUpdateCb) {
             cb(state);

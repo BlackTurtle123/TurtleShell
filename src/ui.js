@@ -19,12 +19,18 @@ async function startUi() {
     // This way every time background calls sendUpdate with its state we get event with new background state
     const eventEmitter = new EventEmitter();
     const emitterApi = {
-        sendUpdate: async state => eventEmitter.emit('update', state)
+        sendUpdate: async state => eventEmitter.emit('update', state),
+        // This method is used in Microsoft Edge browser
+        closeEdgeNotificationWindow: async () => {
+            if (window.location.href.split('/').reverse()[0] === 'notification.html') {
+                window.close();
+            }
+        }
     };
-    const dnode = setupDnode(connectionStream, emitterApi,  'api');
-
+    const dnode = setupDnode(connectionStream, emitterApi, 'api');
     const background = await new Promise(resolve => {
         dnode.once('remote', (background) => {
+
             let backgroundWithPromises = transformMethods(cbToPromise, background);
             // Add event emitter api to background object
 
@@ -35,15 +41,18 @@ async function startUi() {
 
     // global access to service on debug
     if (WAVESKEEPER_DEBUG) {
-        global.background = background
+        global.background = background;
+        console.log('inited');
     }
 
     // If popup is opened close notification window
-    if (extension.extension.getViews({ type: "popup" }).length > 0){
+    if (extension.extension.getViews({type: 'popup'}).length > 0) {
         await background.closeNotificationWindow();
     }
 
-
+    if (WAVESKEEPER_DEBUG) {
+        console.log('closed windows');
+    }
     // Initialize app
     initApp(background);
 }

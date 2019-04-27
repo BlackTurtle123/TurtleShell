@@ -10,12 +10,14 @@ export const addAccount = store => next => action => {
         const { currentNetwork, networks } = store.getState();
         const networkCode = (networks.filter(({ name }) => name === currentNetwork)[0] || networks[0]).code;
 
-        background.addWallet({ ...payload, networkCode }).then(
+        background.addWallet({ ...payload, networkCode, currentNetwork, network: currentNetwork }).then(
             () => {
                 store.dispatch(addUserReceive());
                 store.dispatch(setTab('assets'));
             },
-            (e) => store.dispatch(addUserReceive(e))
+            (e) => {
+                store.dispatch(addUserReceive(e))
+            }
         );
 
         store.dispatch(addUserSend());

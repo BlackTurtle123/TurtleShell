@@ -1,7 +1,6 @@
 import extension from 'extensionizer';
 import pump from 'pump';
 import LocalMessageDuplexStream from 'post-message-stream';
-import ObjectMultiplex from 'obj-multiplex';
 import PortStream from './lib/port-stream.js';
 
 if (shouldInject()) {
@@ -9,14 +8,35 @@ if (shouldInject()) {
     setupConnection();
 }
 
+
+// function initKeeper() {
+//     let cbs = [];
+//     window.WavesKeeper = window.Waves = {
+//         on: function (event, cb) { cbs.push({ event, cb }) },
+//         _inited: function (api) {
+//             cbs.forEach(function ({ event, cb }) {
+//                 api.on(event, cb);
+//             });
+//             cbs = [];
+//         }
+//     };
+// }
+
 function injectBundle() {
     try {
         // inject in-page script
-        let script = document.createElement('script');
-        script.src = extension.extension.getURL('inpage.js');
+        // const script = document.createElement('script');
         const container = document.head || document.documentElement;
-        container.insertBefore(script, container.children[0]);
-        script.onload = () => script.remove();
+        // script.innerHTML = '(' + initKeeper.toString() + ')()';
+        // container.insertBefore(script, container.children[0]);
+
+        const script2 = document.createElement('script');
+        script2.src = extension.extension.getURL('inpage.js');
+        container.insertBefore(script2, container.children[0]);
+
+        script2.onload = () => {
+            script2.parentElement.removeChild(script2);
+        };
     } catch (e) {
         console.error('Injection failed.', e);
     }
@@ -25,12 +45,12 @@ function injectBundle() {
 
 function setupConnection() {
     const pageStream = new LocalMessageDuplexStream({
-        name: 'content',
-        target: 'page',
+        name: 'waves_keeper_content',
+        target: 'waves_keeper_page',
     });
 
-    const pluginPort = extension.runtime.connect({name: 'contentscript'})
-    const pluginStream = new PortStream(pluginPort)
+    const pluginPort = extension.runtime.connect({name: 'contentscript'});
+    const pluginStream = new PortStream(pluginPort);
 
     // forward communication plugin->inpage
     pump(
@@ -39,33 +59,6 @@ function setupConnection() {
         pageStream,
         (err) => logStreamDisconnectWarning('Waveskeeper Contentscript Forwarding', err)
     );
-
-    // // setup local multistream channels
-    // const mux = new ObjectMultiplex();
-    // mux.setMaxListeners(25)
-    //
-    // pump(
-    //     mux,
-    //     pageStream,
-    //     mux,
-    //     (err) => logStreamDisconnectWarning('WavesKeeper Inpage', err)
-    // );
-    // pump(
-    //     mux,
-    //     pluginStream,
-    //     mux,
-    //     (err) => logStreamDisconnectWarning('WavesKeeper Background', err)
-    // );
-
-
-    // // connect phishing warning stream
-    // const phishingStream = mux.createStream('phishing')
-    // phishingStream.once('data', redirectToPhishingWarning)
-    //
-    // // ignore unused channels (handled by background, inpage)
-    //mux.ignoreStream('inpageApi')
-    // mux.ignoreStream('publicConfig')
-    // mux.ignoreStream('waves')
 }
 
 /**
@@ -75,14 +68,14 @@ function setupConnection() {
  * @param {Error} err Stream connection error
  */
 function logStreamDisconnectWarning(remoteLabel, err) {
-    let warningMsg = `TNkeeperContentscript - lost connection to ${remoteLabel}`
-    if (err) warningMsg += '\n' + err.stack
+
+    let warningMsg = `TNkeeperContentscript - lost connection to ${remoteLabel}`;
+    if (err) warningMsg += '\n' + err.stack;
     console.warn(warningMsg)
 }
 
 function shouldInject() {
-    return doctypeCheck() && suffixCheck()
-        && documentElementCheck() && !blacklistedDomainCheck()
+    return doctypeCheck() && suffixCheck() && documentElementCheck();
 }
 
 /**
@@ -130,37 +123,3 @@ function documentElementCheck() {
     return true
 }
 
-/**
- * Checks if the current domain is blacklisted
- *
- * @returns {boolean} {@code true} if the current domain is blacklisted
- */
-function blacklistedDomainCheck() {
-    const blacklistedDomains = [
-        // 'uscourts.gov',
-        // 'dropbox.com',
-        // 'webbyawards.com',
-        // 'cdn.shopify.com/s/javascripts/tricorder/xtld-read-only-frame.html',
-        // 'adyen.com',
-        // 'gravityforms.com',
-    ];
-    const currentUrl = window.location.href;
-    let currentRegex;
-    for (let i = 0; i < blacklistedDomains.length; i++) {
-        const blacklistedDomain = blacklistedDomains[i].replace('.', '\\.')
-        currentRegex = new RegExp(`(?:https?:\\/\\/)(?:(?!${blacklistedDomain}).)*$`)
-        if (!currentRegex.test(currentUrl)) {
-            return true
-        }
-    }
-    return false
-}
-
-/**
- * Redirects the current page to a phishing information page
- */
-function redirectToPhishingWarning() {
-    console.log('TNKeeper - redirecting to phishing warning')
-    // Todo: render some phishing message or redirect user to phishing page
-    //window.location.href = 'https://metamask.io/phishing.html'
-}

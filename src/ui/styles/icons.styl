@@ -1,3 +1,5 @@
+@import './colors.styl';
+
 // global icons
 
 :global .copy-icon
@@ -60,6 +62,16 @@
 
 // transactions
 
+:global .set-asset-script-transaction-icon
+  background: url(../assets/img/transactions/t-setassetscript-48.svg) center no-repeat;
+
+:global .authOrigin-transaction-icon,
+:global .authOrigin-transaction-icon-small
+  background: url(../assets/img/transactions/t-access-80.svg) center no-repeat;
+
+:global .authOrigin-transaction-icon-small
+  background-size: cover;
+
 :global .transfer-transaction-icon
   background: url(../assets/img/transactions/t-send-48.svg) center no-repeat;
 
@@ -102,9 +114,18 @@
 :global .set-script-transaction-icon
   background: url(../assets/img/transactions/t-setscript-48.svg) center no-repeat;
 
+:global .transactionPackage-transaction-icon
+  background: url(../assets/img/transactions/t-grouptrans-48.svg) center no-repeat;
+
+:global .script_invocation-transaction-icon
+  background: url(../assets/img/transactions/t-scriptinvocation-48.svg) center no-repeat;
+
 :global .coinomat_confirm-transaction-icon,
+:global .coinomat_confirm-transaction-icon-small,
 :global .matcher_orders-transaction-icon,
+:global .matcher_orders-transaction-icon-small,
 :global .auth-transaction-icon
+:global .auth-transaction-icon-small
   background: url(../assets/img/userimg-browsershare-80-submit-300.svg) center no-repeat;
   background-size: cover;
 
@@ -125,7 +146,56 @@
   cursor: pointer;
 
 :global .apple-store-btn
-  background: url(../assets/img/google-play-icon.svg) center no-repeat;
+  background: url(../assets/img/apple-store-icon.svg) center no-repeat;
 
 :global .google-play-btn
-  background: url(../assets/img/apple-store-icon.svg) center no-repeat;
+  background: url(../assets/img/google-play-icon.svg) center no-repeat;
+
+:global .networkIcon,
+:global .networkIconActive
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+
+:global .networkIcon
+  background: url(../assets/img/network-14-basic-500.svg) left center no-repeat;
+
+:global .networkIconActive
+  background: url(../assets/img/network-14-black.svg) left center no-repeat;
+
+:global .helpIcon
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  display: block;
+  background: url(../assets/img/question-sprite.svg) center top no-repeat;
+  &:hover
+    background: url(../assets/img/question-sprite.svg) center bottom no-repeat;
+
+:global .walletIconBlack,
+:global .transactionsIconBlack,
+:global .copyIconBlack
+  cursor: pointer;
+  margin-right: 8px;
+  &:hover
+    background-color: $accent50;
+
+:global .walletIconBlack
+  background: url(../assets/img/gowallet-14-black.svg) 8px 5px no-repeat;
+
+:global .transactionsIconBlack
+  background: url(../assets/img/explorer-14-black.svg) 8px 5px no-repeat;
+
+:global .showQrIcon
+  background: url(../assets/img/qr-14-black.svg) no-repeat transparent;
+  cursor: pointer;
+
+:global .copyIconBlack
+  background: url(../assets/img/copy-14-black.svg) no-repeat transparent;
+
+:global .delete-icon
+  background: url(../assets/img/delete-18-error-400.svg) center no-repeat;
+
+:global .error-icon
+  background: url(../assets/img/error-18.svg) left no-repeat;
+

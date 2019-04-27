@@ -3,7 +3,7 @@ import * as React from 'react'
 import { setTab } from '../../actions';
 import { translate, Trans } from 'react-i18next';
 import { connect } from 'react-redux';
-import { Button } from '../ui/buttons';
+import { Button, BUTTON_TYPE } from '../ui/buttons';
 import { ConditionsAndTerms } from '../conditions/Conditions';
 import { I18N_NAME_SPACE } from '../../appConfig';
 
@@ -20,7 +20,9 @@ class ConditionsComponent extends React.Component {
 
     state = { confirmDisabled: true };
 
-    onClick() {
+    onClick(e) {
+        e.stopPropagation();
+        e.preventDefault();
         this.props.setTab('new');
     }
 
@@ -48,7 +50,10 @@ class ConditionsComponent extends React.Component {
                 
             </div>
 
-            <Button className="centered" onClick={this.onClick.bind(this)} type='submit' disabled={this.state.confirmDisabled}>
+            <Button className="centered"
+                    onClick={this.onClick.bind(this)}
+                    type={BUTTON_TYPE.GENERAL}
+                    disabled={this.state.confirmDisabled}>
                 <Trans className="text" i18nKey='conditions.accept'>Accept</Trans>
             </Button>
 

@@ -1,22 +1,21 @@
 import * as i18n from 'i18next';
 import { reactI18nextModule } from 'react-i18next';
 import { default as Locize } from 'i18next-locize-backend';
-import { I18N_NAME_SPACE, I18N_API_KEY, I18N_PROJECT_ID } from './appConfig';
+import { I18N_NAME_SPACE, WAVESKEEPER_DEBUG } from './appConfig';
 
-const WAVESKEEPER_DEBUG = process.env.NODE_ENV !== 'production';
 
-let backendPath = { loadPath: './_locales/{{ns}}_{{lng}}.json' } as any;
+let backendPath = { loadPath: './_locales/{{lng}}/{{ns}}.{{lng}}.json' } as any;
 
-if (WAVESKEEPER_DEBUG) {
-    backendPath = {
-        loadPath: 'https://locize.wvservices.com/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-        privatePath: 'https://locize.wvservices.com/private/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-        pullPath: 'https://locize.wvservices.com/pull/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-        getLanguagesPath: 'https://locize.wvservices.com/languages/{{projectId}}',
-        addPath: 'https://locize.wvservices.com/missing/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-        updatePath: 'https://locize.wvservices.com/update/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-    };
-}
+// if (WAVESKEEPER_DEBUG) {
+//     backendPath = {
+//         loadPath: 'https://locize.wvservices.com/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
+//         //privatePath: 'https://api.locize.io/private/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
+//         //pullPath: 'https://api.locize.io/pull/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
+//         //getLanguagesPath: 'https://api.locize.io/languages/{{projectId}}',
+//         //addPath: 'https://api.locize.io/missing/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
+//         //updatePath: 'https://api.locize.io/update/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
+//     };
+// }
 
 i18n
     .use(reactI18nextModule)
@@ -24,19 +23,18 @@ i18n
     .init({
         fallbackLng: 'en',
         appendNamespaceToCIMode: true,
-        saveMissing: true,
+        saveMissing: false,
         ns: [I18N_NAME_SPACE],
         defaultNS: I18N_NAME_SPACE,
 
-        debug: true,
+        debug: WAVESKEEPER_DEBUG,
         keySeparator: '.', // we use content as keys
         nsSeparator: '.', // we use content as keys
 
         backend: {
-            projectId: I18N_PROJECT_ID,
-            apiKey: I18N_API_KEY,
+            projectId: '',
+            apiKey: '',
             referenceLng: 'en',
-            loadPath: './_locales/{{ns}}_{{lng}}.json',
             ...backendPath
         },
 
@@ -49,7 +47,7 @@ i18n
         },
 
         react: {
-            wait: true
+            wait: true//!WAVESKEEPER_DEBUG
         }
     });
 

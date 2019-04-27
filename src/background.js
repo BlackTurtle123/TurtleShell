@@ -6,6 +6,7 @@ import debounceStream from 'debounce-stream';
 import debounce from 'debounce';
 import asStream from 'obs-store/lib/asStream';
 import extension from 'extensionizer';
+import {ERRORS} from './lib/KeeperError';
 import {createStreamSink} from './lib/createStreamSink';
 import {getFirstLangCode} from './lib/get-first-lang-code';
 import PortStream from './lib/port-stream.js';
@@ -17,20 +18,27 @@ import {
     NetworkController,
     MessageController,
     BalanceController,
-    UiStateController, AssetInfoController, ExternalDeviceController
-} from './controllers'
+    PermissionsController,
+    UiStateController,
+    AssetInfoController,
+    TxInfoController,
+    ExternalDeviceController,
+    RemoteConfigController,
+    IdleController,
+} from './controllers';
+import { PERMISSIONS } from './controllers/PermissionsController';
 import {setupDnode} from './lib/dnode-util';
 import {WindowManager} from './lib/WindowManger'
+import { getAdapterByType } from '@waves/signature-adapter'
+import { WAVESKEEPER_DEBUG } from  './constants';
 
-
-const WAVESKEEPER_DEBUG = process.env.NODE_ENV !== 'production';
-const IDLE_INTERVAL = 60;
-const isEdge = window.navigator.userAgent.indexOf("Edge") > -1
-
+const isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
 log.setDefaultLevel(WAVESKEEPER_DEBUG ? 'debug' : 'warn');
 
 setupBackgroundService().catch(e => log.error(e));
 
+const Adapter = getAdapterByType('seed');
+const adapter = new Adapter('test seed for get seed adapter info');
 
 async function setupBackgroundService() {
     // Background service init
@@ -73,6 +81,7 @@ async function setupBackgroundService() {
 
     // connect to other contexts
     extension.runtime.onConnect.addListener(connectRemote);
+
     if (!isEdge) {
         extension.runtime.onConnectExternal.addListener(connectExternal)
     }
@@ -82,7 +91,7 @@ async function setupBackgroundService() {
         extension.browserAction.setBadgeText({text});
         extension.browserAction.setBadgeBackgroundColor({color: '#768FFF'});
     });
-
+    backgroundService.messageController.updateBadge();
     // open new tab
     backgroundService.messageController.on('Open new tab', url => {
         extension.tabs.create({url});
@@ -91,32 +100,23 @@ async function setupBackgroundService() {
     // Notification window management
     const windowManager = new WindowManager();
     backgroundService.on('Show notification', windowManager.showWindow.bind(windowManager));
-    backgroundService.on('Close notification', windowManager.closeWindow.bind(windowManager));
+    backgroundService.on('Close notification', () => {
+        if (isEdge) {
+            // Microsoft Edge doesn't support browser.windows.close api. We emit notification, so window will close itself
+            backgroundService.emit('closeEdgeNotificationWindow')
+        } else {
+            windowManager.closeWindow();
+        }
+    });
 
-    // Idle management
-    extension.idle.setDetectionInterval(IDLE_INTERVAL);
-    if (!isEdge) {
-        extension.idle.onStateChanged.addListener(state => {
-            if (['active', 'idle'].indexOf(state) > -1) {
-                backgroundService.walletController.lock()
-            }
-        });
-    } else {
-        setInterval(() => {
-            extension.idle.queryState(IDLE_INTERVAL, (state) => {
-                if(["idle", "locked"].indexOf(state) > -1){
-                    backgroundService.walletController.lock()
-                }
-            })
-        }, 10000)
-    }
 
+    backgroundService.idleController = new IdleController({ backgroundService });
 
     // Connection handlers
     function connectRemote(remotePort) {
         const processName = remotePort.name;
         if (processName === 'contentscript') {
-            connectExternal(remotePort)
+            connectExternal(remotePort);
         } else {
             const portStream = new PortStream(remotePort);
             backgroundService.setupUiConnection(portStream, processName);
@@ -139,26 +139,45 @@ class BackgroundService extends EventEmitter {
         this.store = new ComposableObservableStore(initState);
 
         // Controllers
+        this.remoteConfigController = new RemoteConfigController({
+            initState: initState.RemoteConfigController,
+        });
+
+        this.permissionsController = new PermissionsController({
+            initState: initState.PermissionsController,
+            remoteConfig: this.remoteConfigController,
+        });
 
         // Network. Works with blockchain
-        this.networkController = new NetworkController({initState: initState.NetworkController});
+        this.networkController = new NetworkController({
+            initState: initState.NetworkController,
+            getNetworkConfig: () => this.remoteConfigController.getNetworkConfig(),
+            getNetworks: () => this.remoteConfigController.getNetworks(),
+        });
 
         // Preferences. Contains accounts, available accounts, selected language etc.
         this.preferencesController = new PreferencesController({
             initState: initState.PreferencesController,
             initLangCode: options.langCode,
-            getNetwork: this.networkController.getNetwork.bind(this.networkController)
+            getNetwork: this.networkController.getNetwork.bind(this.networkController),
+            getNetworkConfig: () => this.remoteConfigController.getNetworkConfig(),
         });
 
         // On network change select accounts of this network
         this.networkController.store.subscribe(() => this.preferencesController.syncCurrentNetworkAccounts());
 
-
         // Ui State. Provides storage for ui application
         this.uiStateController = new UiStateController({initState: initState.UiStateController});
 
         // Wallet. Wallet creation, app locking, signing method
-        this.walletController = new WalletController({initState: initState.WalletController});
+        this.walletController = new WalletController({
+            initState: initState.WalletController,
+            getNetwork: this.networkController.getNetwork.bind(this.networkController),
+            getNetworkCode: this.networkController.getNetworkCode.bind(this.networkController),
+            getNetworks: this.networkController.getNetworks.bind(this.networkController),
+        });
+
+
         this.walletController.store.subscribe(state => {
             if (!state.locked || !state.initialized) {
                 const accounts = this.walletController.getAccounts();
@@ -169,15 +188,23 @@ class BackgroundService extends EventEmitter {
         // Balance. Polls balances for accounts
         this.balanceController = new BalanceController({
             initState: initState.BalanceController,
+            getNetworkConfig: () => this.remoteConfigController.getNetworkConfig(),
             getNetwork: this.networkController.getNetwork.bind(this.networkController),
             getNode: this.networkController.getNode.bind(this.networkController),
-            getAccounts: this.walletController.getAccounts.bind(this.walletController)
+            getAccounts: this.walletController.getAccounts.bind(this.walletController),
+            getCode: this.networkController.getNetworkCode.bind(this.networkController),
         });
+
         this.networkController.store.subscribe(() => this.balanceController.updateBalances());
 
         // AssetInfo. Provides information about assets
         this.assetInfoController = new AssetInfoController({
             initState: initState.AssetInfoController,
+            getNetwork: this.networkController.getNetwork.bind(this.networkController),
+            getNode: this.networkController.getNode.bind(this.networkController)
+        });
+
+        this.txinfoController = new TxInfoController({
             getNetwork: this.networkController.getNetwork.bind(this.networkController),
             getNode: this.networkController.getNode.bind(this.networkController)
         });
@@ -193,7 +220,12 @@ class BackgroundService extends EventEmitter {
             signBytes: this.walletController.signBytes.bind(this.walletController),
             broadcast: this.networkController.broadcast.bind(this.networkController),
             getMatcherPublicKey: this.networkController.getMatcherPublicKey.bind(this.networkController),
-            assetInfo: this.assetInfoController.assetInfo.bind(this.assetInfoController)
+            assetInfo: this.assetInfoController.assetInfo.bind(this.assetInfoController),
+            txInfo: this.txinfoController.txInfo.bind(this.txinfoController),
+            setPermission: this.permissionsController.setPermission.bind(this.permissionsController),
+            getMessagesConfig: () => this.remoteConfigController.getMessagesConfig(),
+            getPackConfig: () => this.remoteConfigController.getPackConfig(),
+            canAutoApprove: (origin, tx) => this.permissionsController.canApprove(origin, tx),
         });
 
 
@@ -204,8 +236,10 @@ class BackgroundService extends EventEmitter {
             NetworkController: this.networkController.store,
             MessageController: this.messageController.store,
             BalanceController: this.balanceController.store,
+            PermissionsController: this.permissionsController.store,
             UiStateController: this.uiStateController.store,
-            AssetInfoController: this.assetInfoController.store
+            AssetInfoController: this.assetInfoController.store,
+            RemoteConfigController: this.remoteConfigController.store,
         });
 
         // Call send update, which is bound to ui EventEmitter, on every store update
@@ -223,18 +257,25 @@ class BackgroundService extends EventEmitter {
         return {
             // state
             getState: async () => this.getState(),
-
+            updateIdle: async () => this.idleController.update(),
+            setIdleOptions: async ({ type }) => {
+                const config = this.remoteConfigController.getIdleConfig();
+                if (!(Object.keys(config)).includes(type)) {
+                    throw ERRORS.UNKNOWN_IDLE();
+                }
+                this.idleController.setOptions({ type, interval: config[type] });
+            },
             // preferences
             setCurrentLocale: async (key) => this.preferencesController.setCurrentLocale(key),
-            selectAccount: async (publicKey) => this.preferencesController.selectAccount(publicKey),
-            editWalletName: async (address, name) => this.preferencesController.addLabel(address, name),
+            selectAccount: async (address, network) => this.preferencesController.selectAccount(address, network),
+            editWalletName: async (address, name, network) => this.preferencesController.addLabel(address, name, network),
 
             // ui state
             setUiState: async (state) => this.uiStateController.setUiState(state),
 
             // wallets
             addWallet: async (account) => this.walletController.addWallet(account),
-            removeWallet: async (publicKey) => this.walletController.removeWallet(publicKey),
+            removeWallet: async (address, network) => this.walletController.removeWallet(address, network),
             lock: async () => this.walletController.lock(),
             unlock: async (password) => this.walletController.unlock(password),
             initVault: async (password) => this.walletController.initVault(password),
@@ -243,8 +284,8 @@ class BackgroundService extends EventEmitter {
                 await this.walletController.deleteVault();
             },
             newPassword: async (oldPassword, newPassword) => this.walletController.newPassword(oldPassword, newPassword),
-            exportAccount: async (address, password) => this.walletController.exportAccount(address, password),
-            encryptedSeed: async (address) => this.walletController.encryptedSeed(address),
+            exportAccount: async (address, password, network) => this.walletController.exportAccount(address, password, network),
+            encryptedSeed: async (address, network) => this.walletController.encryptedSeed(address, network),
 
             // messages
             clearMessages: async () => this.messageController.clearMessages(),
@@ -255,6 +296,11 @@ class BackgroundService extends EventEmitter {
             setNetwork: async (network) => this.networkController.setNetwork(network),
             getNetworks: async () => this.networkController.getNetworks(),
             setCustomNode: async (url, network) => this.networkController.setCustomNode(url, network),
+            setCustomCode: async (code, network) => {
+                this.walletController.updateNetworkCode(network, code);
+                this.networkController.setCustomCode(code, network);
+                this.balanceController.restartPolling();
+            },
             setCustomMatcher: async (url, network) => this.networkController.setCustomMatcher(url, network),
 
             // external devices
@@ -264,22 +310,88 @@ class BackgroundService extends EventEmitter {
             assetInfo: async (assetId) => await this.assetInfoController.assetInfo(assetId),
 
             // window control
-            closeNotificationWindow: async () => this.emit('Close notification')
+            closeNotificationWindow: async () => this.emit('Close notification'),
+
+            // origin settings
+            allowOrigin: async (origin) => {
+                this.messageController.rejectByOrigin(origin);
+                this.permissionsController.deletePermission(origin, PERMISSIONS.REJECTED);
+                this.permissionsController.setPermission(origin, PERMISSIONS.APPROVED);
+            },
+
+            disableOrigin: async (origin) => {
+                this.permissionsController.deletePermission(origin, PERMISSIONS.APPROVED);
+                this.permissionsController.setPermission(origin, PERMISSIONS.REJECTED);
+            },
+
+            deleteOrigin: async (origin) => {
+                this.permissionsController.deletePermissions(origin);
+            },
+            // extended permission autoSign
+            setAutoSign: async ({ origin, params }) => {
+                this.permissionsController.setAutoApprove(origin, params);
+            }
+        }
+    }
+
+    async validatePermission(origin) {
+        const { selectedAccount } = this.getState();
+
+        if (!selectedAccount) throw ERRORS.EMPTY_KEEPER();
+
+        const canIUse = this.permissionsController.hasPermission(origin, PERMISSIONS.APPROVED);
+
+        if (!canIUse && canIUse != null) {
+            throw ERRORS.API_DENIED();
+        }
+
+        if (canIUse === null) {
+            let messageId = this.permissionsController.getMessageIdAccess(origin);
+
+            if (messageId) {
+                try {
+                    const message = this.messageController.getMessageById(messageId);
+
+                    if (!message || message.account.address !== selectedAccount.address) {
+                        messageId = null;
+                    }
+                } catch (e) {
+                    messageId = null;
+                }
+
+            }
+
+            if (!messageId) {
+                const result = await this.messageController.newMessage({ origin }, 'authOrigin', origin, selectedAccount, false);
+                messageId = result.id;
+                this.permissionsController.setMessageIdAccess(origin, messageId);
+            }
+
+            this.emit('Show notification');
+
+            await this.messageController.getMessageResult(messageId)
+                .then(() => {
+                    this.messageController.setPermission(origin, PERMISSIONS.APPROVED);
+                })
+                .catch((e) => {
+                    this.messageController.setPermission(origin, PERMISSIONS.REJECTED);
+                    return Promise.reject(e);
+                });
         }
     }
 
     getInpageApi(origin) {
-        const newMessage = async (data, type, from, broadcast) => {
-            const {selectedAccount} = this.getState();
+        const newMessage = async (data, type, from, broadcast, title = '') => {
+            const { selectedAccount } = this.getState();
 
-            if (!selectedAccount) throw new Error('TNKeeper contains co accounts');
-            // Proper public key check
-            if (from && from !== selectedAccount.address) {
-                throw new Error('From address should match selected account address or be blank');
+            await this.validatePermission(origin);
+
+            const { id: messageId, showNotification } = await this.messageController.newMessage(data, type, origin, selectedAccount, broadcast, title);
+
+            if (showNotification) {
+                this.emit('Show notification');
             }
 
-            const messageId = await this.messageController.newMessage(data, type, origin, selectedAccount, broadcast);
-            this.emit('Show notification');
             return await this.messageController.getMessageResult(messageId)
         };
 
@@ -299,6 +411,9 @@ class BackgroundService extends EventEmitter {
             signTransaction: async (data, from) => {
                 return await newMessage(data, 'transaction', from, false)
             },
+            signTransactionPackage: async (data, title, from) => {
+                return await newMessage(data, 'transactionPackage', from, false, title)
+            },
             signAndPublishTransaction: async (data, from) => {
                 return await newMessage(data, 'transaction', from, true)
             },
@@ -308,28 +423,48 @@ class BackgroundService extends EventEmitter {
             signRequest: async (data, from) => {
                 return await newMessage(data, 'request', from, false)
             },
-            pairing: async (data, from) => await newMessage(data, 'pairing', from, false),
+            //pairing: async (data, from) => await newMessage(data, 'pairing', from, false),
 
-            //publicState: async () => this._publicState(this.getState()),
+
+
         };
 
-        if (true || origin === 'client.wavesplatform.com' || origin === 'chrome-ext.wvservices.com') {
-            api.signBytes = async (data, from) => await newMessage(data, 'bytes', from, false);
-            api.publicState = async () => this._publicState(this.getState())
-        }
+        api.publicState = async () => {
+            const state = this.getState();
+            const { selectedAccount, initialized } = state;
 
-        return api
+            if (!selectedAccount) {
+                throw !initialized ? ERRORS.INIT_KEEPER() : ERRORS.EMPTY_KEEPER();
+            }
+
+            await this.validatePermission(origin);
+
+            return this._publicState(this.getState(), origin);
+        };
+
+        return api;
     }
 
-    setupUiConnection(connectionStream, origin) {
+    setupUiConnection(connectionStream) {
         const api = this.getApi();
         const dnode = setupDnode(connectionStream, api, 'api');
 
-        dnode.on('remote', (remote) => {
+        const remoteHandler = (remote) => {
             // push updates to popup
             const sendUpdate = remote.sendUpdate.bind(remote);
-            this.on('update', sendUpdate)
-        })
+            this.on('update', sendUpdate);
+
+            //Microsoft Edge doesn't support browser.windows.close api. We emit notification, so window will close itself
+            const closeEdgeNotificationWindow = remote.closeEdgeNotificationWindow.bind(remote);
+            this.on('closeEdgeNotificationWindow', closeEdgeNotificationWindow);
+
+            dnode.on('end', () => {
+                this.removeListener('update', sendUpdate);
+                this.removeListener('closeEdgeNotificationWindow', closeEdgeNotificationWindow);
+            });
+        };
+
+        dnode.on('remote', remoteHandler);
     }
 
     setupPageConnection(connectionStream, origin) {
@@ -337,24 +472,33 @@ class BackgroundService extends EventEmitter {
 
         const inpageApi = this.getInpageApi(origin);
         const dnode = setupDnode(connectionStream, inpageApi, 'inpageApi');
-
         const self = this;
-        // Select public state from app state
-        let publicState = this._publicState(this.getState());
-        dnode.on('remote', (remote) => {
+
+        const onRemoteHandler = (remote) => {
             // push account change event to the page
             const sendUpdate = remote.sendUpdate.bind(remote);
-            if (true || origin === 'turtlenetwork.blackturtle.eu' || origin === 'chrome-ext.wvservices.com') {
-                this.on('update', function (state) {
-                    const updatedPublicState = self._publicState(state);
-                    // If public state changed call remote with new public state
-                    if (updatedPublicState.locked !== publicState.locked || updatedPublicState.account !== publicState.account) {
-                        publicState = updatedPublicState;
-                        sendUpdate(publicState)
-                    }
-                })
-            }
-        })
+
+            const updateHandler = function (state) {
+                const updatedPublicState = self._publicState(state, origin);
+                // If public state changed call remote with new public state
+                if (updatedPublicState.locked !== publicState.locked || updatedPublicState.account !== publicState.account) {
+                    publicState = updatedPublicState;
+                    sendUpdate(publicState)
+                }
+            };
+
+
+                this.on('update', updateHandler);
+
+            dnode.on('end', () => {
+                this.removeListener('update', updateHandler);
+            });
+        };
+
+
+        // Select public state from app state
+        let publicState = this._publicState(this.getState(), origin);
+        dnode.on('remote', onRemoteHandler);
     }
 
     _privateSendUpdate() {
@@ -362,18 +506,32 @@ class BackgroundService extends EventEmitter {
     }
 
     _getCurrentNtwork(account) {
-        return !account ? null : this.networkController.getNetworks().find((conf) => conf.code === account.networkCode);
+        const networks = {
+            code: this.networkController.getNetworkCode(),
+            server: this.networkController.getNode(),
+            matcher: this.networkController.getMather()
+        };
+        return !account ? null : networks;
     }
 
-    _publicState(state) {
+    _publicState(state, originReq) {
 
         let account = null;
+        let messages = [];
+        const canIUse = this.permissionsController.hasPermission(originReq, PERMISSIONS.APPROVED);
 
-        if (!state.locked) {
+        if (!state.locked && state.selectedAccount && canIUse) {
+
+            const address = state.selectedAccount.address;
+
             account = {
                 ...state.selectedAccount,
                 balance: state.balances[state.selectedAccount.address] || 0,
             };
+
+            messages = state.messages
+                .filter(({ account, origin }) => account.address === address && origin === originReq)
+                .map(({ id, status, ext_uuid }) => ({ id, status, uid: ext_uuid }));
         }
 
         return {
@@ -381,6 +539,8 @@ class BackgroundService extends EventEmitter {
             locked: state.locked,
             account,
             network: this._getCurrentNtwork(state.selectedAccount),
+            messages,
+            txVersion: adapter.getSignVersions(),
         }
     }
 }

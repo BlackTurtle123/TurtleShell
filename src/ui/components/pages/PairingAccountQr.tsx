@@ -52,7 +52,7 @@ class PairingAccountQrComponent extends React.PureComponent {
             [styles.big]: setBig
         });
 
-        const pairingData = `waves://export/${address}?encryptedSeed=${seed}&name=${name}`;
+        const pairingData = `TN://export/${address}?encryptedSeed=${seed}&name=${name}`;
 
         return <div className={rootClassName}>
             <div className={styles.walletInfo}>
@@ -87,8 +87,7 @@ class PairingAccountQrComponent extends React.PureComponent {
                     </div>
 
                     <div className="buttons-wrapper margin-main-large">
-                        <a href="#" className="apple-store-btn" target="_blank"></a>
-                        <a href="#" className="google-play-btn" target="_blank"></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.tn.wallet" className="google-play-btn" target="_blank"></a>
                     </div>
                 </div>
 

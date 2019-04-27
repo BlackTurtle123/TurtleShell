@@ -8,22 +8,20 @@ import {
     notificationDelete,
     notificationSelect,
     notificationChangeName,
-    approveError,
-    approveOk,
-    approvePending,
-    rejectOk,
     pairingLoading,
-    pairingSetData,
+    pairingSetData, updateActiveMessage,
+    updateIdle,
 } from '../actions';
 import { PAGES } from '../pageConfig';
+import { store } from '../store';
 
 export const pairingData = store => next => action => {
     if (action.type !== ACTION.PAIRING.GET_SEED) {
         return next(action);
     }
-    
+    const { currentNetwork } = store.getState();
     store.dispatch(pairingLoading(true));
-    background.exportSeed(action.payload).then(
+    background.exportSeed(action.payload, currentNetwork).then(
         (data) => {
             store.dispatch(pairingSetData(data));
             store.dispatch(pairingLoading(false));
@@ -42,6 +40,15 @@ export const changeLang = store => next => action => {
     return next(action);
 };
 
+export const setIdle = store => next => action => {
+    
+    if (action.type !== ACTION.REMOTE_CONFIG.SET_IDLE) {
+        return next(action);
+    }
+    
+    background.setIdleOptions({ type: action.payload });
+};
+
 export const updateLang = store => next => action => {
     if (action.type === ACTION.UPDATE_FROM_LNG && action.payload !== store.getState().currentLocale) {
         i18n.changeLanguage(action.payload);
@@ -51,7 +58,8 @@ export const updateLang = store => next => action => {
 
 export const selectAccount = store => next => action => {
     if (action.type === ACTION.SELECT_ACCOUNT && store.getState().selectedAccount.address !== action.payload.address) {
-        background.selectAccount(action.payload.address).then(
+        const { currentNetwork } = store.getState();
+        background.selectAccount(action.payload.address, currentNetwork).then(
             () => {
                 store.dispatch(notificationSelect(true));
                 setTimeout(() => store.dispatch(notificationSelect(false)), 1000);
@@ -65,10 +73,10 @@ export const selectAccount = store => next => action => {
 
 export const deleteActiveAccount = store => next => action => {
     if (action.type === ACTION.DELETE_ACTIVE_ACCOUNT) {
-        const { selectedAccount, localState } = store.getState();
+        const { selectedAccount, localState, currentNetwork } = store.getState();
         const selected =  localState.assets.account ?  localState.assets.account.address : selectedAccount.address;
         
-        background.removeWallet(selected).then(
+        background.removeWallet(selected, currentNetwork).then(
             () => {
                 store.dispatch(notificationDelete(true));
                 setTimeout(() => {
@@ -94,12 +102,13 @@ export const deleteAccountMw = store => next => action => {
     if (action.type === ACTION.DELETE_ACCOUNT) {
         background.deleteVault().then(
             () => {
-                store.dispatch(notificationDelete(true));
-                setTimeout(() => {
-                    store.dispatch(notificationDelete(false));
-                    store.dispatch(setTab(PAGES.ROOT));
-    
-                }, 1000);
+                store.dispatch(updateActiveMessage(null));
+                // store.dispatch(notificationDelete(true));
+                // setTimeout(() => {
+                //     store.dispatch(notificationDelete(false));
+                //
+                // }, 1000);
+                store.dispatch(setTab(PAGES.ROOT));
             }
         );
         return null;
@@ -163,7 +172,9 @@ export const getAsset = store => next => action => {
 export const changeName = store => next => action => {
     if (action.type === ACTION.CHANGE_ACCOUNT_NAME) {
         const { address, name } = action.payload;
-        background.editWalletName(address, name).then(
+        const { currentNetwork } = store.getState();
+    
+        background.editWalletName(address, name, currentNetwork).then(
             () => {
                 store.dispatch(notificationChangeName(true));
                 setTimeout(() => store.dispatch(notificationChangeName(false)), 1000);
@@ -177,8 +188,18 @@ export const changeName = store => next => action => {
 
 export const setCustomNode = store => next => action => {
     if (ACTION.CHANGE_NODE === action.type) {
-        const { currentNetwork } = store.getState();
-        background.setCustomNode(action.payload, currentNetwork);
+        const { node, network } = action.payload;
+        background.setCustomNode(node, network);
+        return null;
+    }
+
+    return next(action);
+};
+
+export const setCustomCode = store => next => action => {
+    if (ACTION.CHANGE_NETWORK_CODE === action.type) {
+        const { code, network } = action.payload;
+        background.setCustomCode(code, network);
         return null;
     }
 
@@ -187,8 +208,8 @@ export const setCustomNode = store => next => action => {
 
 export const setCustomMatcher = store => next => action => {
     if (ACTION.CHANGE_MATCHER === action.type) {
-        const { currentNetwork } = store.getState();
-        background.setCustomMatcher(action.payload, currentNetwork);
+        const { matcher, network } = action.payload;
+        background.setCustomMatcher(matcher, network);
         return null;
     }
     
@@ -227,43 +248,3 @@ export const lock = store => next => action => {
     return next(action);
 };
 
-export const clearMessages = () => next => action => {
-    
-    if (ACTION.CLEAR_MESSAGES === action.type) {
-        background.clearMessages();
-        return;
-    }
-    
-    return next(action);
-};
-
-export const approve = store => next => action => {
-    if (action.type !== ACTION.APPROVE) {
-        return next(action);
-    }
-    const messageId = action.payload;
-    const { selectedAccount } = store.getState();
-    const { messages } = store.getState();
-    const message = messages.find(({ id }) => id === action.payload);
-    const res = background.approve(messageId, selectedAccount);
-    store.dispatch(approvePending(true));
-    res.then(
-        (res) => store.dispatch(approveOk({ res, message })),
-        (error) => store.dispatch(approveError({ error, message })),
-    ).then(
-        () => store.dispatch(approvePending(false))
-    )
-    
-};
-
-export const reject = store => next => action => {
-    if (action.type !== ACTION.REJECT) {
-        return next(action);
-    }
-    
-    background.reject(action.payload).then(
-        () => store.dispatch(rejectOk(action.payload))
-    ).then(
-        () => store.dispatch(approvePending(false))
-    );
-};

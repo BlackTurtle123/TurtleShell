@@ -4,10 +4,13 @@ import cn from 'classnames';
 
 export const BUTTON_TYPE = {
     SUBMIT: 'submit',
+    SUBMIT_TINY: 'submitTiny',
+    GENERAL: 'submit',
     TRANSPARENT: 'transparent',
     ICON: 'icon',
     WARNING: 'warning',
     INTERFACE: 'interface',
+    CUSTOM: 'custom'
 };
 
 export function Button({ className, type, withIcon, children, ...props }: IProps ) {
@@ -16,7 +19,10 @@ export function Button({ className, type, withIcon, children, ...props }: IProps
         className,
         styles.button,
         {
+            [styles.custom]: type === BUTTON_TYPE.CUSTOM,
             [styles.submit]: type === BUTTON_TYPE.SUBMIT,
+            [styles.submitTiny]: type === BUTTON_TYPE.SUBMIT_TINY,
+            [styles.submit]: type === BUTTON_TYPE.GENERAL,
             [styles.transparent]: type === BUTTON_TYPE.TRANSPARENT,
             [styles.icon]: withIcon,
             [styles.warning]: type === BUTTON_TYPE.WARNING,
@@ -29,8 +35,7 @@ export function Button({ className, type, withIcon, children, ...props }: IProps
         <button
             type={type}
             className={btnClassName}
-            {...props}
-        >
+            {...props}>
             {children}
         </button>
     );
@@ -43,5 +48,4 @@ interface IProps {
     type?: any;
     withIcon?: boolean;
     disabled?: any;
-
 }

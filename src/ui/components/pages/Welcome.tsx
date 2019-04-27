@@ -10,12 +10,15 @@ import { I18N_NAME_SPACE } from '../../appConfig';
 export class Welcome extends React.Component {
     
     readonly props;
-    clickHandler = () => this.props.setTab(PAGES.CONDITIONS);
+    clickHandler = (e) => {
+        e.preventDefault();
+        this.props.setTab(PAGES.CONDITIONS);
+    };
     
     render() {
         return <div className={`${styles.content}`}>
             <BigLogo className="margin-main-large" />
-            <Button type={BUTTON_TYPE.SUBMIT} onClick={this.clickHandler} className="margin-main-big">
+            <Button type={BUTTON_TYPE.GENERAL} onClick={this.clickHandler} className="margin-main-big">
                 <Trans i18nKey='welcome.getStarted'>Get Started</Trans>
             </Button>
             <div className="basic500 body3">

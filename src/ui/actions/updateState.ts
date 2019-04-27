@@ -15,7 +15,11 @@ export function updateState(state) {
         balances = [],
         uiState = {},
         customNodes = {},
+        customCodes = {},
         customMatchers = {},
+        origins = {},
+        config = {},
+        idleOptions = {},
     } = state;
     const currentState = store.getState();
 
@@ -26,10 +30,31 @@ export function updateState(state) {
         });
     }
 
+    if (!equals(currentState.config, config)) {
+        actions.push({
+            type: ACTION.REMOTE_CONFIG.SET_CONFIG,
+            payload: config,
+        });
+    }
+    
+    if (!equals(currentState.idleOptions, idleOptions)) {
+        actions.push({
+            type: ACTION.REMOTE_CONFIG.UPDATE_IDLE,
+            payload: idleOptions,
+        });
+    }
+    
     if (!equals(currentState.customNodes, customNodes)) {
         actions.push({
             type: ACTION.UPDATE_NODES,
             payload: customNodes
+        });
+    }
+    
+    if (!equals(currentState.customCodes, customCodes)) {
+        actions.push({
+            type: ACTION.UPDATE_CODES,
+            payload: customCodes
         });
     }
     
@@ -47,7 +72,7 @@ export function updateState(state) {
         });
     }
 
-    if (uiState) {
+    if (!equals(uiState, currentState.uiState)) {
         actions.push({
             type: ACTION.UPDATE_UI_STATE,
             payload: uiState
@@ -61,12 +86,27 @@ export function updateState(state) {
         });
     }
 
-    const unapprovedMessages = messages.filter(msg => msg.status === 'unapproved');
+    if (!equals(origins, currentState.origins)) {
+        actions.push({
+            type: ACTION.UPDATE_ORIGINS,
+            payload: origins,
+        });
+    }
+    
+    function isMyMessages(msg) {
+        try {
+            return msg.status === 'unapproved' && (msg.account.address === selectedAccount.address && msg.account.network === selectedAccount.network);
+        } catch (e) {
+            return false;
+        }
+    }
+    
+    const unapprovedMessages = messages.filter(isMyMessages);
     
     if (!equals(unapprovedMessages, currentState.messages)) {
         actions.push({
             type: ACTION.UPDATE_MESSAGES,
-            payload: unapprovedMessages
+            payload: { unapprovedMessages, messages },
         });
     }
     
@@ -94,10 +134,8 @@ export function updateState(state) {
             payload: { initialized, locked }
         });
     }
-
-    const hasNewBalance = Object.keys(balances).filter(key => balances[key] !== currentState.balances[key]).length;
-
-    if (hasNewBalance) {
+    
+    if (!equals(balances, currentState.balances)) {
         actions.push({
             type: ACTION.UPDATE_BALANCES,
             payload: balances

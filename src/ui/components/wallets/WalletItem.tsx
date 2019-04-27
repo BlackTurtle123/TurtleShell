@@ -13,6 +13,7 @@ export const WalletItem = ({
         account = null,
         active = false,
         balance = null,
+        leaseBalance = null,
         children = [],
         ...props
     }) => {
@@ -55,8 +56,8 @@ export const WalletItem = ({
 
         <div className={styles.controls}>
             {children}
-            <div onClick={selectHandler} className={iconClass}></div>
-            <div className={`${styles.accountIconTooltip} tooltip`}>
+            <div onClick={selectHandler} className={`showTooltip ${iconClass}`}></div>
+            <div className={`${styles.makeActiveTooltip} tooltip`}>
                 <Trans i18nKey='wallet.tooltip.makeActive'>Make active</Trans>
             </div>
         </div>
