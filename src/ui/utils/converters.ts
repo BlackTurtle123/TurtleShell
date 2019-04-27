@@ -1,8 +1,8 @@
-import { BigNumber, Money } from '@waves/data-entities';
+import { BigNumber, Money } from '@turtlenetwork/data-entities';
 
 export const moneyLikeToMoney = (amount: IMoneyLike, assets): Money => {
     if (amount) {
-        let amountResult = new Money(0, assets[amount.assetId || 'WAVES']);
+        let amountResult = new Money(0, assets[amount.assetId || 'TN']);
 
         if ('tokens' in amount) {
             amountResult = amountResult.cloneWithTokens(amount.tokens || 0);
@@ -23,14 +23,14 @@ export const getMoney = (amount: TAmount, assets) => {
     }
     
     if (amount instanceof BigNumber) {
-        return new Money(amount, assets['WAVES']);
+        return new Money(amount, assets['TN']);
     }
     
     if (typeof amount === 'object' && (amount.tokens || amount.coins) ) {
         return moneyLikeToMoney(amount as IMoneyLike, assets);
     }
     
-    return new Money(new BigNumber(amount as string), assets['WAVES']);
+    return new Money(new BigNumber(amount as string), assets['TN']);
 };
 
 type TAmount = IMoneyLike|BigNumber|Money|string|number;

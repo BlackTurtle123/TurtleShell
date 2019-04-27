@@ -1,6 +1,6 @@
-import { SeedAdapter, TSignData } from '@waves/signature-adapter';
-import * as SG from '@waves/signature-generator';
-import { utils, libs } from '@waves/signature-generator';
+import { SeedAdapter, TSignData } from '@turtlenetwork/signature-adapter';
+import * as SG from '@turtlenetwork/signature-generator';
+import { utils, libs } from '@turtlenetwork/signature-generator';
 
 import { pipe, identity, isNil, ifElse, concat } from 'ramda';
 
@@ -18,12 +18,12 @@ export function getExplorerUrls(network: string, address: string) {
     
     switch (network) {
         case 'mainnet':
-            result.walletLink = 'https://client.wavesplatform.com/import/waveskeeper';
-            result.activeAddressLink = `https://wavesexplorer.com/address/${address}`;
+            result.walletLink = 'https://client.turtlenetwork.eu/import/waveskeeper';
+            result.activeAddressLink = `https://explorer.blackturtle.eu/address/${address}`;
             break;
         case 'testnet':
-            result.walletLink = 'https://testnet.wavesplatform.com/import/waveskeeper';
-            result.activeAddressLink = `https://wavesexplorer.com/testnet/address/${address}`;
+            result.walletLink = 'https://client.turtlenetwork.eu/import/waveskeeper';
+            result.activeAddressLink = `https://testnetexplorer.blackturtle.eu/testnet/address/${address}`;
             break;
     }
     

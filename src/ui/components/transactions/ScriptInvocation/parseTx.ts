@@ -1,5 +1,5 @@
-import { SIGN_TYPE } from '@waves/signature-adapter';
-import { BigNumber } from '@waves/data-entities';
+import { SIGN_TYPE } from '@turtlenetwork/signature-adapter';
+import { BigNumber } from '@turtlenetwork/data-entities';
 
 export const messageType = 'script_invocation';
 export const txType = 'transaction';
@@ -15,17 +15,17 @@ export function getTransferAmount(amount, assetId) {
 }
 
 export function getAssetsId(tx): Array<string> {
-    const feeAssetId = tx.fee && tx.fee.assetId ? tx.fee.assetId : tx.feeAssetId || 'WAVES';
+    const feeAssetId = tx.fee && tx.fee.assetId ? tx.fee.assetId : tx.feeAssetId || 'TN';
     const amountAssetId = [];
     
     (tx.payment || []).map(item => {
         switch (typeof item) {
             case 'string':
-                return 'WAVES';
+                return 'TN';
             case 'number':
-                return  'WAVES';
+                return  'TN';
             case 'object':
-                return  item && item.assetId ? item.assetId : 'WAVES';
+                return  item && item.assetId ? item.assetId : 'TN';
         }
     });
     
@@ -33,7 +33,7 @@ export function getAssetsId(tx): Array<string> {
 }
 
 export function getFee(tx) {
-    return typeof tx.fee === 'object' ? tx.fee : { coins: tx.fee, assetId: 'WAVES' };
+    return typeof tx.fee === 'object' ? tx.fee : { coins: tx.fee, assetId: 'TN' };
 }
 
 export function getAmount(tx) {
@@ -55,7 +55,7 @@ export function getAmount(tx) {
         }
     });
     
-    const assetId = ((tx.payment || [])[0] || {}).assetId || 'WAVES';
+    const assetId = ((tx.payment || [])[0] || {}).assetId || 'TN';
     
     return { coins, tokens, assetId };
 }

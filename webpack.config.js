@@ -10,7 +10,6 @@ const DIST = config.DIST || 'dist';
 const LANGS = config.LANGS || ['en'];
 const PAGE_TITLE = config.PAGE_TITLE || 'TurtleShell';
 const PLATFORMS = config.PLATFORMS || ['chrome', 'firefox', 'opera', 'edge'];
-
 module.exports = () => {
     const version = getVersion();
     if (!version) {

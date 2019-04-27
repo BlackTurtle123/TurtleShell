@@ -68,7 +68,7 @@
     "conditions": {
         "accept": "Accept",
         "agreement": "Agreement",
-        "attention": "ATTENTION: PLEASE READ CAREFULLY THESE TERMS AND CONDITIONS AS THEY AFFECT YOUR OBLIGATIONS AND LEGAL RIGHTS, INCLUDING, BUT NOT LIMITED TO WAIVERS OF RIGHTS AND LIMITATION OF LIABILITY. IF YOU DO NOT AGREE WITH THESE TERMS AND CONDITIONS DO NOT PROCEED WITH REGISTRATION AT WAVES PLATFORM",
+        "attention": "ATTENTION: PLEASE READ CAREFULLY THESE TERMS AND CONDITIONS AS THEY AFFECT YOUR OBLIGATIONS AND LEGAL RIGHTS, INCLUDING, BUT NOT LIMITED TO WAIVERS OF RIGHTS AND LIMITATION OF LIABILITY. IF YOU DO NOT AGREE WITH THESE TERMS AND CONDITIONS DO NOT PROCEED WITH REGISTRATION AT TN PLATFORM",
         "title": "Terms and conditions"
     },
     "confirmBackup": {
@@ -112,8 +112,8 @@
         "newSeed": "Wallet Seed"
     },
     "info": {
-        "joinUs": "Join the Waves Community",
-        "keepUp": "Waves Keeper — is the safest way to interact with third-party web resources with Waves-integrated functionality or DApps. Using Waves Keeper, you can sign transactions and remain safe from malicious sites."
+        "joinUs": "Join the TN Community",
+        "keepUp": "TurtleShell — is the safest way to interact with third-party web resources with TN-integrated functionality or DApps. Using TurtleShell, you can sign transactions and remain safe from malicious sites."
     },
     "langsSettings": {
         "confirm": "Confirm",
@@ -158,7 +158,7 @@
         "create": "Continue",
         "createPassword": "Create a password",
         "notMatch": "Passwords does not match",
-        "passinfo": "The password you entered will be stored locally. If you change device or lose your password, you will have to repeat the process of adding accounts to Waves Keeper. Waves does not store your passwords.",
+        "passinfo": "The password you entered will be stored locally. If you change device or lose your password, you will have to repeat the process of adding accounts to TurtleShell. TN does not store your passwords.",
         "protect": "Protect Your Account",
         "smallPass": "Password is too short"
     },
@@ -183,7 +183,7 @@
         "allow": "Allow",
         "block": "Block",
         "deny": "Deny",
-        "description": "wants to access your Waves Address",
+        "description": "wants to access your TN Address",
         "title": "Allow access"
     },
     "pairing": {
@@ -275,9 +275,9 @@
         "reject": "Reject",
         "rejected": "Your transaction is rejected!",
         "requestRejected": "Request has not been signed",
-        "signAccessHost": "wants to access your Waves Address",
-        "signAccessInfo": "The application will have access to your Waves address but will not expose your SEED or private key. Never enter your secret phrase (SEED) on any website you are redirected to.",
-        "signAccessWaves": "Sign in with Waves",
+        "signAccessHost": "wants to access your TN Address",
+        "signAccessInfo": "The application will have access to your TN address but will not expose your SEED or private key. Never enter your secret phrase (SEED) on any website you are redirected to.",
+        "signAccessWaves": "Sign in with TN",
         "signButton": "Sign",
         "someError": "Something went wrong",
         "switchAccount": "Switch account",
@@ -360,7 +360,7 @@
         "orderPrice": "Price",
         "orderSell": "Sell",
         "orderType": "Order Type",
-        "originWarning": "wants to access your Waves Address",
+        "originWarning": "wants to access your TN Address",
         "packTransactionFee": "Fee",
         "packTransactionGroup": "Group",
         "packTransactions": "Transactions",
@@ -369,7 +369,7 @@
         "permission": {
             "details": "Permission details"
         },
-        "permissionsWarning": "The application will have access to your Waves address but will not expose your SEED or private key. Never enter your secret phrase (SEED) on any website you are redirected to.",
+        "permissionsWarning": "The application will have access to your TN address but will not expose your SEED or private key. Never enter your secret phrase (SEED) on any website you are redirected to.",
         "price": "Price",
         "recipients": "Recipients",
         "reissuable": "Reissuable",
@@ -387,7 +387,7 @@
         "setSponsored": "Set Sponsorship",
         "showAll": "Show all",
         "showTransactions": "Show transactions",
-        "signAccessWaves": "Sign in with Waves",
+        "signAccessWaves": "Sign in with TN",
         "signCustomRequest": "Sign a request",
         "signMatcherRequest": "Sign a request to the Matcher",
         "signRequest": "Sign a request to the Coinomat",
@@ -404,13 +404,13 @@
         "txid": "TXID",
         "txTime": "TX Time",
         "unknown": "Unknown",
-        "waves": "WAVES"
+        "waves": "TN"
     },
     "ui": {
         "accountName": "Account name",
         "activeAccount": "Active account",
-        "logo-title": "Keep your Waves keys safe online",
-        "logoTitle": "Keep your Waves keys safe online",
+        "logo-title": "Keep your TN keys safe online",
+        "logoTitle": "Keep your TN keys safe online",
         "showQR": "Show QR"
     },
     "ur": {
@@ -426,7 +426,7 @@
     },
     "welcome": {
         "getStarted": "Get Started",
-        "info": "Waves Keeper — is the safest way to interact with third-party web resources with Waves-integrated functionality or DApps.",
-        "info2": "Using Waves Keeper, you can sign transactions and remain safe from malicious sites."
+        "info": "TurtleShell — is the safest way to interact with third-party web resources with TN-integrated functionality or DApps.",
+        "info2": "Using TurtleShell, you can sign transactions and remain safe from malicious sites."
     }
 }

@@ -273,11 +273,11 @@ Example:
         type: 4,
         data: {
             amount: {
-               assetId: "WAVES",
+               assetId: "TN",
                tokens: "1.567"
             },
             fee: {
-                assetId: "WAVES",
+                assetId: "TN",
                 tokens: "0.001"
             },
             recipient: "test"
@@ -295,7 +295,7 @@ API returns lines, not an object, as in javascript precision is lost in operatio
 
 A description of supported transaction types is below.
 
-In the example, we are signing a transaction for transferring WAVES to the alias `test `in Waves' network.
+In the example, we are signing a transaction for transferring TN to the alias `test `in Waves' network.
 
 REPLY `{"version":2,"assetId":"", "amount":156700000,"feeAssetId":"",fee:100000, "recipient":"recipient","attachment":"", "timestamp":1548770230589,"senderPublicKey":"public key","proofs":["signature"],"type":4}`
 
@@ -319,11 +319,11 @@ Example:
            type: 4,
            data: {
                amount: {
-                  assetId: "WAVES",
+                  assetId: "TN",
                   tokens: "1.567"
                },
                fee: {
-                   assetId: "WAVES",
+                   assetId: "TN",
                    tokens: "0.001"
                },
                recipient: "test"
@@ -369,11 +369,11 @@ Example:
         type: 4,
         data: {
             amount: {
-               assetId: "WAVES",
+               assetId: "TN",
                tokens: "1.567"
             },
             fee: {
-                assetId: "WAVES",
+                assetId: "TN",
                 tokens: "0.001"
             },
             recipient: "test"
@@ -381,11 +381,11 @@ Example:
         type: 4,
         data: {
             amount: {
-               assetId: "WAVES",
+               assetId: "TN",
                tokens: "0.51"
             },
             fee: {
-                assetId: "WAVES",
+                assetId: "TN",
                 tokens: "0.001"
             },
             recipient: "merry"
@@ -401,8 +401,8 @@ Sign two transaction:
 
 
 
-*   Transfer 1.567 WAVES to the alias test 
-*   Transfer 0.1 WAVES to the alias merry
+*   Transfer 1.567 TN to the alias test 
+*   Transfer 0.1 TN to the alias merry
 
 REPLY
 
@@ -441,10 +441,10 @@ MoneyLike could look as:
 
 
 
-*   `{ tokens: 1, assetId: "WAVES" }`
-*   `{ coins: 100000000, assetId: "WAVES" }`;
+*   `{ tokens: 1, assetId: "TN" }`
+*   `{ coins: 100000000, assetId: "TN" }`;
 
-In both messages, the same price of 1 WAVES is indicated. You can easily convert `coins `into `tokens `and back, if you know in what asset the price is indicated and you have received its precision `tokens = coins / (10 ** precision)` \
+In both messages, the same price of 1 TN is indicated. You can easily convert `coins `into `tokens `and back, if you know in what asset the price is indicated and you have received its precision `tokens = coins / (10 ** precision)` \
 If the field contains other types than MoneyLike, for instance, string/MoneyLike , the sum is indicated as a number in  `coins`.
 
 
@@ -480,7 +480,7 @@ Example:
              "reissuable": true,
              fee: {
                  "tokens": "1",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -511,12 +511,12 @@ Example:
     WavesKeeper.signAndPublishTransaction({
         type: 4,
         data: {
-            amount: { tokens: "3.3333333", assetId: "WAVES" },
-            fee: { tokens: "0.001", assetId: "WAVES"},
+            amount: { tokens: "3.3333333", assetId: "TN" },
+            fee: { tokens: "0.001", assetId: "TN"},
             recipient: "merry"
         }
     }).then((tx) => {
-         console.log("Hurray! I've been able to send WAVES!!!");
+         console.log("Hurray! I've been able to send TN!!!");
     }).catch((error) => {
          console.error("Something went wrong", error);
     });
@@ -546,7 +546,7 @@ Example:
                 "reissuable": true,
                 fee: {
                     "tokens": "1",
-                    "assetId": "WAVES"
+                    "assetId": "TN"
                 }
            }
       }).then((tx) => {
@@ -580,7 +580,7 @@ Example:
              assetId: "8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -614,7 +614,7 @@ Example:
              "recipient": "merry",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -625,7 +625,7 @@ Example:
 ```
 
 
-In case of a success, 0.00001000 WAVES is leased.
+In case of a success, 0.00001000 TN is leased.
 
 **[Тype 9 LEASE CANCEL – cancel leasing](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-92869b0109414c29eb600dfc6caf4520)**
 
@@ -646,7 +646,7 @@ Example:
              leaseId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -678,7 +678,7 @@ Example:
              alias: "testAlias",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -710,14 +710,14 @@ Example:
    WavesKeeper.signAndPublishTransaction({
         type: 11,
         data: {
-             totalAmount: { assetId: "WAVES", coins: 0},
+             totalAmount: { assetId: "TN", coins: 0},
              transfers: [
                 { recipient: "alias1", amount: "200000" },
                 { recipient: "alias2", amount: "200000" },
              ],
              fee: {
                  "tokens": "0.002",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -728,7 +728,7 @@ Example:
 ```
 
 
-In case of a success, 0.002 WAVES will be sent to alias1 and alias2.
+In case of a success, 0.002 TN will be sent to alias1 and alias2.
 
 **[Тype 12 DATA TRANSACTION - saving data](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-f6e7a2443d41af2a0ef8b4c4c33ba6b3)**
 
@@ -757,7 +757,7 @@ Field:
              ],
              fee: {
                  "tokens": "0.01",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -791,7 +791,7 @@ Example:
              script: "",
              fee: {
                  "tokens": "0.04",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -814,7 +814,7 @@ Example 2:
              script: "base64:AQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tH",
              fee: {
                  "tokens": "0.01",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -849,7 +849,7 @@ Example:
              },
              fee: {
                  "tokens": "1",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -885,7 +885,7 @@ Example:
              script: "base64:AQa3b8tH",
              fee: {
                  "tokens": "0.01",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -917,7 +917,7 @@ Example:
         data: {
              fee: {
                  "tokens": "0.05",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              },
              dappAddress: '3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU',
              call: {
@@ -927,7 +927,7 @@ Example:
              		      "type": "string", 
              		      "value": "Will?"
              		    }]
-             	}, payment: [{assetId: "WAVES", tokens: 2}]
+             	}, payment: [{assetId: "TN", tokens: 2}]
         }
    }).then((tx) => {
         console.log("Ура! Я выполнил скрипт!!!");
@@ -965,7 +965,7 @@ Waves Keeper's method for signing an order to the matcher. As input, it accepts 
 *   `amount` MoneyLike - amount
 *   `price` MoneyLike - price
 *   `orderType` 'sell'/'buy' – order type
-*   `matcherFee` MoneyLike - fee (0.003 WAVES minimum),
+*   `matcherFee` MoneyLike - fee (0.003 TN minimum),
 *   `matcherPublicKey` string - the public key of the exchange service
 *   `expiration` string/number – the order's expiration time
 *   `*timestamp` string/number - current time
@@ -983,7 +983,7 @@ Example:
              expiration: Date.now() + 100000,
              amount: {
                  tokens: "100",
-                 assetId: "WAVES"
+                 assetId: "TN"
              },
              price: {
                  tokens: "0.01",
@@ -991,7 +991,7 @@ Example:
              },
              matcherFee: {
                  tokens: "0.03",
-                 assetId: "WAVES"
+                 assetId: "TN"
              }
         }
    }).then((tx) => {

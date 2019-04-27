@@ -1,18 +1,18 @@
-import { SIGN_TYPE } from '@waves/signature-adapter';
+import { SIGN_TYPE } from '@turtlenetwork/signature-adapter';
 
 export const messageType = 'matcher_orders';
 export const txType = 'request';
 
 export function getAssetsId(tx = null): Array<string> {
-    return ['WAVES'];
+    return ['TN'];
 }
 
 export function getFee(tx = null) {
-    return { coins: 0, assetId: 'WAVES' };
+    return { coins: 0, assetId: 'TN' };
 }
 
 export function getAmount(tx = null) {
-    return { coins: 0, assetId: 'WAVES' };
+    return { coins: 0, assetId: 'TN' };
 }
 
 export function getAmountSign() {

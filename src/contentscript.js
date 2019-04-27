@@ -45,8 +45,8 @@ function injectBundle() {
 
 function setupConnection() {
     const pageStream = new LocalMessageDuplexStream({
-        name: 'waves_keeper_content',
-        target: 'waves_keeper_page',
+        name: 'turtleshell_content',
+        target: 'turtleshell_page',
     });
 
     const pluginPort = extension.runtime.connect({name: 'contentscript'});
@@ -68,9 +68,8 @@ function setupConnection() {
  * @param {Error} err Stream connection error
  */
 function logStreamDisconnectWarning(remoteLabel, err) {
-
-    let warningMsg = `TNkeeperContentscript - lost connection to ${remoteLabel}`;
-    if (err) warningMsg += '\n' + err.stack;
+    let warningMsg = `TurtleShellContentscript - lost connection to ${remoteLabel}`
+    if (err) warningMsg += '\n' + err.stack
     console.warn(warningMsg)
 }
 

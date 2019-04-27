@@ -273,7 +273,7 @@ gulp.task('dist',
 function zipTask(target) {
     return () => {
         return gulp.src(`dist/${target}/**`)
-            .pipe(zip(`waveskeeper-${target}-${manifest.version}.zip`))
+            .pipe(zip(`turtleshell-${target}-${manifest.version}.zip`))
             .pipe(gulp.dest('builds'))
     }
 }
@@ -286,7 +286,7 @@ function generateBundler(opts, performBundle) {
         fullPaths: opts.buildWithFullPaths,
         //temporary fix waves-api lib not supporting browserify
         noParse: [
-            __dirname + '/node_modules/@turtlenetwork/waves-signature-generator/dist/waves-signature-generator.js',
+            __dirname + '/node_modules/@turtlenetwork/signature-generator/dist/signature-generator.js',
         ]
     })
 

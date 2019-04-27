@@ -1,5 +1,5 @@
 import ObservableStore from 'obs-store';
-import { BigNumber } from "@waves/data-entities/dist/libs/bignumber";
+import { BigNumber } from "@turtlenetwork/data-entities/dist/libs/bignumber";
 import { uniq } from 'ramda';
 import { allowMatcher } from '../constants';
 
@@ -259,7 +259,7 @@ const getTxAmount = (tx) => {
         result = getTxDataAmount(tx);
     }
 
-    if (result.fee.assetId === result.amount.assetId && result.fee.assetId === 'WAVES') {
+    if (result.fee.assetId === result.amount.assetId && result.fee.assetId === 'TN') {
         return result.fee.amount.plus(result.amount.amount);
     }
 
@@ -272,12 +272,12 @@ const getTxReceiveAmount = (tx) => {
 
     if (tx.data.fee) {
         fee.amount = moneyLikeToBigNumber(tx.data.fee, 8);
-        fee.assetId = tx.data.fee.assetId || 'WAVES';
+        fee.assetId = tx.data.fee.assetId || 'TN';
     }
 
     if (tx.data.amount) {
         amount.amount = moneyLikeToBigNumber(tx.data.amount, 8);
-        amount.assetId = tx.data.amount.assetId || 'WAVES';
+        amount.assetId = tx.data.amount.assetId || 'TN';
     }
 
     return { amount, fee };
@@ -289,7 +289,7 @@ const getTxMassReceiveAmount = (tx) => {
 
     if (tx.data.fee) {
         fee.amount = moneyLikeToBigNumber(tx.data.fee, 8);
-        fee.assetId = tx.data.fee.assetId || 'WAVES';
+        fee.assetId = tx.data.fee.assetId || 'TN';
     }
 
     amount.assetId = tx.data.assetId || tx.data.totalAmount.assetId;
@@ -302,11 +302,11 @@ const getTxMassReceiveAmount = (tx) => {
 
 const getTxDataAmount = (tx) => {
     let fee = { amount: null, assetId: null };
-    let amount = { amount: new BigNumber(0), assetId: 'WAVES' };
+    let amount = { amount: new BigNumber(0), assetId: 'TN' };
 
     if (tx.data.fee) {
         fee.amount = moneyLikeToBigNumber(tx.data.fee, 8);
-        fee.assetId = tx.data.fee.assetId || 'WAVES';
+        fee.assetId = tx.data.fee.assetId || 'TN';
     }
 
     return { amount, fee };
@@ -314,7 +314,7 @@ const getTxDataAmount = (tx) => {
 
 const getPackAmount = (txs) => {
 
-    const fee = { amount: new BigNumber(0), assetId: 'WAVES' };
+    const fee = { amount: new BigNumber(0), assetId: 'TN' };
     const amount = { amount: new BigNumber(0), assetId: null };
 
     for (const tx of txs) {
@@ -328,7 +328,7 @@ const getPackAmount = (txs) => {
             result = getTxDataAmount(tx);
         }
 
-        if (result && result.fee.assetId !== result.amount.assetId || result.fee.assetId !== 'WAVES') {
+        if (result && result.fee.assetId !== result.amount.assetId || result.fee.assetId !== 'TN') {
             return { amount, fee: { assetId: null, amount: null } };
         }
 

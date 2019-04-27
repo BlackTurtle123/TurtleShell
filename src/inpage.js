@@ -1,5 +1,5 @@
 import LocalMessageDuplexStream from 'post-message-stream';
-import { setupDnode, transformMethods, cbToPromise } from './lib/dnode-util';
+import {cbToPromise, setupDnode, transformMethods} from './lib/dnode-util';
 import log from "loglevel";
 import EventEmitter from 'events';
 
@@ -19,12 +19,12 @@ async function setupInpageApi() {
     };
 
     const def = createDeffer();
-    const waves = { initialPromise: def.propmise };
-    global.WavesKeeper = global.Waves = waves;
+    const tn = { initialPromise: def.propmise };
+    global.TurtleShell = global.Tn = tn;
 
     const connectionStream = new LocalMessageDuplexStream({
-        name: 'waves_keeper_page',
-        target: 'waves_keeper_content',
+        name: 'turtleshell_page',
+        target: 'TurtleContent',
     });
 
     const eventEmitter = new EventEmitter();
@@ -44,8 +44,8 @@ async function setupInpageApi() {
 
     setupClickInterceptor(inpageApi);
 
-    Object.assign(waves, inpageApi);
-    def.resolve(waves);
+    Object.assign(tn, inpageApi);
+    def.resolve(tn);
 
 }
 
@@ -139,6 +139,7 @@ function processPaymentAPILink({ type, hash }, inpageApi) {
                 type: 4,
                 successPath: apiData.referrer,
                 data: {
+                    version: 1,
                     amount: {
                         assetId: assetId,
                         tokens: apiData.amount

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { libs } from '@waves/signature-generator';
+import { libs } from '@turtlenetwork/signature-generator';
 import * as cn from 'classnames';
 import * as styles from './attachment.styl';
 

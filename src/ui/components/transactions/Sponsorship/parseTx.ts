@@ -1,4 +1,4 @@
-import { SIGN_TYPE } from '@waves/signature-adapter';
+import { SIGN_TYPE } from '@turtleshell/signature-adapter';
 
 export const messageType = 'sponsorship';
 export const txType = 'transaction';
@@ -8,12 +8,12 @@ export const SPONSOR_MODE = {
 };
 
 export function getAssetsId(tx): Array<string> {
-    const feeAssetId = tx.fee && tx.fee.assetId ? tx.fee.assetId : tx.feeAssetId || 'WAVES';
+    const feeAssetId = tx.fee && tx.fee.assetId ? tx.fee.assetId : tx.feeAssetId || 'TN';
     return [feeAssetId];
 }
 
 export function getFee(tx) {
-    return typeof tx.fee === 'object' ? tx.fee : { coins: tx.fee, assetId: 'WAVES' };
+    return typeof tx.fee === 'object' ? tx.fee : { coins: tx.fee, assetId: 'TN' };
 }
 
 export function getAssetFee(tx) {
@@ -22,7 +22,7 @@ export function getAssetFee(tx) {
 }
 
 export function getAmount(tx = null) {
-    return { coins: 0, assetId: 'WAVES' };
+    return { coins: 0, assetId: 'TN' };
 }
 
 export function getAmountSign() {

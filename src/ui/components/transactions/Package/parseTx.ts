@@ -1,4 +1,4 @@
-import { BigNumber } from '@waves/data-entities';
+import { BigNumber } from '@turtlenetwork/data-entities';
 import { getMoney } from '../../../utils/converters';
 import { getConfigByTransaction } from '../index';
 
@@ -13,20 +13,20 @@ export function getTransactionData(item) {
 
 export function getAssetsId(tx): Array<string> {
     if (!Array.isArray(tx)) {
-        return ['WAVES'];
+        return ['TN'];
     }
     
     const assets = tx.reduce((acc, item) => {
         const { tx, config } = getTransactionData(item);
         config.getAssetsId(tx).forEach(item => acc.add(item));
         return acc;
-    }, new Set(['WAVES']));
+    }, new Set(['TN']));
     
     return Array.from(assets);
 }
 
 export function getFee(tx = null) {
-    return { coins: 0, assetId: 'WAVES' };
+    return { coins: 0, assetId: 'TN' };
 }
 
 
@@ -68,7 +68,7 @@ export function getAmounts(tx = null, assets) {
 }
 
 export function getAmount(tx = null) {
-    return { coins: 0, assetId: 'WAVES' };
+    return { coins: 0, assetId: 'TN' };
 }
 
 export function getAmountSign() {

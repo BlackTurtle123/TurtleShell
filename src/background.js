@@ -29,7 +29,7 @@ import {
 import { PERMISSIONS } from './controllers/PermissionsController';
 import {setupDnode} from './lib/dnode-util';
 import {WindowManager} from './lib/WindowManger'
-import { getAdapterByType } from '@waves/signature-adapter'
+import { getAdapterByType } from '@turtleshell/signature-adapter'
 import { WAVESKEEPER_DEBUG } from  './constants';
 
 const isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
@@ -415,6 +415,7 @@ class BackgroundService extends EventEmitter {
                 return await newMessage(data, 'transactionPackage', from, false, title)
             },
             signAndPublishTransaction: async (data, from) => {
+                console.log(data);
                 return await newMessage(data, 'transaction', from, true)
             },
             auth: async (data, from) => {

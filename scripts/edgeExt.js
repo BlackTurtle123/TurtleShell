@@ -7,10 +7,10 @@ const DIST_PATH = path.resolve(DIST);
 const ROOT_PATH = path.resolve(EXT_DIST);
 const distUtil = 'manifoldjs';
 
-const PACKAGE_IDENTITY_NAME = '60844WavesPlatform.WavesKeeper';
-const PACKAGE_IDENTITY_PUBLISHER = '4268AF7A-13B3-4B08-923A-DF5F6D92E653';
-const PUBLISHER_NAME = 'WavesPlatform';
-const NAME = 'WavesKeeper';
+const PACKAGE_IDENTITY_NAME = 'XXXXXXXXXXXXXXX';
+const PACKAGE_IDENTITY_PUBLISHER = 'XXXXXXXXXXXXXXX';
+const PUBLISHER_NAME = 'BlackTurtle';
+const NAME = 'TurtleShell';
 
 const REPLACE_PATTERN = {
     "0.1.1.3": "1.1.3.0", //TODO delete after first release
@@ -20,7 +20,7 @@ const REPLACE_PATTERN = {
     "<Resource Language=\"ru\" />": '',
     "<!-- UPDATE PUBLISHER DISPLAY NAME -->": '',
     "<!-- UPDATE IDENTITY -->": '',
-    "__MSG_appName__": "Waves Keeper",
+    "__MSG_appName__": "Turtle Shell",
     "__MSG_appDescription__": "Manage your private keys securely",
 };
 

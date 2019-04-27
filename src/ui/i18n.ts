@@ -4,6 +4,7 @@ import { default as Locize } from 'i18next-locize-backend';
 import { I18N_NAME_SPACE, WAVESKEEPER_DEBUG } from './appConfig';
 
 
+
 let backendPath = { loadPath: './_locales/{{lng}}/{{ns}}.{{lng}}.json' } as any;
 
 // if (WAVESKEEPER_DEBUG) {

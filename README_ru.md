@@ -230,11 +230,11 @@
         type: 4,
         data: {
             amount: {
-               assetId: "WAVES",
+               assetId: "TN",
                tokens: "1.567"
             },
             fee: {
-                assetId: "WAVES",
+                assetId: "TN",
                 tokens: "0.001"
             },
             recipient: "test"
@@ -271,11 +271,11 @@
            type: 4,
            data: {
                amount: {
-                  assetId: "WAVES",
+                  assetId: "TN",
                   tokens: "1.567"
                },
                fee: {
-                   assetId: "WAVES",
+                   assetId: "TN",
                    tokens: "0.001"
                },
                recipient: "test"
@@ -319,11 +319,11 @@
         type: 4,
         data: {
             amount: {
-               assetId: "WAVES",
+               assetId: "TN",
                tokens: "1.567"
             },
             fee: {
-                assetId: "WAVES",
+                assetId: "TN",
                 tokens: "0.001"
             },
             recipient: "test"
@@ -331,11 +331,11 @@
         type: 4,
         data: {
             amount: {
-               assetId: "WAVES",
+               assetId: "TN",
                tokens: "0.51"
             },
             fee: {
-                assetId: "WAVES",
+                assetId: "TN",
                 tokens: "0.001"
             },
             recipient: "merry"
@@ -385,10 +385,10 @@
 > MoneyLike - цена
 
 MoneyLike может иметь вид:  
-* ``{ tokens: 1, assetId: "WAVES" }``
-* ``{ coins: 100000000, assetId: "WAVES" }``; 
+* ``{ tokens: 1, assetId: "TN" }``
+* ``{ coins: 100000000, assetId: "TN" }``; 
   
-В обоих записях указана одинаковая цена 1 WAVES. Можно свободно перевести `coins` в `tokens` и  обратно,
+В обоих записях указана одинаковая цена 1 TN. Можно свободно перевести `coins` в `tokens` и  обратно,
 зная в каком ассете указана цена и получив его точность `tokens = coins / (10 ** precision)`  
 Если в поле указаны дополнительные типы кроме MoneyLike, например string/MoneyLike , сумма указывается числом в `coins`.
   
@@ -420,7 +420,7 @@ MoneyLike может иметь вид:
              "reissuable": true,
              fee: {
                  "tokens": "1",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -450,8 +450,8 @@ MoneyLike может иметь вид:
     WavesKeeper.signAndPublishTransaction({
         type: 4,
         data: {
-            amount: { tokens: "3.3333333", assetId: "WAVES" },
-            fee: { tokens: "0.001", assetId: "WAVES"},
+            amount: { tokens: "3.3333333", assetId: "TN" },
+            fee: { tokens: "0.001", assetId: "TN"},
             recipient: "merry"
         }
     }).then((tx) => {
@@ -483,7 +483,7 @@ MoneyLike может иметь вид:
                 "reissuable": true,
                 fee: {
                     "tokens": "1",
-                    "assetId": "WAVES"
+                    "assetId": "TN"
                 }
            }
       }).then((tx) => {
@@ -516,7 +516,7 @@ MoneyLike может иметь вид:
              assetId: "8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -546,7 +546,7 @@ MoneyLike может иметь вид:
              "recipient": "merry",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -574,7 +574,7 @@ MoneyLike может иметь вид:
              leaseId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -602,7 +602,7 @@ MoneyLike может иметь вид:
              alias: "testAlias",
              fee: {
                  "tokens": "0.001",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -629,14 +629,14 @@ MoneyLike может иметь вид:
    WavesKeeper.signAndPublishTransaction({
         type: 11,
         data: {
-             totalAmount: { assetId: "WAVES", coins: 0},
+             totalAmount: { assetId: "TN", coins: 0},
              transfers: [
                 { recipient: "alias1", amount: "200000" },
                 { recipient: "alias2", amount: "200000" },
              ],
              fee: {
                  "tokens": "0.002",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -671,7 +671,7 @@ MoneyLike может иметь вид:
              ],
              fee: {
                  "tokens": "0.01",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -701,7 +701,7 @@ MoneyLike может иметь вид:
              script: "",
              fee: {
                  "tokens": "0.04",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -721,7 +721,7 @@ MoneyLike может иметь вид:
              script: "base64:AQa3b8tH",
              fee: {
                  "tokens": "0.01",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -754,7 +754,7 @@ MoneyLike может иметь вид:
              },
              fee: {
                  "tokens": "1",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -786,7 +786,7 @@ MoneyLike может иметь вид:
              script: "base64:AQa3b8tH",
              fee: {
                  "tokens": "0.01",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              }
         }
    }).then((tx) => {
@@ -818,7 +818,7 @@ MoneyLike может иметь вид:
         data: {
              fee: {
                  "tokens": "0.05",
-                 "assetId": "WAVES"
+                 "assetId": "TN"
              },
              dappAddress: '3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU',
              call: {
@@ -828,7 +828,7 @@ MoneyLike может иметь вид:
              		      "type": "string", 
              		      "value": "Will?"
              		    }]
-             	}, payment: [{assetId: "WAVES", tokens: 2}]
+             	}, payment: [{assetId: "TN", tokens: 2}]
         }
    }).then((tx) => {
         console.log("Ура! Я выполнил скрипт!!!");
@@ -874,7 +874,7 @@ MoneyLike может иметь вид:
              expiration: Date.now() + 100000,
              amount: {
                  tokens: "100",
-                 assetId: "WAVES"
+                 assetId: "TN"
              },
              price: {
                  tokens: "0.01",
@@ -882,7 +882,7 @@ MoneyLike может иметь вид:
              },
              matcherFee: {
                  tokens: "0.03",
-                 assetId: "WAVES"
+                 assetId: "TN"
              }
         }
    }).then((tx) => {
