@@ -29,7 +29,7 @@ import {
 import { PERMISSIONS } from './controllers/PermissionsController';
 import {setupDnode} from './lib/dnode-util';
 import {WindowManager} from './lib/WindowManger'
-import { getAdapterByType } from '@turtleshell/signature-adapter'
+import { getAdapterByType } from '@turtlenetwork/signature-adapter'
 import { WAVESKEEPER_DEBUG } from  './constants';
 
 const isEdge = window.navigator.userAgent.indexOf("Edge") > -1;

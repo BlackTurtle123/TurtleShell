@@ -1,4 +1,4 @@
-import { SIGN_TYPE } from '@turtleshell/signature-adapter';
+import { SIGN_TYPE } from '@turtlenetwork/signature-adapter';
 
 export const messageType = 'sponsorship';
 export const txType = 'transaction';

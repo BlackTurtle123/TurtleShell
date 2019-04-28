@@ -1,6 +1,6 @@
 import * as i18n from 'i18next';
 import { reactI18nextModule } from 'react-i18next';
-import { default as Locize } from 'i18next-locize-backend';
+import  * as Locize  from 'i18next-locize-backend';
 import { I18N_NAME_SPACE, WAVESKEEPER_DEBUG } from './appConfig';
 
 
