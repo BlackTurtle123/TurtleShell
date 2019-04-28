@@ -273,7 +273,7 @@ gulp.task('dist',
 function zipTask(target) {
     return () => {
         return gulp.src(`dist/${target}/**`)
-            .pipe(zip(`turtleshell-${target}-${manifest.version}.zip`))
+            .pipe(zip(`TurtleShell-${target}-${manifest.version}.zip`))
             .pipe(gulp.dest('builds'))
     }
 }

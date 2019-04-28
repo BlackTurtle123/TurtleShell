@@ -110,7 +110,7 @@ class ExtendedPermissionsComponent extends React.PureComponent<IProps, IState> {
                                onChange={this.amountHandler}
                                className={styles.amountInput}
                                value={value} placeholder={0}/>
-                        <div className={styles.waves}>Waves</div>
+                        <div className={styles.waves}>TN</div>
                  </div>
                 
             </div>

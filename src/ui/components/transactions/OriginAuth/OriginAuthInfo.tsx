@@ -15,7 +15,7 @@ export class OriginAuthInfo extends React.PureComponent<IOriginAuthInfo> {
                     </div>
                     <div>
                         <Trans i18nKey='sign.signAccessInfo'>
-                            The application will have access to your Waves address but will not expose your SEED or
+                            The application will have access to your TN address but will not expose your SEED or
                             private key.
                             Never enter your secret phrase (SEED) on any website you are redirected to.
                         </Trans>

@@ -45,8 +45,8 @@ function injectBundle() {
 
 function setupConnection() {
     const pageStream = new LocalMessageDuplexStream({
-        name: 'turtleshell_content',
-        target: 'turtleshell_page',
+        name: 'TurtleShell_content',
+        target: 'TurtleShell_page',
     });
 
     const pluginPort = extension.runtime.connect({name: 'contentscript'});
@@ -57,7 +57,7 @@ function setupConnection() {
         pageStream,
         pluginStream,
         pageStream,
-        (err) => logStreamDisconnectWarning('Waveskeeper Contentscript Forwarding', err)
+        (err) => logStreamDisconnectWarning('TurtleShell Contentscript Forwarding', err)
     );
 }
 

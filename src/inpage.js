@@ -23,8 +23,8 @@ async function setupInpageApi() {
     global.TurtleShell = global.Tn = tn;
 
     const connectionStream = new LocalMessageDuplexStream({
-        name: 'turtleshell_page',
-        target: 'TurtleContent',
+        name: 'TurtleShell_page',
+        target: 'TurtleShell_content',
     });
 
     const eventEmitter = new EventEmitter();
