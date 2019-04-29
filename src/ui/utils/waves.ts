@@ -19,11 +19,11 @@ export function getExplorerUrls(network: string, address: string) {
     switch (network) {
         case 'mainnet':
             result.walletLink = 'https://client.turtlenetwork.eu/';
-            result.activeAddressLink = `https://explorer.blackturtle.eu/address/${address}`;
+            result.activeAddressLink = `https://explorer.turtlenetwork.eu/address/${address}`;
             break;
         case 'testnet':
             result.walletLink = 'https://client.turtlenetwork.eu/';
-            result.activeAddressLink = `https://testnetexplorer.blackturtle.eu/testnet/address/${address}`;
+            result.activeAddressLink = `https://testnetexplorer.turtlenetwork.eu/testnet/address/${address}`;
             break;
     }
     
