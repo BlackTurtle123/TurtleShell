@@ -1,23 +1,23 @@
-# Waves Keeper v1.1.3        
-[en](https://github.com/wavesplatform/waveskeeper/blob/master/README.md) | ru
+# Turtle Shell v1.0.7        
+[en](https://github.com/BlackTurtle123/TurtleShell/blob/master/README.md) | ru
 
 Приложение для хранения данных пользователя  
 и проведения транзакций в блокчейн сети Waves.  
 [Информация о сети Waves](https://docs.wavesplatform.com/en/)
 
-## Waves Keeper API
+## Turtle Shell API
 
-На страницах браузера, работающим по протоколам http/https (не работает на локальных страничках по протоколу file://), 
-с установленным расширением Waves Keeper
-становятся доступным глобальный объект WavesKeeper 
+На страницах браузера, работающим по протоколам http/https (не работает на локальных страничках по протоколу file://),
+с установленным расширением Turtle Shell
+становятся доступным глобальный объект TurtleShell
 в котором вы найдете следующие методы:
-- `auth` 
+- `auth`
 - `publicState`
 - `signAndPublishCancelOrder`
-- `signAndPublishOrder` 
+- `signAndPublishOrder`
 - `signAndPublishTransaction`
 - `signCancelOrder`
-- `signOrder`, 
+- `signOrder`,
 - `signTransaction`
 - `signRequest`
 - `signTransactionPackage`
@@ -25,26 +25,26 @@
 
 > Все методы кроме `on` работают асинхронно и возвращают [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
-При загрузке страницы в объекте WavesKeeper нет методов апи до окончания инициализации плагина. 
-Для облегчения работы с WavesKeeper при инициализации в window.WavesKeeper есть initialPromise
+При загрузке страницы в объекте TurtleShell нет методов апи до окончания инициализации плагина.
+Для облегчения работы с TurtleShell при инициализации в window.TurtleShell есть initialPromise
 который отрабатывает в момент окончания инициализации.
 Пример:
 ```
-    WavesKeeper.initialPromise
-        .then((keeperApi) => { 
-            /*...инициализация работы приложения с WavesKeeper*/
+    TurtleShell.initialPromise
+        .then((keeperApi) => {
+            /*...инициализация работы приложения с TurtleShell*/
             keeperApi.publicState().then( state => startApp(state));
         })
-      
+
 ```
 
-В Waves Keeper, для большей безопасности и удобства использования, 
+В Turtle Shell, для большей безопасности и удобства использования,
 каждый новый сайт использующий API должен быть разрешен пользователем.
-При первой попытке использования API (кроме `on`) пользователю будет показан запрос на 
-разрешение работы Waves Keeper с этим сайтом. Если пользователь согласен дать доступ, 
-сайт становится доверенным, и получает возможность использовать API на своих страницах. 
-В противном случае, сайт блокируется и на все запросы будет возвращена ошибка 
-``{message: "Api rejected by user", code: 12}``, пользователь не увидит новых уведомлений. 
+При первой попытке использования API (кроме `on`) пользователю будет показан запрос на
+разрешение работы Turtle Shell с этим сайтом. Если пользователь согласен дать доступ,
+сайт становится доверенным, и получает возможность использовать API на своих страницах.
+В противном случае, сайт блокируется и на все запросы будет возвращена ошибка
+``{message: "Api rejected by user", code: 12}``, пользователь не увидит новых уведомлений.
 Для получения доступа, пользователь должен из интерфейса сделать сайт доверенным.
 
 ## Описание методов
@@ -54,7 +54,7 @@
 
 Пример:
 ```
-    WavesKeeper.publicState()
+    TurtleShell.publicState()
         .then(state => {
             console.log(state); //вывод в консоль результата
             /*...обработка данных */
@@ -62,13 +62,13 @@
             console.error(error); //вывод в консоль результата
             /*...обработка ошибок */
         })
-      
+
 ```
 или
 ```
     const getPublicState = async () => {
         try {
-            const state = await WavesKeeper.publicState();
+            const state = await TurtleShell.publicState();
             console.log(state); //вывод в консоль результата
             /*...обработка данных */
         } catch(error) {
@@ -76,7 +76,7 @@
             /*...обработка ошибок */
         }
       }
-      
+
       const result = await getPublicState();
 ```
 
@@ -88,17 +88,17 @@
     "account": {
         "name": "foo",
         "publicKey": "bar",
-        "address": "waves адресс",
+        "address": "tn адресс",
         "networkCode": "байт сети",
         "balance": {
-            "available": "баланс в waves",
+            "available": "баланс в tn",
             "leasedOut": "баланс в лизинге"
         }
     },
     "network": {
-        "code": "W",
-        "server": "https://nodes.wavesplatform.com/",
-        "matcher": "https://matcher.wavesplatform.com/"
+        "code": "L",
+        "server": "https://privatenode2.blackturtle.eu/",
+        "matcher": "https://privatematcher.blackturtle.eu/"
     },
     "messages": [],
     "txVersion": {
@@ -121,20 +121,20 @@
 
 Возможные ошибки
 
-+ `{ message: "Init Waves Keeper and add account" }` - кипер не проинициализирован 
-+ `{ message: "Add Waves Keeper account" }` - вход в кипер произведен, но нет аккаунтов  
++ `{ message: "Init Turtle Shell and add account" }` - кипер не проинициализирован
++ `{ message: "Add Turtle Shell account" }` - вход в кипер произведен, но нет аккаунтов  
 + `{ message: "User denied message" }` -  пользователь запретил сайту работать с кипером  
 
 ### on
-Позволяет подписаться на события из Waves Keeper.  
+Позволяет подписаться на события из Turtle Shell.  
 
 Поддерживает события:
 * `update` - подписаться на изменения стейта
 
 Пример:
 ```
-   WavesKeeper.on("update", state => {
-        //state бъект как из WavesKeeper.publicState
+   TurtleShell.on("update", state => {
+        //state бъект как из TurtleShell.publicState
    });
 ```
 Если сайт не является доверенным, то события приходить не будут.
@@ -147,7 +147,7 @@
 Пример:
 ```
     const authData = { data: "Auth on my site" };
-    WavesKeeper.auth(authData)
+    TurtleShell.auth(authData)
         .then(auth => {
             console.log(auth); //вывод в консоль результата
             /*...обработка данных */
@@ -155,13 +155,13 @@
             console.error(error); //вывод в консоль результата
             /*...обработка ошибок */
         })
-      
+
 ```
 или
 ```
     const getAuthData = async authData => {
         try {
-            const state = await WavesKeeper.auth(authData);
+            const state = await TurtleShell.auth(authData);
             console.log(state); //вывод в консоль результата
             /*...обработка данных */
         } catch(error) {
@@ -169,7 +169,7 @@
             /*...обработка ошибок */
         }
     }
-    
+
     const authData = { data: "Auth on my site" };
     getAuthData(authData);
 ```
@@ -184,23 +184,23 @@
 
 Например
 ```
-    const authData = { 
+    const authData = {
         data: "Generated string from server",
         name: "My test App",
         icon: "/img/icons/waves_logo.svg",
-        referrer: "https://client.wavesplatform.com/",
+        referrer: "https://client.turtlenetwork.eu/",
         successPath: "login"
     };
-    
-    WavesKeeper.auth(authData).then((data) => {
+
+    TurtleShell.auth(authData).then((data) => {
         //data - данные от кипера
         //проверка подписи и сохранение адреса...
         console.log(data);
     }).catch((error) => {
         //обработка ошибки
     });
-    
-    
+
+
 ```
 При удачном подтверждении кипер в Promise вернет объект содержащий данные для проверки подписи:
 
@@ -222,7 +222,7 @@
 
 
 ### signTransaction
-Метод для подписи транзакций в сети Waves. 
+Метод для подписи транзакций в сети Waves.
 
 Пример:
 ```
@@ -240,15 +240,15 @@
             recipient: "test"
         }
     };
-    WavesKeeper.signTransaction(txData).then((data) => {
+    TurtleShell.signTransaction(txData).then((data) => {
         //data - строка готовая для отсылки на ноду(сервер) сети Waves
-    }).catch((error) => { 
+    }).catch((error) => {
         //Обработка ошибок
     });
 ```
 >  
 > Апи возвращает строки, а не объект, так как в javascript при работе с 8 байтными целыми происходит потеря точности.
-> 
+>
 > Описание поддерживаемых типов транзакций вы найдете ниже
 
 В примере мы подписываем транзакцию на перевод токенов Waves на алиас `test` в сети Waves.  
@@ -281,9 +281,9 @@
                recipient: "test"
            }
        };
-       WavesKeeper.signAndPublishTransaction(txData).then((data) => {
+       TurtleShell.signAndPublishTransaction(txData).then((data) => {
            //data - строка готовая для отсылки на ноду(сервер) сети Waves
-       }).catch((error) => { 
+       }).catch((error) => {
            //Обработка ошибок
        });
 ```
@@ -298,8 +298,8 @@
 
 ### signTransactionPackage
 Пакетная подпись транзакций.
-Иногда надо подписать сразу несколько транзакций, для удобства пользователя, 
-допускается подписывать до 7 транзакций одновременно, и разрешены только 
+Иногда надо подписать сразу несколько транзакций, для удобства пользователя,
+допускается подписывать до 7 транзакций одновременно, и разрешены только
 определенные типы транзакций:  
 
 * `    3 - выпуск токена`  
@@ -341,15 +341,15 @@
             recipient: "merry"
         }
     }];
-    
-    WavesKeeper.signTransactionPackage(tx, name)
+
+    TurtleShell.signTransactionPackage(tx, name)
 ```
 
 Подписать 2 транзакции:
 + перевода на алиас test 1.567 Waves
 + перевода на алиас merry 0.1 Waves
-    
-    
+
+
 ОТВЕТ
 
 массив из 2-х строк, подписанных и готовых к отправке транзакций.
@@ -359,11 +359,11 @@
 
 
 ## [Транзакции](https://docs.wavesplatform.com/en/development-and-api/client-libraries/waves-transactions.html)
-У каждого пользователя в сети waves есть стейт (балансы, ассеты, данные, скрипты), 
+У каждого пользователя в сети waves есть стейт (балансы, ассеты, данные, скрипты),
 любая прошедшая транзакция меняет эти данные.  
-В wavesKeeper API - отличается от [NODE REST API](https://docs.wavesplatform.com/en/development-and-api/waves-node-rest-api.html). 
-  
-`signTransaction`, `signAndPublishTransaction` принимают транзакцию в следующем виде 
+В TurtleShell API - отличается от [NODE REST API](https://docs.wavesplatform.com/en/development-and-api/waves-node-rest-api.html).
+
+`signTransaction`, `signAndPublishTransaction` принимают транзакцию в следующем виде
 ```
 {
     type: number //тип транзакции,
@@ -375,7 +375,7 @@
 
 Условные обозначения
 
-> \* - необязательное поле, данные подставятся автоматически из WavesKeeper.  
+> \* - необязательное поле, данные подставятся автоматически из TurtleShell.  
 > [x,y] - oграничение длины от x, до y.   
 > [,x] - oграничение длины до x.  
 > [y,] - oграничение длины от y.  
@@ -386,12 +386,12 @@
 
 MoneyLike может иметь вид:  
 * ``{ tokens: 1, assetId: "TN" }``
-* ``{ coins: 100000000, assetId: "TN" }``; 
-  
+* ``{ coins: 100000000, assetId: "TN" }``;
+
 В обоих записях указана одинаковая цена 1 TN. Можно свободно перевести `coins` в `tokens` и  обратно,
 зная в каком ассете указана цена и получив его точность `tokens = coins / (10 ** precision)`  
 Если в поле указаны дополнительные типы кроме MoneyLike, например string/MoneyLike , сумма указывается числом в `coins`.
-  
+
 ***
 
 ### [Тип 3 ISSUE - выпуск токена](https://docs.wavesplatform.com/en/platform-features/assets-custom-tokens.html#section-8b6593d26c82bcc46ea77e373128b6f3)  
@@ -401,16 +401,16 @@ MoneyLike может иметь вид:
 + `quantity` [0 - (JLM)]  number/string - количество,
 + `precision`  [0 - 8]  number - точность,
 + `reissuable` true|false - возможно перевыпускать,
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*script` string - [скрипт для ассета](https://docs.wavesplatform.com/en/technical-details/waves-contracts-language-description/creating-and-deploying-a-script-manually.html#section-5e6520b97a7ead921d7fb6bce7292ce0)
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
- 
+
 Пример:
 
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 3,
         data: {
              "name": "Best Token",
@@ -439,7 +439,7 @@ MoneyLike может иметь вид:
 + `amount` MoneyLike - количество,
 + `recipient` string - адрес получателя или алиас
 + `attachment`[,140 bytes] string или Byte Array- доп информация
-+ `fee` MoneyLike - комиссия 
++ `fee` MoneyLike - комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
@@ -447,7 +447,7 @@ MoneyLike может иметь вид:
 Пример:
 
 ```
-    WavesKeeper.signAndPublishTransaction({
+    TurtleShell.signAndPublishTransaction({
         type: 4,
         data: {
             amount: { tokens: "3.3333333", assetId: "TN" },
@@ -467,15 +467,15 @@ MoneyLike может иметь вид:
 + `assetId` string - "Id ассета",
 + `quantity` [0 - (JLM)]  number/string/MoneyLike - количество,
 + `reissuable` false - запретить перевыпускать
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
- 
+
 Пример:
 
 ```
-      WavesKeeper.signAndPublishTransaction({
+      TurtleShell.signAndPublishTransaction({
            type: 5,
            data: {
                 "quantity": 1000,
@@ -501,15 +501,15 @@ MoneyLike может иметь вид:
 
 + `assetId` string - Id ассета,
 + `amount` [0 - (JLM)]  number/string/MoneyLike - количество,
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
- 
+
 Пример:
 
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 6,
         data: {
              amount: 1000,
@@ -526,20 +526,20 @@ MoneyLike может иметь вид:
    });
 ```
 
-В случае успеха сжигается 1000 `coins`. 
+В случае успеха сжигается 1000 `coins`.
 
 
 ### [Тип 8 LEASE - Передача в лизинг](https://docs.wavesplatform.com/en/platform-features/assets-custom-tokens.html#section-423d9cffbd0e1a0b1298bf22c176fac3)  
 
 + `recipient` string - адрес получателя или алиас,
 + `amount` [0 - (JLM)]  number/string/MoneyLike - количество,
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 8,
         data: {
              "amount": 1000,
@@ -562,13 +562,13 @@ MoneyLike может иметь вид:
 ### [Тип 9 LEASE CANCEL - отмена лизинга](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-92869b0109414c29eb600dfc6caf4520)  
 
 + `leaseId` string - id транзакции лизинга,
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 9,
         data: {
              leaseId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS",
@@ -590,13 +590,13 @@ MoneyLike может иметь вид:
 ### [Тип 10 CREATE ALIAS - создание алиаса для адреса](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-e4657fe644ac2cf0d4e382fe676f0477)  
 
 + `alias`[4, 30] string - имя
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 10,
         data: {
              alias: "testAlias",
@@ -616,17 +616,17 @@ MoneyLike может иметь вид:
 
 
 ### [Тип 11 MASS TRANSFER - массовая рассылка ассета](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-bccba990c89ceec7ef3751e8e763ecc6)  
-+ `totalAmount` moneyLike - итого отошлется // можно не считать сумму и вставить { assetId: "id отправляемого ассета", coins: 0}, 
++ `totalAmount` moneyLike - итого отошлется // можно не считать сумму и вставить { assetId: "id отправляемого ассета", coins: 0},
 + `transfers` массив объектов
     + { `recipient`: string - адрес/алиас, amount: number/string/moneyLike }
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `attachment` [,140 bytes в base58] string - доп информация
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 11,
         data: {
              totalAmount: { assetId: "TN", coins: 0},
@@ -650,17 +650,17 @@ MoneyLike может иметь вид:
 
 
 ### [Тип 12 DATA TRANSACTION - сохранение данных](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-f6e7a2443d41af2a0ef8b4c4c33ba6b3)  
-+ `data` массив объектов 
-    +   `type` "binary"/string/"integer"/"boolean" - тип, 
-    +   `key` string - название поля 
-    +   `value` /string/string/number/boolean зависит от типа 
-+ `fee` MoneyLike -комиссия 
++ `data` массив объектов
+    +   `type` "binary"/string/"integer"/"boolean" - тип,
+    +   `key` string - название поля
+    +   `value` /string/string/number/boolean зависит от типа
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 12,
         data: {
              data: [
@@ -686,7 +686,7 @@ MoneyLike может иметь вид:
 
 ### [Тип 13 SET SCRIPT - скриптовать акаунт](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-11573fe1c896857a6d3fcfcf6cf6571d)  
 + `script` string - [скрипт](https://docs.wavesplatform.com/en/technical-details/waves-contracts-language-description/creating-and-deploying-a-script-manually.html#section-5e6520b97a7ead921d7fb6bce7292ce0)
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
@@ -695,7 +695,7 @@ MoneyLike может иметь вид:
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 13,
         data: {
              script: "",
@@ -715,7 +715,7 @@ MoneyLike может иметь вид:
 
 Пример2:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 13,
         data: {
              script: "base64:AQa3b8tH",
@@ -731,25 +731,25 @@ MoneyLike может иметь вид:
    });
 ```
 
-В случае успеха на аккаунте будет новый скрипт 
+В случае успеха на аккаунте будет новый скрипт
 разрешающий на аккаунте любые транзакции без подписи (будте осторожны!).
 
 
 ### [Тип 14 Sponsored Fee Transaction - Спонсорство](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-730bd9c8fe7e7628ba840d36df3c726e)  
 
 + `minSponsoredAssetFee` MoneyLike - цена комиссии в ассете.
-+ `fee` MoneyLike - комиссия 
++ `fee` MoneyLike - комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 14,
         data: {
              minSponsoredAssetFee: {
-                assetId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS", 
+                assetId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS",
                 tokens: 0.1
              },
              fee: {
@@ -770,7 +770,7 @@ MoneyLike может иметь вид:
 ### [Тип 15 SET ASSET SCRIPT - скрипт на ассет](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-9459bb3757b06f2d75f1a07f24f873ce)  
 + `assetId` string - id ассета
 + `script` string - [скрипт](https://docs.wavesplatform.com/en/technical-details/waves-contracts-language-description/creating-and-deploying-a-script-manually.html#section-5e6520b97a7ead921d7fb6bce7292ce0)
-+ `fee` MoneyLike -комиссия 
++ `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
@@ -779,7 +779,7 @@ MoneyLike может иметь вид:
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 15,
         data: {
              assetId: "",
@@ -796,24 +796,24 @@ MoneyLike может иметь вид:
    });
 ```
 
-В случае успеха на ассете будет переписан скрипт 
+В случае успеха на ассете будет переписан скрипт
 
 
 ### [Тип 16 SCRIPT INVOCATION - выполнение функций скрипта *(только testnet)]()  
 + `dappAddress` string адрес контракта
-+ `fee` MoneyLike комиссия 
++ `fee` MoneyLike комиссия
 + `call` объект слкдующей структуры
     + `function` string название функции
     + `args` массив аргументов вида
-        +   `type` "binary"/string/"integer"/"boolean" - тип, 
-        +   `value` /string/string/number/boolean зависит от типа 
+        +   `type` "binary"/string/"integer"/"boolean" - тип,
+        +   `value` /string/string/number/boolean зависит от типа
 + `*payment` массив MoneyLike (пока поддерживается 1 платеж)
 + `*senderPublicKey` string - публичный ключ отправителя в base58
 + `*timestamp` number/string - время в мс
 
 Пример:
 ```
-   WavesKeeper.signAndPublishTransaction({
+   TurtleShell.signAndPublishTransaction({
         type: 16,
         data: {
              fee: {
@@ -824,8 +824,8 @@ MoneyLike может иметь вид:
              call: {
              		function: 'tellme',
              		args: [
-             		    { 
-             		      "type": "string", 
+             		    {
+             		      "type": "string",
              		      "value": "Will?"
              		    }]
              	}, payment: [{assetId: "TN", tokens: 2}]
@@ -837,14 +837,14 @@ MoneyLike может иметь вид:
    });
 ```
 
-В случае успеха будет запущен скрипт 
+В случае успеха будет запущен скрипт
 
 ### [Как расчитать комиссию](https://docs.wavesplatform.com/en/technical-details/transactions-fees.html)
 
 ***
 
 ### signOrder
-Метод Waves Keeper для подписи ордера в матчер
+Метод Turtle Shell для подписи ордера в матчер
 Принимает на вход объект похожий на транзакцию вида
 ```
     {
@@ -866,7 +866,7 @@ MoneyLike может иметь вид:
 
 Пример:
 ```
-   WavesKeeper.signOrder({
+   TurtleShell.signOrder({
         type: 1002,
         data: {
              matcherPublicKey: "7kPFrHDiGw1rCm7LPszuECwWYL3dMf6iMifLRDJQZMzy",
@@ -903,7 +903,7 @@ MoneyLike может иметь вид:
 
 
 ### signAndPublishOrder
-Метод Waves Keeper создания ордера на матчер работает идентично `signOrder`, 
+Метод Turtle Shell создания ордера на матчер работает идентично `signOrder`,
 но еще пытается отослать данные на матчер
 
 ОТВЕТ:
@@ -915,7 +915,7 @@ MoneyLike может иметь вид:
 
 
 ### signCancelOrder
-Метод Waves Keeper подпись отмены ордера на матчер 
+Метод Turtle Shell подпись отмены ордера на матчер
 Принимает на вход объект похожий на транзакцию вида
 ```
     {
@@ -933,17 +933,17 @@ MoneyLike может иметь вид:
 
 Пример:
 ```
-    WavesKeeper.signCancelOrder({
+    TurtleShell.signCancelOrder({
         type: 1003,
         data: {
-            id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'	
+            id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'
         }
     });
 ```
 
 ОТВЕТ:
   Строка с данными для отправки на матчер.
-  
+
 ОШИБКИ:
 
 + ``{ message: "User denied message", code: 10 }`` - пользователь отклонил запрос
@@ -953,15 +953,15 @@ MoneyLike может иметь вид:
 
 
 ### signAndPublishCancelOrder
-Метод Waves Keeper для отмены ордера на матчер, работает идентично `signCancelOrder`, 
+Метод Turtle Shell для отмены ордера на матчер, работает идентично `signCancelOrder`,
 но еще пытается отослать данные на матчер  
 
 Пример:
 ```
-    WavesKeeper.signAndPublishCancelOrder({
+    TurtleShell.signAndPublishCancelOrder({
         type: 1003,
         data: {
-        	id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'	
+        	id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'
         }
     }).then(() => {
         console.log('Ура! Я отменил ордер');
@@ -979,7 +979,7 @@ MoneyLike может иметь вид:
 
 
 ### signRequest
-Метод Waves Keeper для подписи типизированных данных, для подтверждения запросов на разных сервисах
+Метод Turtle Shell для подписи типизированных данных, для подтверждения запросов на разных сервисах
 Принимает на вход объект похожий на транзакцию вида
 ```
     {
@@ -991,15 +991,15 @@ MoneyLike может иметь вид:
 ```
 
 В данный момент метод поддерживает следующие типы:
-    
+
 #### 1001 - подпись данных для запроса на матчер за своими ордерами
 
 + `timestamp` number/string
 + `*senderPublicKey` string публичный ключ в base58
 
-Пример: 
+Пример:
 ```
-    WavesKeeper.signRequest({
+    TurtleShell.signRequest({
         type: 1001,
         data: {
             timestamp: 234234242423423
@@ -1008,7 +1008,7 @@ MoneyLike может иметь вид:
 ```
 ОТВЕТ:
   Строка c подписью в base58.
-  
+
 ОШИБКИ:
 
 + ``{ message: "User denied message", code: 10 }`` - пользователь отклонил запрос
@@ -1020,9 +1020,9 @@ MoneyLike может иметь вид:
 
 + `timestamp` number/string
 
-Пример: 
+Пример:
 ```
-    WavesKeeper.signRequest({
+    TurtleShell.signRequest({
         type: 1004,
         data: {
             timestamp: 234234242423423
@@ -1031,7 +1031,7 @@ MoneyLike может иметь вид:
 ```
 ОТВЕТ:
   Строка c подписью в base58.
-  
+
 ОШИБКИ:
 
 + ``{ message: "User denied message", code: 10 }`` - пользователь отклонил запрос
