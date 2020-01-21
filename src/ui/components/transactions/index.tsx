@@ -19,6 +19,8 @@ import assetScript from './AssetScript';
 import scriptInvocation from './ScriptInvocation';
 import packageTx from './Package';
 import unknown from './Unknown';
+import customData from './CustomData';
+import wavesAuth from './WavesAuth';
 
 const MESSAGES = [
     auth,
@@ -41,6 +43,8 @@ const MESSAGES = [
     assetScript,
     scriptInvocation,
     packageTx,
+    customData,
+    wavesAuth
 ];
 
 export { FinalTransaction } from './FinalTransaction';

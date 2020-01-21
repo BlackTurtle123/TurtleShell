@@ -17,17 +17,17 @@ export class Info extends React.Component {
                 </Trans>
             </div>
 
-            <a className="link black" target='_blank' href='https://blackturtle.eu'>blackturtle.eu</a>
+            <a className="link black" target='_blank' href='https://turtlenetwork.eu'>turtlenetwork.eu</a>
 
             <div className={`${styles.social} margin-main`}>
                 <div className="margin-main basic500">
                     <Trans i18nKey='info.joinUs'>Join the TN Community</Trans>
                 </div>
                 <ul>
-                    <li className={styles.github}><a target="_blank" href="https://github.com/BlackTurtle123/"></a></li>
-                    <li className={styles.telegram}><a target="_blank" href="https://telegram.me/TurtleNetwork"></a></li>
-                    <li className={styles.twitter}><a target="_blank" href="https://twitter.com/TurtleNetworkTN"></a></li>
-                    <li className={styles.facebook}><a target="_blank" href="https://www.facebook.com/TurtleNetworkTN"></a></li>
+                    <li className={styles.github}><a rel="noopener noreferrer" target="_blank" href="https://github.com/TurtleNetwork/"></a></li>
+                    <li className={styles.telegram}><a rel="noopener noreferrer" target="_blank" href="https://telegram.me/TurtleNetwork"></a></li>
+                    <li className={styles.twitter}><a rel="noopener noreferrer" target="_blank" href="https://twitter.com/TurtleNetworkTN"></a></li>
+                    <li className={styles.facebook}><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/TurtleNetworkTN"></a></li>
                 </ul>
             </div>
 

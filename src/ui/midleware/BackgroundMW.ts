@@ -1,16 +1,17 @@
 import { ACTION } from '../actions/constants';
-import { config } from '@turtlenetwork/signature-generator';
 import background from '../services/Background';
 import { i18n } from '../i18n';
 import {
     setTab,
     updateAsset,
+    updateActiveState,
     notificationDelete,
     notificationSelect,
     notificationChangeName,
     pairingLoading,
-    pairingSetData, updateActiveMessage,
+    pairingSetData,
     updateIdle,
+    setActiveNotification,
 } from '../actions';
 import { PAGES } from '../pageConfig';
 import { store } from '../store';
@@ -38,6 +39,30 @@ export const changeLang = store => next => action => {
         background.setCurrentLocale(action.payload);
     }
     return next(action);
+};
+
+
+export const deleteNotifications = store => next => action => {
+    if (action.type !== ACTION.NOTIFICATIONS.DELETE) {
+        return next(action);
+    }
+    
+    const ids = action.payload.length ? action.payload : action.payload.ids;
+    const nextNotify = action.payload.length ? null : action.payload.next;
+    
+    return background.deleteNotifications(ids).then(
+        () => {
+            store.dispatch(setActiveNotification(nextNotify));
+        }
+    );
+};
+
+export const setNotificationPerms = store => next => action => {
+    if (action.type !== ACTION.NOTIFICATIONS.SET_PERMS) {
+        return next(action);
+    }
+    
+    background.setNotificationPermissions(action.payload);
 };
 
 export const setIdle = store => next => action => {
@@ -102,12 +127,7 @@ export const deleteAccountMw = store => next => action => {
     if (action.type === ACTION.DELETE_ACCOUNT) {
         background.deleteVault().then(
             () => {
-                store.dispatch(updateActiveMessage(null));
-                // store.dispatch(notificationDelete(true));
-                // setTimeout(() => {
-                //     store.dispatch(notificationDelete(false));
-                //
-                // }, 1000);
+                store.dispatch(updateActiveState(null));
                 store.dispatch(setTab(PAGES.ROOT));
             }
         );
@@ -161,6 +181,9 @@ export const getAsset = store => next => action => {
         background.assetInfo(action.payload).then(
             (data) => {
                 store.dispatch(updateAsset({[action.payload]: data}))
+            },
+            () => {
+                store.dispatch(updateAsset({[action.payload]: {}}))
             }
         );
         return null;
@@ -214,30 +237,6 @@ export const setCustomMatcher = store => next => action => {
     }
     
     return next(action);
-};
-
-export const updateNetworkCode = store => next => action => {
-    if (action.type === ACTION.UPDATE_CURRENT_NETWORK || action.type === ACTION.UPDATE_NETWORKS) {
-        const { payload, type } = action;
-        let { networks, currentNetwork } = store.getState();
-
-        if (type === ACTION.UPDATE_CURRENT_NETWORK) {
-            currentNetwork = payload;
-        }
-
-        if (type === ACTION.UPDATE_NETWORKS) {
-            networks = payload;
-        }
-        
-        if (currentNetwork && networks && networks.length) {
-            const netCode = networks.filter(({ name }) => name === currentNetwork)[0] || networks[0];
-            if (netCode) {
-                config.set({networkByte: netCode.code.charCodeAt(0)});
-            }
-        }
-    }
-
-    next(action);
 };
 
 export const lock = store => next => action => {

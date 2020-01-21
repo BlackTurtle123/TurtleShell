@@ -1,5 +1,48 @@
 ## Waves Keeper
 
+#### version 1.1.12
++ Fix links to waves.exchange
+
+#### version 1.1.11
++ Fix debounce on delete account btn
++ Add backup accounts store
+
+#### version 1.1.10
++ Added methods to sign and verify custom data
++ Added Stagenet in network selector
++ simplified the creation of the new accounts
++ accounts are now sorted in the list by last activity
++ added Privacy Policy confirmation on the registration screen
++ fixed bug of empty InvokeScript function error
++ fixed network byte loss , while switching between different custom networks
+
+#### version 1.1.9
++ WavesKeeper proxy
++ Update fixed libs
+
+#### version 1.1.8
++ Add auto calculate fee
++ Fix auth api
++ Orders UI
++ Update major libs versions with keeper refactor (updated crypto protocol)
+
+#### version 1.1.7
++ Order v3 support
++ Fix auto payment
++ Add script invocation in package
++ Fix some texts
+
+#### version 1.1.6
++ Add encrypt and decrypt API by DH
++ Fix some UI problems
+
+#### version 1.1.5
++ Add notifications
++ Update development invocation script
++ Fix publicState eventschrome
++ Fix build with no lokalize api key
++ Some UI fixes
++ Messages refactoring
 
 #### version 1.1.4
 + Idle configurable

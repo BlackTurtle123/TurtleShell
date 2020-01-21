@@ -1,11 +1,13 @@
 import ObservableStore from 'obs-store';
-import { BigNumber } from "@turtlenetwork/data-entities/dist/libs/bignumber";
 import { uniq } from 'ramda';
 import { allowMatcher } from '../constants';
+import { ERRORS } from '../lib/KeeperError';
+
 
 export const PERMISSIONS = {
     ALL: 'all',
     USE_API: 'useApi',
+    USE_NOTIFICATION: 'useNotifications',
     REJECTED: 'rejected',
     APPROVED: 'approved',
     AUTO_SIGN: 'allowAutoSign',
@@ -88,7 +90,7 @@ export class PermissionsController {
         const { origins, ...other } = this.store.getState();
         const { whitelist, blacklist } = other;
 
-        if ( whitelist.includes(origin) || blacklist.includes(origin) ) {
+        if (whitelist.includes(origin) || blacklist.includes(origin)) {
             return null;
         }
 
@@ -119,6 +121,10 @@ export class PermissionsController {
         const findPermission = findPermissionFabric(permissionType);
         const permissions = this.getPermissions(origin).filter(item => !findPermission(item));
         this.setPermissions(origin, permissions);
+    }
+
+    setNotificationPermissions(origin, canUse, time = 0) {
+        this.updatePermission(origin, { type: PERMISSIONS.USE_NOTIFICATION, time, canUse });
     }
 
     setAutoApprove(origin, { interval, totalAmount }) {
@@ -153,6 +159,29 @@ export class PermissionsController {
         return ['1001', '1002', '1003'].includes(String(tx.type).trim());
     }
 
+    canUseNotification(origin, time_interval) {
+        const useApi = this.getPermission(origin, PERMISSIONS.APPROVED);
+        const { whitelist = [] } = this.store.getState();
+        const isInWhiteList = whitelist.includes(origin);
+        const permission = this.getPermission(origin, PERMISSIONS.USE_NOTIFICATION);
+        const hasPermission = !!permission && permission.canUse != null;
+        const allowByPermission = hasPermission && permission.canUse || (!hasPermission && isInWhiteList);
+
+        if (!useApi || !allowByPermission) {
+            throw ERRORS.API_DENIED();
+        }
+        const time = permission && permission.time || 0;
+        const delta = Date.now() - time;
+        const minInterval = time_interval;
+        const waitTime = minInterval - delta;
+
+        if (waitTime > 0) {
+            throw ERRORS.NOTIFICATION_ERROR({ msg: `Min notification interval ${minInterval / 1000}s. Wait ${waitTime / 1000}s.` })
+        }
+
+        return true;
+    }
+
     canApprove(origin, tx) {
 
         if (this.matcherOrdersAllow(origin, tx)) {
@@ -175,9 +204,9 @@ export class PermissionsController {
         const currentTime = Date.now();
         approved = approved.filter(({ time }) => currentTime - time < interval);
         const total = new BigNumber(totalAmount);
-        const amount = approved.reduce((acc, { amount }) => acc.plus(new BigNumber(amount)), new BigNumber(0));
+        const amount = approved.reduce((acc, { amount }) => acc.add(new BigNumber(amount)), new BigNumber(0));
 
-        if (amount.plus(txAmount).gt(total)) {
+        if (amount.add(txAmount).gt(total)) {
             return false;
         }
 
@@ -260,7 +289,7 @@ const getTxAmount = (tx) => {
     }
 
     if (result.fee.assetId === result.amount.assetId && result.fee.assetId === 'TN') {
-        return result.fee.amount.plus(result.amount.amount);
+        return result.fee.amount.add(result.amount.amount);
     }
 
     return null;
@@ -294,7 +323,7 @@ const getTxMassReceiveAmount = (tx) => {
 
     amount.assetId = tx.data.assetId || tx.data.totalAmount.assetId;
     amount.amount = tx.data.transfers.reduce((acc, transfer) => {
-        return acc.plus(moneyLikeToBigNumber(transfer.amount, 8));
+        return acc.add(moneyLikeToBigNumber(transfer.amount, 8));
     }, new BigNumber(0));
 
     return { amount, fee };
@@ -334,8 +363,8 @@ const getPackAmount = (txs) => {
 
         amount.assetId = result.amount.assetId;
         fee.assetId = result.fee.assetId;
-        amount.amount = amount.amount.plus(result.amount.amount);
-        fee.amount = fee.amount.plus(result.fee.amount);
+        amount.amount = amount.amount.add(result.amount.amount);
+        fee.amount = fee.amount.add(result.fee.amount);
         result = null;
     }
 
@@ -349,7 +378,7 @@ const moneyLikeToBigNumber = (moneyLike, precession) => {
     }
 
     const { coins = 0, tokens = 0 } = moneyLike;
-    const tokensAmount = new BigNumber(tokens).multipliedBy(10 ** precession);
+    const tokensAmount = new BigNumber(tokens).mul(10 ** precession);
     const coinsAmount = new BigNumber(coins);
 
     if (!coinsAmount.isNaN() && coinsAmount.gt(0)) {

@@ -1,8 +1,9 @@
 import ObservableStore from 'obs-store';
-import *  as SG from '@turtlenetwork/signature-generator'
+import { seedUtils, libs } from '@turtlenetwork/waves-transactions';
 import { encrypt, decrypt } from '../lib/encryprtor';
-import { Seed } from '@turtlenetwork/signature-generator'
 import { Wallet } from "../lib/wallet";
+
+const { Seed } = seedUtils;
 
 export class WalletController {
     constructor(options = {}) {
@@ -17,6 +18,7 @@ export class WalletController {
         this.getNetwork = options.getNetwork;
         this.getNetworks = options.getNetworks;
         this.getNetworkCode = options.getNetworkCode;
+        this.trashControl = options.trash;
     }
 
     // Public
@@ -26,9 +28,7 @@ export class WalletController {
         switch (options.type) {
             case 'seed':
                 const networkCode = this.getNetworkCode(options.network);
-                const networkByte = networkCode.charCodeAt(0);
-                SG.config.set({ networkByte });
-                const seed = new SG.Seed(options.seed);
+                const seed = new Seed(options.seed, networkCode);
                 user = {
                     seed: seed.phrase,
                     publicKey: seed.keyPair.publicKey,
@@ -54,8 +54,10 @@ export class WalletController {
     removeWallet(address, network) {
         if (this.store.getState().locked) throw new Error('App is locked');
         const wallet = this.getWalletsByNetwork(network).find(wallet => wallet.getAccount().address === address);
-        const index = this.wallets.indexOf(wallet);
-        this.wallets.splice(index, 1);
+        this._walletToTrash(wallet);
+        this.wallets = this.wallets.filter((w) => {
+            return w !== wallet;
+        });
         this._saveWallets();
     }
 
@@ -82,6 +84,7 @@ export class WalletController {
         if (!password || typeof password !== 'string') {
             throw new Error('Password is needed to init vault')
         }
+        (this.wallets || []).forEach(wallet => this._walletToTrash(wallet));
         this.password = password;
         this.wallets = [];
         this._saveWallets();
@@ -89,6 +92,7 @@ export class WalletController {
     }
 
     deleteVault() {
+        (this.wallets || []).forEach(wallet => this._walletToTrash(wallet));
         this.password = null;
         this.wallets = [];
         this.store.updateState({ locked: true, initialized: false, vault: undefined });
@@ -133,17 +137,15 @@ export class WalletController {
     encryptedSeed(address, network) {
         const wallet = this._findWallet(address, network);
         const seed = wallet.getSecret();
-        return SG.Seed.encryptSeedPhrase(seed, this.password)
+        return Seed.encryptSeedPhrase(seed, this.password)
     }
 
     updateNetworkCode(network, code) {
         code = code || this.getNetworkCode(network);
-        const networkByte = code.charCodeAt(0);
-        SG.config.set({ networkByte });
         const wallets = this.getWalletsByNetwork(network);
         wallets.forEach(wallet => {
             if (wallet.user.networkCode !== code) {
-                const seed = new SG.Seed(wallet.user.seed);
+                const seed = new Seed(wallet.user.seed, code);
                 wallet.user.network = network;
                 wallet.user.networkCode = code;
                 wallet.user.address = seed.address;
@@ -157,6 +159,15 @@ export class WalletController {
 
     getWalletsByNetwork(network) {
         return this.wallets.filter(wallet => wallet.isMyNetwork(network));
+    }
+
+
+    _walletToTrash(wallet) {
+        const walletsData = wallet && wallet.serialize && wallet.serialize();
+        if (walletsData) {
+            const saveData = { walletsData: this.password ? encrypt(walletsData, this.password) : walletsData, address: wallet.address };
+            this.trashControl.addData(saveData);
+        }
     }
 
     _migrateWalletsNetwork() {
@@ -194,6 +205,11 @@ export class WalletController {
     async signTx(address, tx, network) {
         const wallet = this._findWallet(address, network);
         return await wallet.signTx(tx);
+    }
+
+    async signWaves(type, data, address, network) {
+        const wallet = this._findWallet(address, network);
+        return await wallet.signWaves(type, data);
     }
 
     /**
@@ -238,6 +254,21 @@ export class WalletController {
             signature,
             version
         }
+    }
+
+    async getKEK(address, network, publicKey, prefix) {
+        const wallet = this._findWallet(address, network);
+        return await wallet.getKEK(publicKey, prefix);
+    }
+
+    async encryptMessage(address,network, message, publicKey, prefix) {
+        const wallet = this._findWallet(address, network);
+        return await wallet.encryptMessage(message, publicKey, prefix);
+    }
+
+    async decryptMessage(address,network, message, publicKey, prefix) {
+        const wallet = this._findWallet(address, network);
+        return await wallet.decryptMessage(message, publicKey, prefix);
     }
 
     // Private
