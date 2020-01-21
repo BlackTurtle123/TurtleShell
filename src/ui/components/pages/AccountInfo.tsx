@@ -7,7 +7,7 @@ import background from '../../services/Background';
 import { getAsset, selectAccount } from '../../actions';
 import { Money, Asset } from '@turtlenetwork/data-entities';
 import { PAGES } from '../../pageConfig';
-import { seedUtils } from '@turtlenetwork/waves-transactions';
+import { seedUtils } from '@waves/waves-transactions';
 import { I18N_NAME_SPACE } from '../../appConfig';
 import { BUTTON_TYPE } from '../ui/buttons';
 import { getExplorerUrls } from 'ui/utils/waves';

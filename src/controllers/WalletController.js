@@ -1,5 +1,5 @@
 import ObservableStore from 'obs-store';
-import { seedUtils, libs } from '@turtlenetwork/waves-transactions';
+import { seedUtils, libs } from '@waves/waves-transactions';
 import { encrypt, decrypt } from '../lib/encryprtor';
 import { Wallet } from "../lib/wallet";
 

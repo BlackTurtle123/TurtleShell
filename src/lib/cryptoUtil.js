@@ -1,4 +1,4 @@
-import { libs } from '@turtlenetwork/waves-transactions';
+import { libs } from '@waves/waves-transactions';
 
 
 function blake2b(input) {

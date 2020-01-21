@@ -1,5 +1,5 @@
 import { getAdapterByType } from '@turtlenetwork/signature-adapter'
-import { libs as transactionsLibs } from '@turtlenetwork/waves-transactions';
+import { libs as transactionsLibs } from '@waves/waves-transactions';
 import { waves } from '../controllers/wavesTransactionsController';
 import { BigNumber } from '@waves/bignumber';
 import create from 'parse-json-bignumber';
@@ -63,13 +63,13 @@ export class Wallet {
         return this.user.seed
     }
 
-    async encryptMessage(message, publicKey, prefix = 'waveskeeper') {
+    async encryptMessage(message, publicKey, prefix = 'TurtleShell') {
         const privateKey = await this._adapter.getPrivateKey();
         const shKey = sharedKey(privateKey, publicKey, prefix);
         return base58Encode(messageEncrypt(shKey, message, prefix || undefined));
     }
 
-    async decryptMessage(message, publicKey, prefix = 'waveskeeper') {
+    async decryptMessage(message, publicKey, prefix = 'TurtleShell') {
         const privateKey = await this._adapter.getPrivateKey();
         const shKey = sharedKey(privateKey, publicKey, prefix);
         try {
@@ -80,7 +80,7 @@ export class Wallet {
     }
 
     async getKEK(publicKey, prefix) {
-        prefix = (prefix || '') + 'waves';
+        prefix = (prefix || '') + 'TN';
         const privateKey = await this._adapter.getPrivateKey();
         return base58Encode(sharedKey(privateKey, publicKey, prefix));
     }
