@@ -23,7 +23,7 @@ export function getExplorerUrls(network: string, address: string) {
             break;
         case 'testnet':
             result.walletLink = 'https://client.turtlenetwork.eu/';
-            result.activeAddressLink = `https://testnetexplorer.turtlenetwork.eu/testnet/address/${address}`;
+            result.activeAddressLink = `https://explorer.turtlenetwork.eu/testnet/address/${address}`;
             break;
     }
     
