@@ -1,5 +1,5 @@
 import ObservableStore from "obs-store";
-import { libs } from '@waves/waves-transactions';
+import { libs } from '@turtlenetwork/waves-transactions';
 import { statisticsApiKey } from '../../config';
 import extension from 'extensionizer';
 

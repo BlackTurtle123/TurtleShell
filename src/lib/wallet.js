@@ -1,5 +1,5 @@
 import { getAdapterByType } from '@turtlenetwork/signature-adapter'
-import { libs as transactionsLibs } from '@waves/waves-transactions';
+import { libs as transactionsLibs } from '@turtlenetwork/waves-transactions';
 import { waves } from '../controllers/wavesTransactionsController';
 import { BigNumber } from '@waves/bignumber';
 import create from 'parse-json-bignumber';

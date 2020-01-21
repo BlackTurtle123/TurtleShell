@@ -2,7 +2,7 @@ import * as styles from './styles/importSeed.styl';
 import * as React from 'react'
 import { connect } from 'react-redux';
 import { translate, Trans } from 'react-i18next';
-import { seedUtils } from '@waves/waves-transactions';
+import { seedUtils } from '@turtlenetwork/waves-transactions';
 import { newAccountSelect, clearSeedErrors } from '../../actions';
 import { Button } from '../ui/buttons';
 import { Input } from '../ui/input';

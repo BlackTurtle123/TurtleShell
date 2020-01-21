@@ -34,10 +34,10 @@ import {
 import { PERMISSIONS } from './controllers/PermissionsController';
 import { setupDnode } from './lib/dnode-util';
 import { WindowManager } from './lib/WindowManger';
-import '@waves/waves-transactions';
+import '@turtlenetwork/waves-transactions';
 import { getAdapterByType } from '@turtlenetwork/signature-adapter';
 import { WAVESKEEPER_DEBUG } from './constants';
-import { verifyCustomData } from "@waves/waves-transactions";
+import { verifyCustomData } from "@turtlenetwork/waves-transactions";
 import { waves } from "./controllers/wavesTransactionsController";
 const isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
 log.setDefaultLevel(WAVESKEEPER_DEBUG ? 'debug' : 'warn');

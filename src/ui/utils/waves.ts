@@ -1,5 +1,5 @@
 import { SeedAdapter, TSignData } from '@turtlenetwork/signature-adapter';
-import { seedUtils, libs } from '@waves/waves-transactions';
+import { seedUtils, libs } from '@turtlenetwork/waves-transactions';
 
 import { pipe, identity, isNil, ifElse, concat } from 'ramda';
 

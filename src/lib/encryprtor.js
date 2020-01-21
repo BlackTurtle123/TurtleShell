@@ -1,4 +1,4 @@
-import { seedUtils } from '@waves/waves-transactions'
+import { seedUtils } from '@turtlenetwork/waves-transactions'
 
 export function encrypt(object, password) {
     const jsonObj = JSON.stringify(object);

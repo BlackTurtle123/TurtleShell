@@ -1,4 +1,4 @@
-import { customData, verifyCustomData, wavesAuth } from '@waves/waves-transactions';
+import { customData, verifyCustomData, wavesAuth } from '@turtlenetwork/waves-transactions';
 
 
 export const waves = {

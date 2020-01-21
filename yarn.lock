@@ -309,9 +309,9 @@
   resolved "https://registry.yarnpkg.com/@waves/ts-types/-/ts-types-0.2.0-beta-3.tgz#a89addf6db5706d0eaa113db1c06b8211fe6a146"
   integrity sha512-PBR4EPyoqGoDvnUr4sWsTDQ3PRfjTFRIDtuqdcuX/XiY36xWE9TSIrCM6CmqZ4vb7UPvvQvSMdwjq1VfupTSug==
 
-"@waves/waves-transactions@^3.22.2":
+"@turtlenetwork/waves-transactions@^3.22.2":
   version "3.25.0"
-  resolved "https://registry.yarnpkg.com/@waves/waves-transactions/-/waves-transactions-3.25.0.tgz#6472bffae8d83be5f782de0550865b3893679700"
+  resolved "https://registry.yarnpkg.com/@turtlenetwork/waves-transactions/-/waves-transactions-3.25.0.tgz#6472bffae8d83be5f782de0550865b3893679700"
   integrity sha512-ddo/Go+hd5+0m2qglwhseSXrfhXVN24cx+60xLYD7ojz2Gw2Zk4cLU9ikXrCRPTk/qRvMFiWwlsaVPCGpB4QGg==
   dependencies:
     "@waves/marshall" "^0.9.1"
