@@ -1,5 +1,5 @@
 import { DEFAULT_FEE_CONFIG, DEFAULT_FEE_CONFIG_URL } from '../constants';
-import { SIGN_TYPE } from "@waves/signature-adapter";
+import { SIGN_TYPE } from "@turtlenetwork/signature-adapter";
 import { libs } from "@turtlenetwork/waves-transactions";
 import { BigNumber } from "@waves/bignumber";
 
