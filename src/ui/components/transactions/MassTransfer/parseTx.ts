@@ -1,5 +1,5 @@
 import { SIGN_TYPE } from '@turtlenetwork/signature-adapter';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 
 export const messageType = 'mass_transfer';
 export const txType = 'transaction';

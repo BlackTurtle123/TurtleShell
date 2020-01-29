@@ -4,7 +4,7 @@ import { I18N_NAME_SPACE } from 'ui/appConfig';
 import cn from 'classnames';
 import * as styles from './settings.styl';
 import { Input, Button, BUTTON_TYPE, Select } from 'ui/components/ui';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 
 const CONFIG = {
     list: [

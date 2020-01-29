@@ -1,5 +1,5 @@
 import { Money } from '@turtlenetwork/data-entities';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 
 export const moneyLikeToMoney = (amount: IMoneyLike, assets): Money => {
     if (amount) {

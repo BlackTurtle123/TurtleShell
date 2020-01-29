@@ -1,5 +1,5 @@
 import { Money } from '@turtlenetwork/data-entities';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 import create from 'parse-json-bignumber';
 
 const { stringify, parse } = create({ BigNumber });

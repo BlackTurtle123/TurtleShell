@@ -1,5 +1,5 @@
 import { SIGN_TYPE } from '@turtlenetwork/signature-adapter';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 
 export const messageType = 'script_invocation';
 export const txType = 'transaction';

@@ -1,4 +1,4 @@
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 import { getMoney } from '../../../utils/converters';
 import { getConfigByTransaction } from '../index';
 

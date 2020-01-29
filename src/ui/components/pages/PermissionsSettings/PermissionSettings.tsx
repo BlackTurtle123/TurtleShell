@@ -7,7 +7,7 @@ import cn from 'classnames';
 import { I18N_NAME_SPACE } from 'ui/appConfig';
 import { Loader, Modal } from 'ui/components/ui';
 import { Tabs, List, OriginSettings } from './components';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 
 
 @translate(I18N_NAME_SPACE)

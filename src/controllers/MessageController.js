@@ -5,7 +5,7 @@ import log from 'loglevel';
 import EventEmitter from 'events'
 import { getAdapterByType } from "@turtlenetwork/signature-adapter";
 import { Asset, Money } from '@turtlenetwork/data-entities';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 import { networkByteFromAddress } from "../lib/cryptoUtil";
 import { ERRORS } from '../lib/KeeperError';
 import { PERMISSIONS } from './PermissionsController';

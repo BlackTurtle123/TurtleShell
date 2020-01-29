@@ -10,7 +10,7 @@ import { ApproveBtn, Button, BUTTON_TYPE, CollapsedContent } from 'ui/components
 import { ExtendedPermission } from 'ui/components/permissions';
 import { connect } from 'react-redux';
 import { state } from '../../../reducers/updateState';
-import { BigNumber } from '@waves/bignumber';
+import { BigNumber } from '@turtlenetwork/bignumber';
 
 @translate(I18N_NAME_SPACE)
 class OriginAuthComponent extends SignClass {
