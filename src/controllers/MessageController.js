@@ -606,7 +606,7 @@ export class MessageController extends EventEmitter {
         let signableData = await this._transformData({ ...signData });
         const Adapter = getAdapterByType('seed');
         const adapter = new Adapter('validation seed', networkByteFromAddress(message.account.address).charCodeAt(0));
-        const fee = { coins: (await this.getFee(adapter, signableData)).toString(), assetId: 'WAVES' };
+        const fee = { coins: (await this.getFee(adapter, signableData)).toString(), assetId: 'TN' };
         return {
             fee,
             matcherFee: fee,

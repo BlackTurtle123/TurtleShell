@@ -22,7 +22,7 @@ export class AssetInfoController {
                     TN
                 },
                 stagenet: {
-                    WAVES
+                    TN
                 },
                 testnet: {
                     TN
@@ -38,7 +38,7 @@ export class AssetInfoController {
     }
 
     getWavesAsset() {
-        return WAVES;
+        return TN;
     }
 
     async assetInfo(assetId) {
