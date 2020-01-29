@@ -1,4 +1,4 @@
-export const WAVESKEEPER_DEBUG = process.env.NODE_ENV !== 'production';
+export const TURTLESHELL_DEBUG = process.env.NODE_ENV !== 'production';
 
 export const CONFIG_URL = 'https://raw.githubusercontent.com/BlackTurtle123/tn-client-config/master/tn_keeper_blacklist.json';
 

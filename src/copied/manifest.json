@@ -32,11 +32,6 @@
     "210": "images/icon_210.png",
     "270": "images/icon_270.png"
   },
-  "applications": {
-    "gecko": {
-      "id": "support@blackturtle.eu"
-    }
-  },
   "default_locale": "en",
   "background": {
     "scripts": [

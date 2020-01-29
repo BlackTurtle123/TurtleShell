@@ -36,11 +36,11 @@ import { setupDnode } from './lib/dnode-util';
 import { WindowManager } from './lib/WindowManger';
 import '@turtlenetwork/waves-transactions';
 import { getAdapterByType } from '@turtlenetwork/signature-adapter';
-import { WAVESKEEPER_DEBUG } from './constants';
+import { TURTLESHELL_DEBUG } from './constants';
 import { verifyCustomData } from "@turtlenetwork/waves-transactions";
 import { waves } from "./controllers/wavesTransactionsController";
 const isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
-log.setDefaultLevel(WAVESKEEPER_DEBUG ? 'debug' : 'warn');
+log.setDefaultLevel(TURTLESHELL_DEBUG ? 'debug' : 'warn');
 
 setupBackgroundService().catch(e => log.error(e));
 
@@ -58,7 +58,7 @@ async function setupBackgroundService() {
     });
 
     // global access to service on debug
-    if (WAVESKEEPER_DEBUG) {
+    if (TURTLESHELL_DEBUG) {
         global.background = backgroundService;
     }
 

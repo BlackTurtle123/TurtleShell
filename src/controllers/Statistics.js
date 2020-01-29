@@ -3,7 +3,7 @@ import { libs } from '@turtlenetwork/waves-transactions';
 import { statisticsApiKey } from '../../config';
 import extension from 'extensionizer';
 
-const WAVESKEEPER_DEBUG = process.env.NODE_ENV !== 'production';
+const TURTLESHELL_DEBUG = process.env.NODE_ENV !== 'production';
 
 export class StatisticsController {
 
@@ -35,7 +35,7 @@ export class StatisticsController {
             extensionId: this.id,
         };
 
-        if (!WAVESKEEPER_DEBUG) {
+        if (!TURTLESHELL_DEBUG) {
             return null;
         }
 
