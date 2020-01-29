@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/BlackTurtleBVBA/TurtleNetwork_OpenSource/_apis/build/status/TurtleNetwork.TurtleShell?branchName=master)](https://dev.azure.com/BlackTurtleBVBA/TurtleNetwork_OpenSource/_build/latest?definitionId=17&branchName=master)
+
 <<<<<<< HEAD
 # Waves Keeper v1.1.12
 
