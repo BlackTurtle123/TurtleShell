@@ -1,22 +1,11 @@
 import * as i18n from 'i18next';
 import { reactI18nextModule } from 'react-i18next';
 import  * as Locize  from 'i18next-locize-backend';
-import { I18N_NAME_SPACE, WAVESKEEPER_DEBUG } from './appConfig';
+import { I18N_NAME_SPACE, TURTLESHELL_DEBUG } from './appConfig';
 
 
 
 let backendPath = { loadPath: './_locales/{{lng}}/{{ns}}.{{lng}}.json' } as any;
-
-// if (WAVESKEEPER_DEBUG) {
-//     backendPath = {
-//         loadPath: 'https://locize.wvservices.com/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-//         //privatePath: 'https://api.locize.io/private/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-//         //pullPath: 'https://api.locize.io/pull/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-//         //getLanguagesPath: 'https://api.locize.io/languages/{{projectId}}',
-//         //addPath: 'https://api.locize.io/missing/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-//         //updatePath: 'https://api.locize.io/update/{{projectId}}/{{version}}/{{lng}}/{{ns}}',
-//     };
-// }
 
 i18n
     .use(reactI18nextModule)
@@ -28,7 +17,7 @@ i18n
         ns: [I18N_NAME_SPACE],
         defaultNS: I18N_NAME_SPACE,
 
-        debug: WAVESKEEPER_DEBUG,
+        debug: TURTLESHELL_DEBUG,
         keySeparator: '.', // we use content as keys
         nsSeparator: '.', // we use content as keys
 
@@ -48,7 +37,7 @@ i18n
         },
 
         react: {
-            wait: true//!WAVESKEEPER_DEBUG
+            wait: true//!TURTLESHELL_DEBUG
         }
     });
 
