@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-# Waves Keeper v1.1.12
-
-en | [ru](https://github.com/wavesplatform/waveskeeper/blob/master/README_ru.md)
-=======
 # Turtle Shell v1.0.7
-en | [ru](https://github.com/BlackTurtle123/TurtleShell/blob/master/README_ru.md)
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
-Turtle Shell is an extension that allows users to securely interact with TurtleNetwork-enabled web services from the Chrome browser.
+Turtle Shell is a Google Chrome extension that allows users to securely interact with TurtleNetwork-enabled web services from the within the browser.
 
-Seed phrases and private keys are encrypted and stored within the extension and cannot be accessed by online dApps and services, making sure that users' funds are always protected from hackers and malicious websites. Completion of a transaction doesn't require entering any sensitive information.
+Seed phrases and private keys are encrypted and stored within the extension and cannot be accessed by online dApps and services, making sure that user's funds are always protected from hackers and malicious websites. Completion of a transaction doesn't require entering any sensitive information.
 
 Turtle Shell is designed for convenience, so users can sign transactions with just a couple of clicks. Users can create multiple wallets and switch between them easily. And if a user ever forgets the password to the account, it can be recovered from the seed phrase.
 
@@ -38,23 +31,15 @@ On browser pages that operate under the http/https (not worked local pages with 
 
 All methods, except for "on" operate asynchronously and return [promises](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
 
-In code you can use [TypeScript types](https://github.com/wavesplatform/waveskeeper-types)
+In code you can use [TypeScript types](https://github.com/wavesplatform/TurtleShell-types)
 
-<<<<<<< HEAD
-On initialize window.WavesKeeper has not api methods.
-You can use WavesKeeper.initialPromise for waiting end initializing api.
-=======
 On initialize window.TurtleShell has not api methods.
 You can use TurtleShell.initialPromise for waiting end initializing api.
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
+
 Example:
 
 ```
-<<<<<<< HEAD
-    WavesKeeper.initialPromise
-=======
     TurtleShell.initialPromise
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         .then((keeperApi) => {
             /*...init app*/
             keeperApi.publicState().then( state => startApp(state));
@@ -73,13 +58,8 @@ If a website is trusted, Turtle Shell public data is returned.
 Example:
 
 
-<<<<<<< HEAD
 ```js
-    WavesKeeper.publicState()
-=======
-```
     TurtleShell.publicState()
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         .then(state => {
             console.log(state); //displaying the result in the console
             /*...processing data */
@@ -152,18 +132,12 @@ Description of query return fields
 
 Possible errors
 
-<<<<<<< HEAD
-- `{ message: "Init Waves Keeper and add account" }` – Waves Keeper is not initialized
-- `{ message: "Add Waves Keeper account" }` – Waves Keeper accessed, but there are no accounts
-- `{ message: "User denied message" }` – the user denied the website operation with Waves Keeper
-=======
 *   `initialized` - boolean shell initialized
 *   `locked` - boolean shell in wait mode
 *   `account` – current account, if the user allowed access to the website, or null
 *   `network` – current TN network, node and matcher addresses
 *   `messages` – signature request statuses
 *   `txVersion` – available transaction versions for each type
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 ### notification
 
@@ -172,25 +146,18 @@ Ypu can send message only 1 time in 30 sec for trusted sites with send permissio
 
 `notification` facilitates input of the following data
 
-<<<<<<< HEAD
-- `title` - string (20 chars max) (required field)
-- `message` - string (250 chars max) (optional field)
-=======
 *   `{ message: "Init Turtle Shell and add account" }` – Turtle Shell is not initialized
 *   `{ message: "Add Turtle Shell account" }` – Turtle Shell accessed, but there are no accounts
 *   `{ message: "User denied message" }` – the user denied the website operation with Turtle Shell
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 return Promise
 
-<<<<<<< HEAD
 Example:
 =======
 Allows subscribing to Turtle Shell events.
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 ```js
-       WavesKeeper.notification({
+       TurtleShell.notification({
             title: 'Hello!',
             message: 'Congratulation!!!'
        });
@@ -208,12 +175,12 @@ Possible errors
 You can encrypt string messages to account in Waves network.
 You need have recipient publicKey.
 
-WavesKeeper.encryptMessage(`*string to encrypt*`, `*public key in base58 string*`, `*prefix is secret app string need for encoding*`)
+TurtleShell.encryptMessage(`*string to encrypt*`, `*public key in base58 string*`, `*prefix is secret app string need for encoding*`)
 
 Example:
 
 ```js
-       WavesKeeper.encryptMessage('My message', '416z9d8DQDy5MPTqDhvReRBaPb19gEyVRWvHcewpP6Nc', 'my app')
+       TurtleShell.encryptMessage('My message', '416z9d8DQDy5MPTqDhvReRBaPb19gEyVRWvHcewpP6Nc', 'my app')
        .then((encryptedMessage) => {
             console.log(encryptedMessage);
        });
@@ -230,42 +197,18 @@ Possible errors
 You can decrypt string messages from account in Waves network to you.
 You need have sender publicKey and encrypted message.
 
-WavesKeeper.decryptMessage(`*string to decrypt*`, `*public key in base58 string*`, `*prefix is secret app string need for encoding*`)
+TurtleShell.decryptMessage(`*string to decrypt*`, `*public key in base58 string*`, `*prefix is secret app string need for encoding*`)
 
 Example:
 
 ```js
-       WavesKeeper.decryptMessage('**encrypted msg**', '416z9d8DQDy5MPTqDhvReRBaPb19gEyVRWvHcewpP6Nc', 'my app')
+       TurtleShell.decryptMessage('**encrypted msg**', '416z9d8DQDy5MPTqDhvReRBaPb19gEyVRWvHcewpP6Nc', 'my app')
        .then((message) => {
             console.log(message);
        });
 ```
-<<<<<<< HEAD
-
-Possible errors
-
-- `{ message: "Init Waves Keeper and add account" }` – Waves Keeper is not initialized
-- `{ message: "App is locked" }` – Waves Keeper is locked
-- `{ message: "Add Waves Keeper account" }` – Waves Keeper accessed, but there are no accounts
-- `{ message: "User denied message" }` – the user denied the website operation with Waves Keeper
-
-**on**
-
-Allows subscribing to Waves Keeper events.
-
-Supports events:
-
-- `update` – subscribe to updates of the state
-
-Example:
-
-```js   
-   WavesKeeper.on("update", state => {
-        //state object as from WavesKeeper.publicState
-=======
    TurtleShell.on("update", state => {
         //state object as from TurtleShell.publicState
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
    });
 ```
 
@@ -320,14 +263,9 @@ or
 
 Example
 
-<<<<<<< HEAD
-```js
-    const authData = { 
-=======
 
-```
+```js
     const authData = {
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         data: "Generated string from server",
         name: "My test App",
         icon: "/img/icons/tn_logo.svg",
@@ -344,25 +282,10 @@ Example
         //processing the error
     });
 
-
-
-
 ```
 
-<<<<<<< HEAD
-If the verification is successful, Waves Keeper will return in the promise an object containing data for signature verification:
-
-- `host` – a host that requested a signature
-- `name` – the name of an application that requested a signature
-- `prefix` – a prefix participating in the signature
-- `address` – an address in Waves network
-- `publicKey` – the user's public key
-- `signature` - signature
-- `version` – API version
-=======
 
 If the verification is successful, Turtle Shell will return in the promise an object containing data for signature verification:
-
 
 
 *   `host` – a host that requested a signature
@@ -372,7 +295,6 @@ If the verification is successful, Turtle Shell will return in the promise an ob
 *   `publicKey` – the user's public key
 *   `signature` - signature
 *   `version` – API version
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 [How to verify a signature](https://docs.wavesplatform.com/en/waves-api-and-sdk/client-api/auth-api.html#how-to-check-signature-validity)?
 
@@ -403,13 +325,8 @@ Example:
             recipient: "test"
         }
     };
-<<<<<<< HEAD
-    WavesKeeper.signTransaction(txData).then((data) => {
-        //data – a line ready for sending to Waves network's node (server)
-=======
     TurtleShell.signTransaction(txData).then((data) => {
         //data – a line ready for sending to TN network's node (server)
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
     }).catch((error) => {
         //Processing errors
     });
@@ -450,24 +367,14 @@ Example:
                recipient: "test"
            }
        };
-<<<<<<< HEAD
-       WavesKeeper.signAndPublishTransaction(txData).then((data) => {
-           //data - a line ready for sending to Waves network's node (server)
-=======
        TurtleShell.signAndPublishTransaction(txData).then((data) => {
            //data - a line ready for sending to TN network's node (server)
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
        }).catch((error) => {
            //processing errors
        });
 ```
 
-<<<<<<< HEAD
-REPLY A reply from Waves network returns as a line containing the entire past transaction.
-=======
-
 REPLY A reply from TN network returns as a line containing the entire past transaction.
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 ERRORS
 
@@ -478,17 +385,6 @@ ERRORS
 
 A package transaction signature. Sometimes several transactions need to be simultaneously signed, and for users' convenience, up to seven transactions at ones could be signed. Only certain types of transactions are permitted:
 
-<<<<<<< HEAD
-- `3 – token issue`
-- `4 – token transfer`
-- `5 – token re-issue`
-- `6 – token burning`
-- `10 – creating an alias for an address in Waves' network`
-- `11 – mass transfer`
-- `12 - DataTransaction`
-=======
-
-
 *   `3 – token issue`
 *   `4 – token transfer`
 *   `5 – token re-issue`
@@ -496,7 +392,6 @@ A package transaction signature. Sometimes several transactions need to be simul
 *   `10 – creating an alias for an address in TN's network`
 *   `11 – mass transfer`
 *   `12 - DataTransaction`
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 Example:
 
@@ -535,13 +430,7 @@ Example:
 
 Sign two transaction:
 
-
-<<<<<<< HEAD
-*   Transfer 1.567 TN to the alias test 
-=======
-
 *   Transfer 1.567 TN to the alias test
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 *   Transfer 0.1 TN to the alias merry
 
 REPLY
@@ -552,13 +441,8 @@ ERRORS Same as in "`signTransaction`"
 
 **[Transactions](https://docs.wavesplatform.com/en/waves-api-and-sdk/client-libraries/waves-transactions.html)**
 
-<<<<<<< HEAD
-Every user of Waves' network has a state (balances, assets, data, scripts), and every past transactions changes these data. \
-In Waves Keeper API it is different from [NODE REST API](https://docs.wavesplatform.com/en/waves-api-and-sdk/waves-node-rest-api.html).
-=======
 Every user of TN's network has a state (balances, assets, data, scripts), and every past transactions changes these data. \
 In Turtle Shell API it is different from [NODE REST API](https://docs.wavesplatform.com/en/development-and-api/waves-node-rest-api.html).
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 `signTransaction`, `signAndPublishTransaction` accept transactions as follows
 
@@ -573,21 +457,12 @@ In Turtle Shell API it is different from [NODE REST API](https://docs.wavesplatf
 
 Legend keys
 
-<<<<<<< HEAD
-- - optional field, data are automatically supplied from WavesKeeper. \
-    [x,y] – length limit from x to y. \
-    [,x] – length limit to x. \
-    [y,] – length limit from y. \
-    [x-y] – number from x to y. x/y - x or y. (JLM) - JAVA LONG MAX = 9 223 372 036 854 775 807 \
-    MoneyLike - price
-=======
 * - optional field, data are automatically supplied from TurtleShell. \
 [x,y] – length limit from x to y. \
 [,x] – length limit to x. \
 [y,] – length limit from y. \
 [x-y] – number from x to y. x/y - x or y. (JLM) - JAVA LONG MAX = 9 223 372 036 854 775 807 \
 MoneyLike - price
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 MoneyLike could look as:
 
@@ -613,14 +488,8 @@ If the field contains other types than MoneyLike, for instance, string/MoneyLike
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 3,
         data: {
              "name": "Best Token",
@@ -653,14 +522,8 @@ In case of a success, we are issuing a new asset in the quantity of 1,000,000, a
 
 Example:
 
-<<<<<<< HEAD
 ```js
-    WavesKeeper.signAndPublishTransaction({
-=======
-
-```
     TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 4,
         data: {
             amount: { tokens: "3.3333333", assetId: "TN" },
@@ -685,14 +548,8 @@ Example:
 
 Example:
 
-<<<<<<< HEAD
 ```js
-      WavesKeeper.signAndPublishTransaction({
-=======
-
-```
       TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
            type: 5,
            data: {
                 "quantity": 1000,
@@ -722,14 +579,8 @@ In case of a success, we are re-issuing a new asset in the quantity of 1,000,000
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 6,
         data: {
              amount: 1000,
@@ -758,14 +609,8 @@ In case of a success, 1,000 coins `are burned`.
 
 Example:
 
-<<<<<<< HEAD
-```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
 ```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 8,
         data: {
              "amount": 1000,
@@ -794,14 +639,8 @@ In case of a success, 0.00001000 TN is leased.
 
 Example:
 
-<<<<<<< HEAD
-```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
 ```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 9,
         data: {
              leaseId: "6frvwF8uicAfyEfTfyC2sXqBJH7V5C8he5K4YH3BkNiS",
@@ -828,14 +667,8 @@ In case of a success, the leasing transaction is cancelled.
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 10,
         data: {
              alias: "testAlias",
@@ -865,14 +698,8 @@ In case of a success, an alias (another name) is created.
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 11,
         data: {
              totalAmount: { assetId: "TN", coins: 0},
@@ -907,14 +734,8 @@ In case of a success, 0.002 TN will be sent to alias1 and alias2.
 
 Field:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 12,
         data: {
              data: [
@@ -948,14 +769,8 @@ For cancelling a script the field `script`has to be "". [Script development on R
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 13,
         data: {
              script: "",
@@ -975,14 +790,8 @@ In case of a success, the script will be removed from the account.
 
 Example 2:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 13,
         data: {
              script: "base64:AQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tHAQa3b8tH",
@@ -1009,14 +818,8 @@ In case of a success, a new script will be added to the account, allowing any tr
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 14,
         data: {
              minSponsoredAssetFee: {
@@ -1049,14 +852,8 @@ It's now impossible to cancel a script, you can only add a new script. [Script 
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-
-```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 15,
         data: {
              assetId: "",
@@ -1077,7 +874,6 @@ In case of a success, the asset's script will be reset.
 
 **[Тип 16 SCRIPT INVOCATION - call account script function](https://docs.wavesplatform.com/en/blockchain/transaction-type/invoke-script-transaction.html)**
 
-<<<<<<< HEAD
 - `dApp` string – address script account
 - `call` object –
   - `function` string function name
@@ -1092,24 +888,22 @@ In case of a success, the asset's script will be reset.
 Example:
 
 ```js
-   WavesKeeper.signAndPublishTransaction({
-=======
-### [Type 16 SCRIPT INVOCATION - call account script function *(testnet only)]()  
-+ `dappAddress` string – address script account
-+ `fee` MoneyLike – fee
-+ `call` object –
-    + `function` string function name
-    + `args` array
-        +   `type` "binary"/string/"integer"/"boolean" - type,
-        +   `value` /string/string/number/boolean - value for type
-+ `*payment` array MoneyLike (at now can use only 1 payment)
-+ `*senderPublicKey` string - public key in base58
-+ `*timestamp` number/string - number/string – time in ms
+   TurtleShell.signAndPublishTransaction({
+        ### [Type 16 SCRIPT INVOCATION - call account script function *(testnet only)]()  
+        + `dappAddress` string – address script account
+        + `fee` MoneyLike – fee
+        + `call` object –
+            + `function` string function name
+            + `args` array
+                +   `type` "binary"/string/"integer"/"boolean" - type,
+                +   `value` /string/string/number/boolean - value for type
+        + `*payment` array MoneyLike (at now can use only 1 payment)
+        + `*senderPublicKey` string - public key in base58
+        + `*timestamp` number/string - number/string – time in ms
 
 Example:
 ```
    TurtleShell.signAndPublishTransaction({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 16,
         data: {
              fee: {
@@ -1131,12 +925,9 @@ Example:
    }).catch((error) => {
         console.error("something went wrong", error);
    });
-<<<<<<< HEAD
-=======
 ```
 
 In case of a success, invoke script function `tellme` in testnet account `3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU`
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 ```
 
@@ -1172,14 +963,8 @@ Turte Shells's method for signing an order to the matcher. As input, it accepts 
 
 Example:
 
-<<<<<<< HEAD
 ```js
-   WavesKeeper.signOrder({
-=======
-
-```
    TurtleShell.signOrder({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 1002,
         data: {
              matcherPublicKey: "7kPFrHDiGw1rCm7LPszuECwWYL3dMf6iMifLRDJQZMzy",
@@ -1243,14 +1028,8 @@ Turtle Shell's method for signing cancellation of an order to the matcher. As in
 
 Example:
 
-<<<<<<< HEAD
 ```js
-    WavesKeeper.signCancelOrder({
-=======
-
-```
     TurtleShell.signCancelOrder({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 1003,
         data: {
             id: '31EeVpTAronk95TjCHdyaveDukde4nDr9BfFpvhZ3Sap'
@@ -1268,15 +1047,6 @@ ERRORS:
 
 **signAndPublishCancelOrder**
 
-<<<<<<< HEAD
-Waves Keeper's method for cancelling an order to the matcher. It works identically to `signCancelOrder`,
-but also tries to send data to the matcher. For api need know also 2 field `priceAsset` and `amountAsset` from order.
-
-Example:
-
-```js
-    WavesKeeper.signAndPublishCancelOrder({
-=======
 Turtle Shell's method for cancelling an order to the matcher. It works identically to `signCancelOrder`, but also tries to send data to the matcher.
 
 Example:
@@ -1284,7 +1054,6 @@ Example:
 
 ```
     TurtleShell.signAndPublishCancelOrder({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 1003,
         priceAsset: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
         amountAsset: 'WAVES',
@@ -1327,14 +1096,8 @@ Currently, the method supports the following types:
 
 Example:
 
-<<<<<<< HEAD
-```js
-    WavesKeeper.signRequest({
-=======
-
 ```
     TurtleShell.signRequest({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 1001,
         data: {
             timestamp: 234234242423423
@@ -1355,15 +1118,9 @@ ERRORS:
 - `timestamp` number/string
 
 Request:
-
-<<<<<<< HEAD
-```js
-    WavesKeeper.signRequest({
-=======
-
+=====
 ```
     TurtleShell.signRequest({
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
         type: 1004,
         data: {
             timestamp: 234234242423423
@@ -1394,7 +1151,7 @@ Note: This method adds the `[255, 255, 255, 1]` prefix to the signed bytes. This
 Example:
 
 ```js
-    WavesKeeper.signCustomData({
+    TurtleShell.signCustomData({
          version: 1,
          binary: 'base64:AADDEE=='
     });
@@ -1430,7 +1187,7 @@ Bytes to sign: [255, 255, 255, 2, ...(from data Array to bin)]
 Example:
 
 ```js
-    WavesKeeper.signCustomData({
+    TurtleShell.signCustomData({
          version: 2,
          data: [{ type: 'string', key: 'name', value: 'Mr. First' }]
     });
@@ -1472,7 +1229,7 @@ Validate custom data:
 ```
 Example:
 ```js
-    WavesKeeper.verifyCustomData({
+    TurtleShell.verifyCustomData({
         "version" : 1,
         "binary" : "base64:AADDEE==",
         "publicKey" : "3BvAsKuGZe2LbSwKr9SA7eSXcNDKnRqN1j2K2bZaTn5X",
@@ -1492,7 +1249,7 @@ Check allow API status for your origin
 Example:
 
 ```js
-    WavesKeeper.resourceIsApproved().then(result => { console.log(result) });
+    TurtleShell.resourceIsApproved().then(result => { console.log(result) });
 ```     
 
 REPLY: true/false
@@ -1503,14 +1260,9 @@ Check block API status for your origin
 
 Example:
 
-<<<<<<< HEAD
 ```js
-    WavesKeeper.resourceIsBlocked().then(result => { console.log(result) });
-```     
-
-REPLY: true/false
-=======
+    TurtleShell.resourceIsBlocked().then(result => { console.log(result) });
 *   `{ message: "User denied message", code: 10 }` – the user rejected the request
 *   `{ message: "Api rejected by user", code: 12 }` – The website is not trusted
 *   `{ message: "Invalid data", data: "Reason", code: 9 }` - invalid/incomplete request data
->>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
+```
