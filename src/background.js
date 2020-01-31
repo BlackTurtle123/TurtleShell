@@ -46,6 +46,7 @@ setupBackgroundService().catch(e => log.error(e));
 
 const Adapter = getAdapterByType('seed');
 const adapter = new Adapter('test seed for get seed adapter info');
+const version = extension.runtime.getManifest().version;
 
 async function setupBackgroundService() {
     // Background service init
