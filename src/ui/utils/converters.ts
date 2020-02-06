@@ -18,7 +18,6 @@ export const moneyLikeToMoney = (amount: IMoneyLike, assets): Money => {
 };
 
 export const getMoney = (amount: TAmount, assets) => {
-    console.log(amount);
     if (amount instanceof Money) {
         return amount;
     }

@@ -39,6 +39,8 @@ import { getAdapterByType } from '@turtlenetwork/signature-adapter';
 import { TURTLESHELL_DEBUG } from './constants';
 import { verifyCustomData } from "@turtlenetwork/waves-transactions";
 import { waves } from "./controllers/wavesTransactionsController";
+
+const version = extension.runtime.getManifest().version;
 const isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
 log.setDefaultLevel(TURTLESHELL_DEBUG ? 'debug' : 'warn');
 
