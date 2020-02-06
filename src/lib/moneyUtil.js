@@ -1,4 +1,4 @@
-import { Money } from '@turtlenetwork/data-entities';
+import { Money } from '@waves/data-entities';
 import { BigNumber } from '@turtlenetwork/bignumber';
 import create from 'parse-json-bignumber';
 

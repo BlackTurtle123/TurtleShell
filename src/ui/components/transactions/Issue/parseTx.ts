@@ -1,5 +1,5 @@
 import { SIGN_TYPE } from '@turtlenetwork/signature-adapter';
-import { Asset, Money } from '@turtlenetwork/data-entities';
+import { Asset, Money } from '@waves/data-entities';
 
 export const messageType = 'issue';
 export const txType = 'transaction';
@@ -7,11 +7,11 @@ export const txType = 'transaction';
 export function getAssetsId(tx): Array<string> {
     const feeAssetId = tx.fee && tx.fee.assetId ? tx.fee.assetId : tx.feeAssetId || 'TN';
     const amountAssetId = tx.amount && tx.amount.assetId ? tx.amount.assetId : tx.assetId || 'TN';
-    
+
     if (feeAssetId === amountAssetId) {
         return [amountAssetId]
     }
-    
+
     return [amountAssetId, feeAssetId];
 }
 

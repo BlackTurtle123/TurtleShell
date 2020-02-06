@@ -10,7 +10,7 @@ import {
     setActiveAccount,
 } from '../../actions';
 import {PAGES} from '../../pageConfig';
-import { Asset, Money } from '@turtlenetwork/data-entities';
+import { Asset, Money } from '@waves/data-entities';
 import { Modal } from '../ui';
 import * as CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import cn from 'classnames';
@@ -54,7 +54,7 @@ class AssetsComponent extends React.Component {
             onShowQr: this.showQrHandler,
             active: true,
         };
-        
+
         const wallets = this.getFilteredAndSortedAccounts(activeAddress)
             .map((account) => (
                 account ?
@@ -89,7 +89,7 @@ class AssetsComponent extends React.Component {
                     {wallets.length ? <div className={`${styles.otherWalletsTitle} basic500 body3`}>
                         <Trans i18nKey='assets.inStorage'>Other accounts</Trans>
                     </div> : null}
-                    
+
                     <div className={styles.walletListWrapper}>
                         <CSSTransitionGroup transitionName="animate_wallets"
                                             transitionEnterTimeout={600}
@@ -120,17 +120,17 @@ class AssetsComponent extends React.Component {
                     <div><Trans i18nKey="assets.setActive">Active account changed</Trans></div>
                 </div>
             </Modal>
-    
+
             <Modal animation={Modal.ANIMATION.FLASH_SCALE} showModal={this.state.deletedNotify} showChildrenOnly={true}>
                 <div className="modal notification active-asset" key='deleted'>
                     <div><Trans i18nKey="assets.deleteAccount">Delete account</Trans></div>
                 </div>
             </Modal>
-            
+
             {/*<div className={styles.notifier}>*/}
                 {/*<i className={styles.counter}>5</i>*/}
             {/*</div>*/}
-            
+
         </div>
     }
 
@@ -141,7 +141,7 @@ class AssetsComponent extends React.Component {
         this._sorted = this._sorted || [];
         const hash = {};
         this.props.accounts.forEach(account => hash[account.address] = account);
-        
+
         this._sorted = this._sorted.map(account => {
             const { address } = account || { address: null };
             const data = hash[address];
@@ -158,19 +158,19 @@ class AssetsComponent extends React.Component {
         if (this._currentActive === activeAddress) {
             return this._sorted;
         }
-    
+
         if (!this._currentActive) {
             this._currentActive = activeAddress;
             return this._sorted;
         }
-    
+
         const last = this.props.accounts.find(account => account.address === this._currentActive);
         this._sorted = this._sorted.filter(account => account.address !== activeAddress);
         this._sorted.unshift(last);
         this._currentActive = activeAddress;
         return this._sorted;
     }
-    
+
     setActive(account) {
         this.props.selectAccount(account);
         this.setState({ showActivated: true, name: account.name });
@@ -188,12 +188,12 @@ class AssetsComponent extends React.Component {
         const showCopy = false;
         setTimeout(() => this.setState({ showSelected, showActivated, showCopy }), 1000);
     }
-    
+
     onCopyModal() {
         this.setState({ showCopy: true });
         this.closeModals();
     }
-    
+
     static getDerivedStateFromProps(props, state) {
         const asset = props.assets['TN'];
 
@@ -205,17 +205,17 @@ class AssetsComponent extends React.Component {
             props.getAsset('TN');
             return { balances: {}, lease: {}, loading: false };
         }
-        
+
         const assetInstance = new Asset(asset);
         const balancesMoney = {};
         const leaseMoney = {};
-        
+
         Object.entries<{ available: string, leasedOut: string }>(props.balances)
             .forEach(([key, balance]) =>  {
                 if (!balance) {
                     return null;
                 }
-            
+
                 balancesMoney[key] = new Money(balance.available, assetInstance);
                 leaseMoney[key] = new Money(balance.leasedOut, assetInstance);
             });

@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import log from 'loglevel';
 import EventEmitter from 'events'
 import { getAdapterByType } from "@turtlenetwork/signature-adapter";
-import { Asset, Money } from '@turtlenetwork/data-entities';
+import { Asset, Money } from '@waves/data-entities';
 import { BigNumber } from '@turtlenetwork/bignumber';
 import { networkByteFromAddress } from "../lib/cryptoUtil";
 import { ERRORS } from '../lib/KeeperError';

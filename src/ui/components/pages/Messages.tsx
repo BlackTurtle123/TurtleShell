@@ -13,7 +13,7 @@ import {
     setShowNotification
 } from '../../actions';
 import { PAGES } from '../../pageConfig';
-import { Asset, Money } from '@turtlenetwork/data-entities';
+import { Asset, Money } from '@waves/data-entities';
 import { Intro } from './Intro';
 import { getConfigByTransaction, FinalTransaction } from '../transactions';
 import { I18N_NAME_SPACE } from '../../appConfig';
@@ -24,7 +24,7 @@ class MessagesComponent extends React.Component {
     readonly state = {} as any;
     readonly props;
     hasApproved: boolean;
-    
+
     rejectHandler = (e) => this.reject(e);
     approveHandler = (e, params) => this.approve(e, params);
     closeHandler = (e) => {
@@ -34,22 +34,22 @@ class MessagesComponent extends React.Component {
     toListHandler = (e) => this.updateActiveMessages(e);
     nextHandler = (e) => this.updateActiveMessages(e, true);
     selectAccountHandler = () => this.props.setTab(PAGES.CHANGE_TX_ACCOUNT);
-    
+
     componentDidCatch(error, info) {
         this.reject();
     }
-    
+
     render() {
         if (this.state.loading || this.state.approvePending) {
             return <Intro/>
         }
-        
+
         const {
             approveOk,
             approveError,
             rejectOk
         } = this.state.transactionStatus;
-    
+
         if (approveOk || approveError || rejectOk) {
             return <FinalTransaction selectedAccount={this.props.selectedAccount}
                                      message={this.props.activeMessage}
@@ -62,7 +62,7 @@ class MessagesComponent extends React.Component {
                                      onNext={this.nextHandler}
                                      onList={this.toListHandler}/>
         }
-        
+
         const { activeMessage } = this.state;
         const conf = getConfigByTransaction(activeMessage);
         const { message: Component, type } = conf;
@@ -85,59 +85,59 @@ class MessagesComponent extends React.Component {
 
     approve(e, params?) {
         e.preventDefault();
-        
+
         if (this.hasApproved) {
             return;
         }
-        
+
         if (params) {
             const { notifyPermissions, approvePermissions } = params;
-            
+
             if (approvePermissions) {
                 this.props.setAutoOrigin(approvePermissions);
             }
-            
+
             if (notifyPermissions) {
                 this.props.setShowNotification(notifyPermissions);
             }
         }
-        
+
         this.hasApproved = true;
         this.props.approve(this.state.activeMessage.id);
     }
-    
+
     reject(e = null) {
         if (e) {
             e.preventDefault();
         }
         this.props.reject(this.state.activeMessage.id);
     }
-    
+
     updateActiveMessages( e, isNext = false) {
-    
+
         if (e) {
             e.preventDefault();
             e.stopPropagation();
         }
-        
+
         this.props.clearMessagesStatus(!isNext);
         this.props.setTab(PAGES.ROOT);
         this.hasApproved = false;
     }
-    
+
     static getDerivedStateFromProps(props, state) {
 
         const { balance: sourceBalance, selectedAccount, assets, activeMessage, messages, notifications } = props;
         let loading = true;
-    
+
         if (!assets || !assets['TN']) {
             props.getAsset('TN');
             return { loading: true, selectedAccount } ;
         }
-    
+
         const assetInstance = new Asset(assets['TN']);
         const balance = new Money(sourceBalance || 0, assetInstance);
-        
+
         const { transactionStatus } = props;
         const isExistMsg = activeMessage && state.activeMessage && activeMessage.id === state.activeMessage.id;
 
@@ -146,16 +146,16 @@ class MessagesComponent extends React.Component {
             loading = false;
             return { balance, selectedAccount, assets, transactionStatus, loading, messages, notifications };
         }
-        
+
         const sourceSignData = activeMessage.data || {};
         const parsedData = MessagesComponent.getAssetsAndMoneys(sourceSignData);
         const needGetAssets = Object.keys(parsedData.assets).filter(id => assets[id] === undefined);
         needGetAssets.forEach( id => props.getAsset(id));
-    
+
         if (needGetAssets.length) {
             return { loading, selectedAccount } ;
         }
-        
+
         loading = false;
         const txHash = activeMessage.messageHash;
         const config = getConfigByTransaction(activeMessage);
@@ -192,15 +192,15 @@ class MessagesComponent extends React.Component {
             if ( currentData instanceof Money) {
                 continue;
             }
-            
+
             if ('priceAsset' in currentData) {
                 assets[currentData.priceAsset || 'TN'] = true;
             }
-    
+
             if ('amountAsset' in currentData) {
                 assets[currentData.amountAsset || 'TN'] = true;
             }
-            
+
             if ( 'assetId' in currentData) {
                 assets[currentData.assetId || 'TN'] = true;
 
@@ -221,7 +221,7 @@ class MessagesComponent extends React.Component {
                     work.push({ data, path });
                 }
             }
-            
+
         }
 
         return { assets, moneys };

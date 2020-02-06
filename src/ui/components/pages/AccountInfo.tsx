@@ -5,7 +5,7 @@ import * as styles from './styles/accountInfo.styl';
 import { Avatar, CopyText, Modal, Input, Error, Button, Balance } from '../ui';
 import background from '../../services/Background';
 import { getAsset, selectAccount } from '../../actions';
-import { Money, Asset } from '@turtlenetwork/data-entities';
+import { Money, Asset } from '@waves/data-entities';
 import { PAGES } from '../../pageConfig';
 import { seedUtils } from '@turtlenetwork/waves-transactions';
 import { I18N_NAME_SPACE } from '../../appConfig';
@@ -16,7 +16,7 @@ const { Seed } = seedUtils;
 
 @translate(I18N_NAME_SPACE)
 class AccountInfoComponent extends React.Component {
-    
+
     readonly props;
     readonly state = {} as any;
     passInputEl: Input;
@@ -24,7 +24,7 @@ class AccountInfoComponent extends React.Component {
     deffer;
     getSeed = (cb) => this.getAccountInfo('seed', cb);
     getPrivate = (cb) => this.getAccountInfo('privateKey', cb);
-    
+
     confirmPassword = (e) => {
         e.preventDefault();
         this.deffer.resolve(this.state.password);
@@ -41,11 +41,11 @@ class AccountInfoComponent extends React.Component {
             this.passInputEl.focus();
         }
     };
-    
+
     onDeleteHandler = () => {
         this.props.setTab(PAGES.DELETE_ACTIVE_ACCOUNT);
     };
-    
+
     render() {
         const { selectedAccount, activeAccount } = this.props;
         const isActive = selectedAccount.address === activeAccount.address;
@@ -54,11 +54,11 @@ class AccountInfoComponent extends React.Component {
         const showLease = leaseBalance && leaseBalance.gt(leaseBalance.cloneWithCoins(0));
         const { address, network, name, publicKey } = selectedAccount;
         const { walletLink, activeAddressLink } = getExplorerUrls(network, address);
-        
+
         return <div className={styles.content}>
-            
+
             <div className="relative">
-                
+
                 <div className={`flex margin-main-big ${styles.wallet}`}>
                     <Avatar className={styles.avatar} address={address} size={48}/>
                     <div className={styles.accountData}>
@@ -72,7 +72,7 @@ class AccountInfoComponent extends React.Component {
                         </div>
                         <div className={`headline1 marginTop1 ${styles.balance}`}>
                             <Balance split={true} showAsset={true} balance={this.state.balance}/>
-                            
+
                             {showLease ? <div className={`${styles.reservedBalance} margin-main-big-top`}>
                                 <span>{leaseBalance.toFormat()}</span>
                                 <span className="basic500 font300"><Trans i18nKey='wallet.lease'>Leased</Trans></span>
@@ -81,9 +81,9 @@ class AccountInfoComponent extends React.Component {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className={`margin-main-big ${styles.buttonsWrapper}`}>
-                    
+
                     {
                         walletLink &&
                         <a href={walletLink} target="_blank"
@@ -91,7 +91,7 @@ class AccountInfoComponent extends React.Component {
                            className="button walletIconBlack button-wallet">
                             <Trans i18nKey='ui.wallet'>Wallet</Trans></a>
                     }
-                    
+
                     {
                         activeAddressLink &&
                         <a href={activeAddressLink} target="_blank"
@@ -99,14 +99,14 @@ class AccountInfoComponent extends React.Component {
                            className="transactionsIconBlack button button-wallet">
                             <Trans i18nKey='ui.transactions'>Transactions</Trans></a>
                     }
-                    
+
                     <span className={styles.walletBtnSeparator}/>
-                    
+
                     <Button onClick={this.setActiveAccount} disabled={isActive}
                             type={BUTTON_TYPE.CUSTOM}
                             className={isActive ? styles.activeAccount : styles.inActiveAccount}
                     />
-                    
+
                     <div className="relative">
                         <Button type={BUTTON_TYPE.CUSTOM}
                                 className="button button-wallet button-wallet-iconOnly showQrIcon showTooltip"
@@ -116,11 +116,11 @@ class AccountInfoComponent extends React.Component {
                             <Trans i18nKey='showQR'>Show QR</Trans>
                         </div>
                     </div>
-                
+
                 </div>
-            
+
             </div>
-            
+
             <div className="margin-main-big">
                 <div className="input-title basic500 tag1">
                     <Trans i18nKey='accountInfo.address'>Your address</Trans>
@@ -129,7 +129,7 @@ class AccountInfoComponent extends React.Component {
                     <CopyText text={address} showCopy={true} showText={true} onCopy={onCopyHandler}/>
                 </div>
             </div>
-            
+
             <div className="margin-main-big">
                 <div className="input-title basic500 tag1">
                     <Trans i18nKey='accountInfo.pubKey'>Public key</Trans>
@@ -138,7 +138,7 @@ class AccountInfoComponent extends React.Component {
                     <CopyText text={publicKey} showCopy={true} showText={true} onCopy={onCopyHandler}/>
                 </div>
             </div>
-            
+
             <div className="margin-main-big">
                 <div className="input-title basic500 tag1">
                     <Trans i18nKey='accountInfo.privKey'>Private key</Trans>
@@ -147,7 +147,7 @@ class AccountInfoComponent extends React.Component {
                     <CopyText type='key' getText={this.getPrivate} showCopy={true} onCopy={onCopyHandler}/>
                 </div>
             </div>
-            
+
             <div className="margin-main-big">
                 <div className="input-title basic500 tag1">
                     <Trans i18nKey='accountInfo.backUp'>Backup phrase</Trans>
@@ -156,7 +156,7 @@ class AccountInfoComponent extends React.Component {
                     <CopyText type='key' getText={this.getSeed} showCopy={true} onCopy={onCopyHandler}/>
                 </div>
             </div>
-            
+
             <div className={styles.accountInfoFooter}>
                 <div className={styles.deleteButton} onClick={this.onDeleteHandler}>
                     <div className={`${styles.deleteIcon} delete-icon`}/>
@@ -165,14 +165,14 @@ class AccountInfoComponent extends React.Component {
                     </div>
                 </div>
             </div>
-            
+
             <Modal animation={Modal.ANIMATION.FLASH}
                    showModal={this.state.showPassword}
                    showChildrenOnly={true}>
                 <form className={`modal ${styles.enterPasswordModal}`}
                       onClick={this.confirmPassword}>
                     <i className={`lock-icon ${styles.lockIcon}`}/>
-                    
+
                     <div className='margin1 relative'>
                         <div className='basic500 tag1 input-title'>
                             <Trans i18nKey='accountInfo.password'>Password</Trans>
@@ -182,14 +182,14 @@ class AccountInfoComponent extends React.Component {
                                error={this.state.passwordError}
                                className='margin1'
                                onChange={this.inputPassword}/>
-                        
+
                         <Error show={this.state.passwordError}>
                             <div className='error'>
                                 <Trans i18nKey='accountInfo.passwordError'>Incorrect password</Trans>
                             </div>
                         </Error>
                     </div>
-                    
+
                     <Button disabled={this.state.passwordError || !this.state.password}
                             className='margin-main-big' type='submit'>
                         <Trans i18nKey='accountInfo.enter'>Enter</Trans>
@@ -197,10 +197,10 @@ class AccountInfoComponent extends React.Component {
                     <Button onClick={this.rejectPassword}>
                         <Trans i18nKey='accountInfo.cancel'>Cancel</Trans>
                     </Button>
-                
+
                 </form>
             </Modal>
-            
+
             <Modal animation={Modal.ANIMATION.FLASH_SCALE}
                    showModal={this.state.showCopied}
                    showChildrenOnly={true}>
@@ -208,7 +208,7 @@ class AccountInfoComponent extends React.Component {
                     <Trans i18nKey='accountInfo.copied'>Copied!</Trans>
                 </div>
             </Modal>
-            
+
             <Modal animation={Modal.ANIMATION.FLASH_SCALE}
                    showModal={this.state.changeNameNotify}
                    showChildrenOnly={true}>
@@ -218,17 +218,17 @@ class AccountInfoComponent extends React.Component {
             </Modal>
         </div>
     }
-    
+
     setCopiedModal() {
         clearTimeout(this.copiedTimer);
         this.setState({ showCopied: true });
         this.copiedTimer = setTimeout(() => this.setState({ showCopied: false }), 1000);
     }
-    
+
     showErrorModal() {
         this.setState({ passwordError: true });
     }
-    
+
     async getAccountInfo(field, cb) {
         const address = this.props.selectedAccount.address;
         this.deffer = {} as any;
@@ -236,9 +236,9 @@ class AccountInfoComponent extends React.Component {
             this.deffer.resolve = res;
             this.deffer.reject = rej;
         });
-        
+
         this.setState({ showPassword: true });
-        
+
         this.waitPassword(address)
             .then(this.onGetAccount(field, cb))
             .catch((e) => {
@@ -248,23 +248,23 @@ class AccountInfoComponent extends React.Component {
                     this.getAccountInfo(field, cb);
                     return null;
                 }
-                
+
                 this.setState({ showPassword: false, passwordError: false });
             });
     }
-    
+
     private waitPassword(address) {
         this.deffer.promise = new Promise((res, rej) => {
             this.deffer.resolve = res;
             this.deffer.reject = rej;
         });
-        
+
         return this.deffer.promise
             .then((password) => {
                 return background.exportAccount(address, password, this.props.network);
             });
     }
-    
+
     private onGetAccount(field, cb) {
         return (data) => {
             this.setState({ showPassword: false, passwordError: false });
@@ -275,7 +275,7 @@ class AccountInfoComponent extends React.Component {
             cb(info[field]);
         };
     }
-    
+
     static getDerivedStateFromProps(props, state) {
         const { selectedAccount, assets, balances } = props;
         const asset = assets['TN'];
@@ -287,17 +287,17 @@ class AccountInfoComponent extends React.Component {
         const assetInstance = new Asset(asset);
         const balancesMoney = {};
         const leaseMoney = {};
-        
+
         Object.entries<{ available: string, leasedOut: string }>(balances)
             .forEach(([key, balance]) => {
                 if (!balance) {
                     return null;
                 }
-                
+
                 balancesMoney[key] = new Money(balance.available, assetInstance);
                 leaseMoney[key] = new Money(balance.leasedOut, assetInstance);
             });
-        
+
         const { changeName: changeNameNotify } = props.notifications;
         const balance = balancesMoney[selectedAccount.address];
         const leaseBalance = leaseMoney[selectedAccount.address];
@@ -308,7 +308,7 @@ class AccountInfoComponent extends React.Component {
 const mapStateToProps = function (store: any) {
     const activeAccount = store.selectedAccount.address;
     const selected = store.localState.assets.account ? store.localState.assets.account.address : activeAccount;
-    
+
     return {
         selectedAccount: store.accounts.find(({ address }) => address === selected),
         activeAccount: store.accounts.find(({ address }) => address === activeAccount),

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ASSETS_NAMES } from '../../../appConfig';
-import { Money } from '@turtlenetwork/data-entities';
+import { Money } from '@waves/data-entities';
 import { BigNumber } from '@turtlenetwork/bignumber';
 import * as styles from './balance.styl';
 import { Loader } from '../loader';
@@ -18,9 +18,9 @@ const Loading = ({ children }) => {
 };
 
 const BalanceComponent = ({ balance, split, getAsset, addSign=null, showAsset, isShortFormat, children, assets, ...props }: IProps) => {
-    
+
     let balanceOut: Money;
-    
+
     switch (true) {
         case !balance:
             return <Loading>{children}</Loading>;
@@ -36,9 +36,9 @@ const BalanceComponent = ({ balance, split, getAsset, addSign=null, showAsset, i
         default:
             return <div>N/A</div>
     }
-    
-    
-    
+
+
+
     const tokens = (isShortFormat ? balanceOut.toFormat() : balanceOut.toTokens()).split('.');
     const assetName = showAsset ? ASSETS_NAMES[balanceOut.asset.id] || balanceOut.asset.name : null;
 
