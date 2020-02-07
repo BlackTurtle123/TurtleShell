@@ -1,5 +1,9 @@
 import { Money } from "@waves/data-entities";
+<<<<<<< HEAD
 import { BigNumber } from "@waves/bignumber";
+=======
+import { BigNumber } from "@turtlenetwork/bignumber";
+>>>>>>> testing
 
 export const moneyLikeToMoney = (amount: IMoneyLike, assets): Money => {
   if (amount) {
@@ -21,7 +25,11 @@ export const moneyLikeToMoney = (amount: IMoneyLike, assets): Money => {
   }
 };
 
+<<<<<<< HEAD
 export const getMoney = (amount: any, assets) => {
+=======
+export const getMoney = (amount: TAmount, assets) => {
+>>>>>>> testing
   if (amount instanceof Money) {
     return amount;
   }
@@ -34,11 +42,24 @@ export const getMoney = (amount: any, assets) => {
     return moneyLikeToMoney(amount as IMoneyLike, assets);
   }
 
+<<<<<<< HEAD
   return new Money(new BigNumber(amount), assets["TN"]);
 };
 
 interface IMoneyLike {
   coins?: number | string | BigNumber;
   tokens?: number | string | BigNumber;
+=======
+  if (typeof amount === "string" || typeof amount == "number") {
+    return new Money(amount, assets["TN"]);
+  }
+};
+
+type TAmount = IMoneyLike | BigNumber | Money | string | number;
+
+interface IMoneyLike {
+  coins?: string | number | BigNumber;
+  tokens?: string | number | BigNumber;
+>>>>>>> testing
   assetId: string;
 }
