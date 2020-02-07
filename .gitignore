@@ -150,3 +150,5 @@ test/sandbox.spec.js
 src/copied/_locales/extension_*.json
 
 config.json
+
+temp-tests
