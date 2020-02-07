@@ -1,5 +1,5 @@
 import ObservableStore from "obs-store";
-import { BigNumber } from "@waves/bignumber";
+import { BigNumber } from "@turtlenetwork/bignumber";
 
 export class BalanceController {
   constructor(options = {}) {
