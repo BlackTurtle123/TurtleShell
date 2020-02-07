@@ -9,7 +9,7 @@
   "license": "ISC",
   "scripts": {
     "start": "webpack --watch",
-    "dist": "NODE_ENV='production' webpack",
+    "dist": "cross-env NODE_ENV='production' webpack",
     "test": "jest"
   },
   "babel": {
@@ -33,6 +33,7 @@
     "circle-progress-bar": "^1.0.0",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.2.1",
+    "cross-env": "^7.0.0",
     "debounce": "^1.1.0",
     "debounce-stream": "^2.0.0",
     "del": "^3.0.0",
