@@ -11,21 +11,28 @@ pool:
 #  vmImage: 'windows-latest'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '12.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.x'
+    displayName: 'Install Node.js'
 
-- task: Npm@1
-  inputs:
-    command: 'install'
+  - task: Npm@1
+    inputs:
+      command: 'install'
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'config set access public --global'
+#  - task: Npm@1
+#    inputs:
+#      command: 'custom'
+#      customCommand: 'test'
+#    displayName: 'Run tests'
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'npm run dist'
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'npm run dist'
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(System.DefaultWorkingDirectory)/dist'
+      artifact: 'dist'
+      publishLocation: 'pipeline'
