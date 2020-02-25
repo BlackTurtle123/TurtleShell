@@ -65,7 +65,7 @@ export const DEFAULT_CONFIG = {
     },
 };
 
-export const DEFAULT_FEE_CONFIG_URL = 'https://raw.githubusercontent.com/wavesplatform/waves-client-config/master/fee.json';
+export const DEFAULT_FEE_CONFIG_URL = 'https://raw.githubusercontent.com/TurtleNetwork/waves-client-config/master/fee.json';
 
 export const DEFAULT_FEE_CONFIG = {
     "smart_asset_extra_fee": 4000000,
