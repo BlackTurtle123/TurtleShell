@@ -8,26 +8,26 @@ export function networkByteFromAddress(address: string): string {
 }
 
 export function getExplorerUrls(network: string, address: string) {
-    
+
     const result = {
         walletLink: null,
         activeAddressLink: null,
     };
-    
+
     switch (network) {
         case 'mainnet':
-            result.walletLink = 'https://client.turtlenetwork.eu/';
+            result.walletLink = 'https://wallet.turtlenetwork.eu/import/waveskeeper';
             result.activeAddressLink = `https://explorer.turtlenetwork.eu/address/${address}`;
             break;
         case 'testnet':
-            result.walletLink = 'https://client.turtlenetwork.eu/';
+            result.walletLink = 'https://testnet.wallet.turtlenetwork.eu/import/waveskeeper';
             result.activeAddressLink = `https://explorer.turtlenetwork.eu/testnet/address/${address}`;
             break;
         default:
-            result.walletLink = 'https://waves.exchange/import/waveskeeper';
-            result.activeAddressLink = `https://wavesexplorer.com/address/${address}`;
+            result.walletLink = 'https://wallet.turtlenetwork.eu/import/waveskeeper';
+            result.activeAddressLink = `https://explorer.turtlenetwork.eu/address/${address}`;
     }
-    
+
     return result;
 }
 
@@ -61,17 +61,17 @@ export async function getTxId(adapter: SeedAdapter, tx: TSignData): Promise<stri
 export async function getNetworkByte(url: string): Promise<string> {
     const response = await getUrl(url, 'blocks/last', true);
     const { generator } = await response.json();
-    
+
     if (!generator) {
         throw new Error('Incorrect node url');
     }
-    
+
     const networkCode = networkByteFromAddress(generator);
-    
+
     if (!networkCode) {
         throw new Error('Incorrect node byte');
     }
-    
+
     return networkCode;
 }
 
@@ -82,7 +82,7 @@ export async function getMatcherPublicKey(url: string): Promise<string> {
     if (publicKeyBytes.length === 32) {
         return pk;
     }
-    
+
     throw new Error('Invalid matcher public key');
 }
 
@@ -100,29 +100,29 @@ function hashChain(input): Uint8Array {
 
 async function getUrl(urlString: string, path = '', required = true): Promise<Response> {
     let url: URL;
-    
+
     if (required && !urlString) {
         return Promise.reject();
     }
-    
+
     try {
         url = new URL(urlString);
     } catch (e) {
         return Promise.reject();
     }
-    
+
     url.pathname = path || url.pathname;
-    
+
     return fetch(url.href);
 }
 
 export const validateNode = async (url: string, networkCode: string) => {
     const code = await getNetworkByte(url);
-    
+
     if (networkCode && code !== networkCode) {
         throw new Error('Invalid code')
     }
-    
+
     return code;
 };
 
@@ -130,27 +130,27 @@ export const byteArrayToString = function (bytes: Uint8Array): string {
     const extraByteMap = [1, 1, 1, 1, 2, 2, 3, 0];
     const count = bytes.length;
     let str = '';
-    
+
     for (let index = 0; index < count;) {
         let ch = bytes[index++];
         if (ch & 0x80) {
             let extra = extraByteMap[(ch >> 3) & 0x07];
             if (!(ch & 0x40) || !extra || ((index + extra) > count))
                 return null;
-            
+
             ch = ch & (0x3F >> extra);
             for (; extra > 0; extra -= 1) {
                 const chx = bytes[index++];
                 if ((chx & 0xC0) != 0x80)
                     return null;
-                
+
                 ch = (ch << 6) | (chx & 0x3F);
             }
         }
-        
+
         str += String.fromCharCode(ch);
     }
-    
+
     return str;
 };
 
@@ -179,10 +179,10 @@ export const readAttachment = data => {
     if (!data) {
         return '';
     }
-    
+
     if (typeof data === 'string') {
         return data;
     }
-    
+
     return bytesToSafeString(data);
 };

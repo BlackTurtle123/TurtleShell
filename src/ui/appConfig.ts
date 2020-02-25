@@ -5,7 +5,7 @@ export const CONFIG = {
     NAME_MIN_LENGTH: 1,
     PASSWORD_MIN_LENGTH: 8,
     MESSAGES_CONFIRM_TIMEOUT: 3000,
-    BASE_URL: 'https://client.turtlenetwork.eu',
+    BASE_URL: 'https://wallet.turtlenetwork.eu',
 };
 
 export const I18N_NAME_SPACE = 'extension';
