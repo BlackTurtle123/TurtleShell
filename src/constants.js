@@ -34,7 +34,7 @@ export const DEFAULT_CONFIG = {
         },
         "mainnet": {
             "code": "L",
-            "server": "https://tnnode2.turtlenetwork.eu.eu/",
+            "server": "https://tnnode2.turtlenetwork.eu/",
             "matcher": "https://privatematcher.blackturtle.eu/"
         },
         "custom": {
