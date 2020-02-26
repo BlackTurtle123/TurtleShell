@@ -96,7 +96,7 @@ async function setupInpageApi() {
     cbs = {};
     Object.assign(wavesApi, inpageApi);
     wavesAppDef.resolve(wavesApi);
-    global.WavesKeeper = global.Waves = wavesApi;
+    global.TurtleShell = global.Tn = wavesApi;
     setupClickInterceptor(inpageApi);
 }
 
