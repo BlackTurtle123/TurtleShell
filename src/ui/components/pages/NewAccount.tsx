@@ -121,9 +121,9 @@ class NewAccountComponent extends React.PureComponent<INewAccountComponentProps>
                     <label htmlFor="termsAccepted">
                         <Trans i18nkey='newAccount.acceptTerms'>I have read and agree with the</Trans>
                         {' '}
-                        {/*<a href="https://waves.exchange/files/Terms_and_conditions.pdf" target='_blank'  rel="noopener noreferrer">*/}
+                        <a href="https://docs.turtlenetwork.eu/files/placeholder.pdf" target='_blank'  rel="noopener noreferrer">
                             <Trans i18nkey='newAccount.termsAndConditions'>Terms and Conditions</Trans>
-                        {/*</a>*/}
+                        </a>
                     </label>
                 </div>
                 <div className="flex margin-main margin-main-top">
