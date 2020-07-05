@@ -3,7 +3,7 @@
 
 [en](https://github.com/wavesplatform/waveskeeper/blob/master/README.md) | ru
 =======
-# Turtle Shell v1.0.7        
+# Turtle Shell v1.0.7
 [en](https://github.com/BlackTurtle123/TurtleShell/blob/master/README.md) | ru
 >>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
@@ -149,8 +149,8 @@
     },
     "network": {
         "code": "L",
-        "server": "https://privatenode2.blackturtle.eu/",
-        "matcher": "https://privatematcher.blackturtle.eu/"
+        "server": "https://tnnode.turtlenetwork.eu/",
+        "matcher": "https://matcher.turtlenetwork.eu/"
     },
     "messages": [],
     "txVersion": {
@@ -228,11 +228,11 @@ Example:
 Позволяет подписаться на события из Waves Keeper.
 =======
 + `{ message: "Init Turtle Shell and add account" }` - кипер не проинициализирован
-+ `{ message: "Add Turtle Shell account" }` - вход в кипер произведен, но нет аккаунтов  
-+ `{ message: "User denied message" }` -  пользователь запретил сайту работать с кипером  
++ `{ message: "Add Turtle Shell account" }` - вход в кипер произведен, но нет аккаунтов
++ `{ message: "User denied message" }` -  пользователь запретил сайту работать с кипером
 
 ### on
-Позволяет подписаться на события из Turtle Shell.  
+Позволяет подписаться на события из Turtle Shell.
 >>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 Поддерживает события:
@@ -404,7 +404,7 @@ Example:
 
 > Апи возвращает строки, а не объект, так как в javascript при работе с 8 байтными целыми (long) происходит потеря точности.
 =======
->  
+>
 > Апи возвращает строки, а не объект, так как в javascript при работе с 8 байтными целыми происходит потеря точности.
 >>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 >
@@ -463,15 +463,15 @@ Example:
 Пакетная подпись транзакций.
 Иногда надо подписать сразу несколько транзакций, для удобства пользователя,
 допускается подписывать до 7 транзакций одновременно, и разрешены только
-определенные типы транзакций:  
+определенные типы транзакций:
 
-* `    3 - выпуск токена`  
-* `    4 - перевод токенов`  
-* `    5 - перевыпуск токенов`  
-* `    6 - сжигание токенов`  
-* `    10 - создaние алиса   на адрес в сети waves`  
-* `    11 - массовый перевод`  
-* `    12 - транзакция с данными`  
+* `    3 - выпуск токена`
+* `    4 - перевод токенов`
+* `    5 - перевыпуск токенов`
+* `    6 - сжигание токенов`
+* `    10 - создaние алиса   на адрес в сети waves`
+* `    11 - массовый перевод`
+* `    12 - транзакция с данными`
 >>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 
 Пакетная подпись транзакций.
@@ -555,7 +555,7 @@ Example:
 =======
 ## [Транзакции](https://docs.wavesplatform.com/en/development-and-api/client-libraries/waves-transactions.html)
 У каждого пользователя в сети waves есть стейт (балансы, ассеты, данные, скрипты),
-любая прошедшая транзакция меняет эти данные.  
+любая прошедшая транзакция меняет эти данные.
 В TurtleShell API - отличается от [NODE REST API](https://docs.wavesplatform.com/en/development-and-api/waves-node-rest-api.html).
 
 `signTransaction`, `signAndPublishTransaction` принимают транзакцию в следующем виде
@@ -577,10 +577,10 @@ Example:
 > [,x] - oграничение длины до x.
 > [y,] - oграничение длины от y.
 =======
-> \* - необязательное поле, данные подставятся автоматически из TurtleShell.  
-> [x,y] - oграничение длины от x, до y.   
-> [,x] - oграничение длины до x.  
-> [y,] - oграничение длины от y.  
+> \* - необязательное поле, данные подставятся автоматически из TurtleShell.
+> [x,y] - oграничение длины от x, до y.
+> [,x] - oграничение длины до x.
+> [y,] - oграничение длины от y.
 >>>>>>> ca3495a53dcf88861f8bf06b5569c5aa68bb4bff
 > [x-y] - число от x до y.
 > x/y - x или y.
@@ -588,12 +588,12 @@ Example:
 > MoneyLike - цена
 
 <<<<<<< HEAD
-MoneyLike может иметь вид:  
+MoneyLike может иметь вид:
 * ``{ tokens: 1, assetId: "TN" }``
 * ``{ coins: 100000000, assetId: "TN" }``;
 
 В обоих записях указана одинаковая цена 1 TN. Можно свободно перевести `coins` в `tokens` и  обратно,
-зная в каком ассете указана цена и получив его точность `tokens = coins / (10 ** precision)`  
+зная в каком ассете указана цена и получив его точность `tokens = coins / (10 ** precision)`
 =======
 MoneyLike может иметь вид:
 
@@ -683,7 +683,7 @@ MoneyLike может иметь вид:
 ```js
     WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 4 TRANSFER - передача ассетов](https://docs.wavesplatform.com/en/development-and-api/waves-node-rest-api/asset-transactions/public-functions.html#section-0c8edc11ae61814aebb41d3eeccbb831)  
+### [Тип 4 TRANSFER - передача ассетов](https://docs.wavesplatform.com/en/development-and-api/waves-node-rest-api/asset-transactions/public-functions.html#section-0c8edc11ae61814aebb41d3eeccbb831)
 
 + `amount` MoneyLike - количество,
 + `recipient` string - адрес получателя или алиас
@@ -774,7 +774,7 @@ MoneyLike может иметь вид:
 ```js
    WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 6 BURN - сжигание токена](https://docs.wavesplatform.com/en/platform-features/assets-custom-tokens.html#section-423d9cffbd0e1a0b1298bf22c176fac3)  
+### [Тип 6 BURN - сжигание токена](https://docs.wavesplatform.com/en/platform-features/assets-custom-tokens.html#section-423d9cffbd0e1a0b1298bf22c176fac3)
 
 + `assetId` string - Id ассета,
 + `amount` [0 - (JLM)]  number/string/MoneyLike - количество,
@@ -865,7 +865,7 @@ MoneyLike может иметь вид:
 ```js
    WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 9 LEASE CANCEL - отмена лизинга](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-92869b0109414c29eb600dfc6caf4520)  
+### [Тип 9 LEASE CANCEL - отмена лизинга](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-92869b0109414c29eb600dfc6caf4520)
 
 + `leaseId` string - id транзакции лизинга,
 + `fee` MoneyLike -комиссия
@@ -906,7 +906,7 @@ MoneyLike может иметь вид:
 ```js
    WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 10 CREATE ALIAS - создание алиаса для адреса](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-e4657fe644ac2cf0d4e382fe676f0477)  
+### [Тип 10 CREATE ALIAS - создание алиаса для адреса](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-e4657fe644ac2cf0d4e382fe676f0477)
 
 + `alias`[4, 30] string - имя
 + `fee` MoneyLike -комиссия
@@ -950,7 +950,7 @@ MoneyLike может иметь вид:
 ```js
    WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 11 MASS TRANSFER - массовая рассылка ассета](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-bccba990c89ceec7ef3751e8e763ecc6)  
+### [Тип 11 MASS TRANSFER - массовая рассылка ассета](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-bccba990c89ceec7ef3751e8e763ecc6)
 + `totalAmount` moneyLike - итого отошлется // можно не считать сумму и вставить { assetId: "id отправляемого ассета", coins: 0},
 + `transfers` массив объектов
     + { `recipient`: string - адрес/алиас, amount: number/string/moneyLike }
@@ -1000,7 +1000,7 @@ MoneyLike может иметь вид:
 ```js
    WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 12 DATA TRANSACTION - сохранение данных](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-f6e7a2443d41af2a0ef8b4c4c33ba6b3)  
+### [Тип 12 DATA TRANSACTION - сохранение данных](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-f6e7a2443d41af2a0ef8b4c4c33ba6b3)
 + `data` массив объектов
     +   `type` "binary"/string/"integer"/"boolean" - тип,
     +   `key` string - название поля
@@ -1043,7 +1043,7 @@ MoneyLike может иметь вид:
 - `*senderPublicKey` string - публичный ключ отправителя в base58
 - `*timestamp` number/string - время в мс
 =======
-### [Тип 13 SET SCRIPT - скриптовать акаунт](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-11573fe1c896857a6d3fcfcf6cf6571d)  
+### [Тип 13 SET SCRIPT - скриптовать акаунт](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-11573fe1c896857a6d3fcfcf6cf6571d)
 + `script` string - [скрипт](https://docs.wavesplatform.com/en/technical-details/waves-contracts-language-description/creating-and-deploying-a-script-manually.html#section-5e6520b97a7ead921d7fb6bce7292ce0)
 + `fee` MoneyLike -комиссия
 + `*senderPublicKey` string - публичный ключ отправителя в base58
@@ -1119,7 +1119,7 @@ MoneyLike может иметь вид:
 ```js
    WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 14 Sponsored Fee Transaction - Спонсорство](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-730bd9c8fe7e7628ba840d36df3c726e)  
+### [Тип 14 Sponsored Fee Transaction - Спонсорство](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-730bd9c8fe7e7628ba840d36df3c726e)
 
 + `minSponsoredAssetFee` MoneyLike - цена комиссии в ассете.
 + `fee` MoneyLike - комиссия
@@ -1160,7 +1160,7 @@ MoneyLike может иметь вид:
 - `*senderPublicKey` string - публичный ключ отправителя в base58
 - `*timestamp` number/string - время в мс
 =======
-### [Тип 15 SET ASSET SCRIPT - скрипт на ассет](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-9459bb3757b06f2d75f1a07f24f873ce)  
+### [Тип 15 SET ASSET SCRIPT - скрипт на ассет](https://docs.wavesplatform.com/en/technical-details/data-structures.html#section-9459bb3757b06f2d75f1a07f24f873ce)
 + `assetId` string - id ассета
 + `script` string - [скрипт](https://docs.wavesplatform.com/en/technical-details/waves-contracts-language-description/creating-and-deploying-a-script-manually.html#section-5e6520b97a7ead921d7fb6bce7292ce0)
 + `fee` MoneyLike -комиссия
@@ -1217,7 +1217,7 @@ MoneyLike может иметь вид:
 ```js
    WavesKeeper.signAndPublishTransaction({
 =======
-### [Тип 16 SCRIPT INVOCATION - выполнение функций скрипта *(только testnet)]()  
+### [Тип 16 SCRIPT INVOCATION - выполнение функций скрипта *(только testnet)]()
 + `dappAddress` string адрес контракта
 + `fee` MoneyLike комиссия
 + `call` объект слкдующей структуры
@@ -1419,7 +1419,7 @@ MoneyLike может иметь вид:
     WavesKeeper.signAndPublishCancelOrder({
 =======
 Метод Turtle Shell для отмены ордера на матчер, работает идентично `signCancelOrder`,
-но еще пытается отослать данные на матчер  
+но еще пытается отослать данные на матчер
 
 Пример:
 ```
@@ -1598,7 +1598,7 @@ MoneyLike может иметь вид:
         signature: '...',
         publicKey: '...'
    }
-```      
+```
 
 ОШИБКИ:
 
@@ -1641,10 +1641,10 @@ MoneyLike может иметь вид:
 
 ```js
     WavesKeeper.resourceIsApproved().then(result => { console.log(result) });
-```     
+```
 
 Ответ: true/false
- 
+
 
 ### resourceIsBlocked
 Проверка запрета на использование API кипера
@@ -1653,6 +1653,6 @@ MoneyLike может иметь вид:
 
 ```js
     WavesKeeper.resourceIsBlocked().then(result => { console.log(result) });
-```     
+```
 
 Ответ: true/false

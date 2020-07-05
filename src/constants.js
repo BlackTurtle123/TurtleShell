@@ -29,13 +29,13 @@ export const DEFAULT_CONFIG = {
     NETWORK_CONFIG: {
         "testnet": {
             "code": "l",
-            "server": "https://apitnetworktest.blackturtle.eu",
-            "matcher": "https://tntestnetmatcher.blackturtle.eu",
+            "server": "https://testnet.tnnode.turtlenetwork.eu",
+            "matcher": "https://testnet.matcher.turtlenetwork.eu",
         },
         "mainnet": {
             "code": "L",
-            "server": "https://tnnode2.turtlenetwork.eu/",
-            "matcher": "https://privatematcher.blackturtle.eu/"
+            "server": "https://tnnode.turtlenetwork.eu/",
+            "matcher": "https://matcher.turtlenetwork.eu/"
         },
         "custom": {
             "code": "",

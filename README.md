@@ -1,6 +1,6 @@
 # Turtle Shell v1.0.7
 
-Turtle Shell is a Google Chrome extension that allows users to securely interact with TurtleNetwork-enabled web services from the within the browser.
+Turtle Shell is a extension that allows users to securely interact with TurtleNetwork-enabled web services from the within the browser.
 
 Seed phrases and private keys are encrypted and stored within the extension and cannot be accessed by online dApps and services, making sure that user's funds are always protected from hackers and malicious websites. Completion of a transaction doesn't require entering any sensitive information.
 
@@ -108,8 +108,8 @@ REPLY
     },
     "network": {
         "code": "L",
-        "server": "https://privatenode2.blackturtle.eu/",
-        "matcher": "https://privatematcher.blackturtle.eu/"
+        "server": "https://tnnode.turtlenetwork.eu/",
+        "matcher": "https://matcher.turtlenetwork.eu/"
     },
     "messages": [],
     "txVersion": {
@@ -889,7 +889,7 @@ Example:
 
 ```js
    TurtleShell.signAndPublishTransaction({
-        ### [Type 16 SCRIPT INVOCATION - call account script function *(testnet only)]()  
+        ### [Type 16 SCRIPT INVOCATION - call account script function *(testnet only)]()
         + `dappAddress` string – address script account
         + `fee` MoneyLike – fee
         + `call` object –
@@ -1202,7 +1202,7 @@ REPLY:
         signature: '...',
         publicKey: '...'
    }
-```      
+```
 
 ERRORS:
 
@@ -1250,10 +1250,10 @@ Example:
 
 ```js
     TurtleShell.resourceIsApproved().then(result => { console.log(result) });
-```     
+```
 
 REPLY: true/false
- 
+
 
 ### resourceIsBlocked
 Check block API status for your origin

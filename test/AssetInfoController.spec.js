@@ -6,7 +6,7 @@ describe('AssetInfoController', () => {
 
     const controller = new AssetInfoController({
         getNetwork: () => 'mainnet',
-        getNode: () => 'https://privatenode2.blackturtle.eu'
+        getNode: () => 'https://tnnode.turtlenetwork.eu'
     });
 
     it('Should Get tn asset info', async () => {
