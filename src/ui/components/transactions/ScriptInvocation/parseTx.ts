@@ -10,14 +10,14 @@ export function getTransferAmount(amount, assetId) {
         amount.assetId = assetId;
         return amount;
     }
-    
+
     return { coins: amount, assetId };
 }
 
 export function getAssetsId(tx): Array<string> {
     const feeAssetId = tx.fee && tx.fee.assetId ? tx.fee.assetId : tx.feeAssetId || 'TN';
     const amountAssetId = [];
-    
+
     (tx.payment || []).map(item => {
         switch (typeof item) {
             case 'string':
@@ -28,7 +28,7 @@ export function getAssetsId(tx): Array<string> {
                 return  item && item.assetId ? item.assetId : 'TN';
         }
     });
-    
+
     return [ ...amountAssetId, feeAssetId ];
 }
 
@@ -36,11 +36,12 @@ export function getFee(tx) {
     return typeof tx.fee === 'object' ? tx.fee : { coins: tx.fee, assetId: 'TN' };
 }
 
-export function getAmount(tx) {
-    let tokens = new BigNumber(0);
-    let coins = new BigNumber(0);
-    
+export function getAmounts(tx) {
+    const amounts = [];
+
     (tx.payment || []).forEach((item) => {
+        let tokens = new BigNumber(0);
+        let coins = new BigNumber(0);
         if (item && item.tokens) {
             tokens = tokens.add(item.tokens);
         } else if (item && item.coins) {
@@ -53,11 +54,12 @@ export function getAmount(tx) {
                 coins = coins.add(parse);
             }
         }
+        const assetId = item.assetId || 'WAVES';
+
+        amounts.push({coins, tokens, assetId});
     });
-    
-    const assetId = ((tx.payment || [])[0] || {}).assetId || 'TN';
-    
-    return { coins, tokens, assetId };
+
+    return amounts;
 }
 
 export function getAmountSign() {

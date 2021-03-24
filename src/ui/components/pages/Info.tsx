@@ -17,7 +17,7 @@ export class Info extends React.Component {
                 </Trans>
             </div>
 
-            <a className="link black" target='_blank' href='https://turtlenetwork.eu'>turtlenetwork.eu</a>
+            <a rel="noopener noreferrer" className="link black" target='_blank' href='https://turtlenetwork.eu'>website</a>
 
             <div className={`${styles.social} margin-main`}>
                 <div className="margin-main basic500">

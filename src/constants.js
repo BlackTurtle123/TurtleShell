@@ -29,12 +29,12 @@ export const DEFAULT_CONFIG = {
     NETWORK_CONFIG: {
         "testnet": {
             "code": "l",
-            "server": "https://testnet.tnnode.turtlenetwork.eu",
+            "server": "https://cluster.testnet.tnnode.turtlenetwork.eu",
             "matcher": "https://testnet.matcher.turtlenetwork.eu",
         },
         "mainnet": {
             "code": "L",
-            "server": "https://tnnode.turtlenetwork.eu/",
+            "server": "https://cluster.tnnode.turtlenetwork.eu/",
             "matcher": "https://matcher.turtlenetwork.eu/"
         },
         "custom": {
@@ -101,6 +101,12 @@ export const DEFAULT_FEE_CONFIG = {
         },
         "15": {
             "fee": 100000000
+        },
+        "16": {
+            "fee": 500000
+        },
+        "17": {
+            "fee": 100000
         }
     }
 };
