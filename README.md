@@ -872,7 +872,7 @@ Example:
 
 In case of a success, the asset's script will be reset.
 
-**[Тип 16 SCRIPT INVOCATION - call account script function](https://docs.wavesplatform.com/en/blockchain/transaction-type/invoke-script-transaction.html)**
+**[Тип 16 SCRIPT INVOCATION - call account script function](https://docs.wavesprotocol.org/en/blockchain/transaction-type/invoke-script-transaction.html)**
 
 - `dApp` string – address script account
 - `call` object –
@@ -889,19 +889,33 @@ Example:
 
 ```js
    TurtleShell.signAndPublishTransaction({
-        ### [Type 16 SCRIPT INVOCATION - call account script function *(testnet only)]()
-        + `dappAddress` string – address script account
-        + `fee` MoneyLike – fee
-        + `call` object –
-            + `function` string function name
-            + `args` array
-                +   `type` "binary"/string/"integer"/"boolean" - type,
-                +   `value` /string/string/number/boolean - value for type
-        + `*payment` array MoneyLike (at now can use only 1 payment)
-        + `*senderPublicKey` string - public key in base58
-        + `*timestamp` number/string - number/string – time in ms
+        type: 16,
+        data: {
+             fee: {
+                 "tokens": "0.05",
+                 "assetId": "WAVES"
+             },
+             dApp: '3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU',
+             call: {
+             		function: 'tellme',
+             		args: [
+             		    {
+             		      "type": "string",
+             		      "value": "Will?"
+             		    }]
+             	}, payment: [{assetId: "TN", tokens: 2}]
+        }
+   }).then((tx) => {
+        console.log("Ура! Я выполнил скрипт!!!");
+   }).catch((error) => {
+        console.error("Что-то пошло не так", error);
+   });
 
-Example:
+```
+
+In case of a success, invoke script function `tellme` in testnet account `3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU`
+
+**[Calculating transaction fees](https://docs.wavesprotocol.org/blockchain/transaction/transaction-fee.html)**
 ```
    TurtleShell.signAndPublishTransaction({
         type: 16,
