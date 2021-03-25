@@ -872,7 +872,7 @@ Example:
 
 In case of a success, the asset's script will be reset.
 
-**[Тип 16 SCRIPT INVOCATION - call account script function](https://docs.wavesprotocol.org/en/blockchain/transaction-type/invoke-script-transaction.html)**
+**[Type 16 SCRIPT INVOCATION - call account script function](https://docs.wavesprotocol.org/en/blockchain/transaction-type/invoke-script-transaction.html)**
 
 - `dApp` string – address script account
 - `call` object –
@@ -892,8 +892,8 @@ Example:
         type: 16,
         data: {
              fee: {
-                 "tokens": "0.05",
-                 "assetId": "WAVES"
+                 "tokens": "0.06",
+                 "assetId": "TN"
              },
              dApp: '3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU',
              call: {
