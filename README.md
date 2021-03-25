@@ -916,32 +916,6 @@ Example:
 In case of a success, invoke script function `tellme` in testnet account `3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU`
 
 **[Calculating transaction fees](https://docs.wavesprotocol.org/blockchain/transaction/transaction-fee.html)**
-```
-   TurtleShell.signAndPublishTransaction({
-        type: 16,
-        data: {
-             fee: {
-                 "tokens": "0.05",
-                 "assetId": "TN"
-             },
-             dApp: '3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU',
-             call: {
-             		function: 'tellme',
-             		args: [
-             		    {
-             		      "type": "string",
-             		      "value": "Will?"
-             		    }]
-             	}, payment: [{assetId: "TN", tokens: 2}]
-        }
-   }).then((tx) => {
-        console.log("Hurray! I have invoked the script!!!");
-   }).catch((error) => {
-        console.error("something went wrong", error);
-   });
-```
-
-In case of a success, invoke script function `tellme` in testnet account `3N27HUMt4ddx2X7foQwZRmpFzg5PSzLrUgU`
 
 ```
 
