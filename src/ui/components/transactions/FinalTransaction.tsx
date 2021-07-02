@@ -20,7 +20,7 @@ const Error = ({ approveError }) => {
 @translate(I18N_NAME_SPACE)
 export class FinalTransaction extends React.PureComponent {
     readonly props: any;
-    
+
     render() {
         const {
             transactionStatus,
@@ -33,7 +33,7 @@ export class FinalTransaction extends React.PureComponent {
             onList,
             assets,
         } = this.props;
-        
+
         const newMessages = (messages
             .map(item => item.id)
             .filter(id => id !== message.id)
@@ -50,23 +50,23 @@ export class FinalTransaction extends React.PureComponent {
         const FinalComponent = config.final;
         const Card = config.card;
         const network = selectedAccount && selectedAccount.networkCode;
-        const txLink = `https://${network === 'l' ? 'testnet.' : ''}explorer.turtlenetwork.eu/tx/${message.messageHash}`;
+        const txLink = `https://explorer.turtlenetwork.eu/${network === 'l' ? 'testnet/' : ''}tx/${message.messageHash}`;
         const className = cn(styles.txBigIcon, 'margin-main', {
             'tx-reject-icon': isReject,
             'tx-approve-icon': isApprove
         });
         const isNotOrder = !isOrder(message.data, message.type);
-        
+
         if(config.type === oauth.type && !isShowClose) {
             const method = isShowList ? 'onList' : 'onNext';
             this.props[method]();
             return null;
         }
-        
+
         return <div className={styles.txFinal}>
-            
+
             <div className={className}></div>
-            
+
             <div className={styles.txFinalContentWrapper}>
                 <div className={styles.finalTxContent}>
                     <div className="margin-main-top margin-main-big">
@@ -80,9 +80,9 @@ export class FinalTransaction extends React.PureComponent {
                                 <Error approveError={transactionStatus.approveError}/>
                             </div> : null}
                     </div>
-                    
+
                     <Card message={message} assets={assets} collapsed={false}/>
-                    
+
                     {
                         isSend && isApprove && isNotOrder && <div className="center margin-main-big-top">
                             <a rel="noopener noreferrer" className="link black" href={txLink} target="_blank">
@@ -102,34 +102,34 @@ export class FinalTransaction extends React.PureComponent {
                     }
                 </div>
             </div>
-            
+
             <div className={styles.txFinalFooterWrapper}>
                 <div className={styles.txFinalButtonWrapper}>
-                    
+
                     {isShowList ? <Button type={BUTTON_TYPE.SUBMIT} onClick={onList} className={styles.closeBtn}>
                         <Trans i18nKey='sign.pendingList'>Pending list</Trans>
                     </Button> : null}
-                    
+
                     {isShowList && isShowClose || isShowNext && isShowList ?
                         <div className={styles.buttonMargin}></div> : null}
-                    
+
                     {isShowNext ? <Button type={BUTTON_TYPE.SUBMIT} onClick={onNext} className={styles.nextBtn}>
                         <Trans i18nKey='sign.nextTransaction'>Next transaction</Trans>
                     </Button> : null}
-                    
+
                     {isShowClose ? <Button onClick={onClose} className={styles.closeBtn}>
                         {isError ? <Trans i18nKey='sign.understand'>I understand</Trans> : null}
                         {isReject || isApprove ? <Trans i18nKey='sign.ok'>Close</Trans> : null}
                     </Button> : null}
                 </div>
-                
+
                 {isSend && isApprove ?
                     <TransactionWallet className={styles.finalTxWallet} account={this.props.selectedAccount}
                                        hideButton={true}/> :
                     <TransactionWallet className={styles.finalTxWallet} account={this.props.selectedAccount}
                                        hideButton={true}/>}
             </div>
-        
+
         </div>;
     }
 }
